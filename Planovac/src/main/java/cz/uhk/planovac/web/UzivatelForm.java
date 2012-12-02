@@ -22,7 +22,9 @@ import cz.uhk.planovac.Uzivatel;
 @RequestMapping("novyuzivatel")
 @SessionAttributes("uzivatel")
 public class UzivatelForm {
-
+//test
+	
+	
 	/*
 	private final Planovac planovac;
 
