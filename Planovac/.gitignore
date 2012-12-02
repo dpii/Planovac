@@ -1,0 +1,13 @@
+*.class
+*.classpath
+*.project
+*.springBeans
+pom.properties
+org.eclipse.wst.common.component
+MANIFEST.MF
+/.settings
+pom.xml
+
+# Package Files #
+*.war
+*.ear
