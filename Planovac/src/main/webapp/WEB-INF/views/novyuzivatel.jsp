@@ -5,7 +5,7 @@
 </c:choose>
 
 <h2><c:if test="${pet['new']}">New </c:if>Pet</h2>
-<p> test </p>
+<p> test5153516 </p>
 <b>Owner:</b> ${pet.owner.firstName} ${pet.owner.lastName}
 <br/>
 <form:form modelAttribute="pet" method="${method}">
