@@ -1,7 +1,9 @@
 
 package cz.uhk.planovac.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,25 +27,36 @@ public class UzivatelForm {
 //test
 	
 	
-	/*
-	private final Planovac planovac;
+	//private final Planovac planovac;
 
 
-	@Autowired
-	public UzivatelForm(Clinic clinic) {
-		this.clinic = clinic;
+	//@Autowired
+	//public UzivatelForm(Clinic clinic) {
+	//	this.clinic = clinic;
+	//}
+
+	@ModelAttribute("jmeno")
+	public String jmeno() {
+		return "Jméno 5";
 	}
-
-	@ModelAttribute("types")
-	public Collection<PetType> populatePetTypes() {
-		return this.clinic.getPetTypes();
+	
+	@ModelAttribute("mesto")
+	public String mesto() {
+		return "Něco";
 	}
-
+	
+	@ModelAttribute("mesta")
+	public Collection<String> populatePetTypes() {
+		Collection<String> seznam = new ArrayList<String>();
+		seznam.add("Něco");
+		seznam.add("Něco2");
+		return seznam;
+	}
+	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	*/
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(Model model) {

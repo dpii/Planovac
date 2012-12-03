@@ -1,44 +1,45 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <c:choose>
-	<c:when test="${pet['new']}"><c:set var="method" value="post"/></c:when>
+	<c:when test="${uzivatel} = null"><c:set var="method" value="post"/></c:when>
 	<c:otherwise><c:set var="method" value="put"/></c:otherwise>
 </c:choose>
 
-<h2><c:if test="${pet['new']}">New </c:if>Pet</h2>
-<p> test5153516 </p>
-<b>Owner:</b> ${pet.owner.firstName} ${pet.owner.lastName}
+<h2><c:if test="${uzivatel} == 'null'">Novy </c:if>Uzivatel</h2>
+<p> test </p>
 <br/>
-<form:form modelAttribute="pet" method="${method}">
+<form:form modelAttribute="uzivatel" method="${method}">
   <table>
     <tr>
       <th>
-        Name: <form:errors path="name" cssClass="errors"/>
+        Login: <form:errors path="jmeno" cssClass="errors"/>
         <br/>
-        <form:input path="name" size="30" maxlength="30"/>
+        <form:input path="jmeno" size="30" maxlength="30"/>
       </th>
     </tr>
     <tr>
       <th>
-        Birth Date: <form:errors path="birthDate" cssClass="errors"/>
+        Datum narozeni: <form:errors path="jmeno" cssClass="errors"/>
         <br/>
-        <form:input path="birthDate" size="10" maxlength="10"/> (yyyy-mm-dd)
+        <form:input path="jmeno" size="10" maxlength="10"/> (yyyy-mm-dd)
       </th>
     </tr>
     <tr>
       <th>
-        Type: <form:errors path="type" cssClass="errors"/>
+        Type: <form:errors path="mesto" cssClass="errors"/>
         <br/>
-        <form:select path="type" items="${types}"/>
+        <form:select path="mesto" items="${mesta}"/>
       </th>
     </tr>
     <tr>
       <td>
         <c:choose>
-          <c:when test="${pet['new']}">
-            <p class="submit"><input type="submit" value="Add Pet"/></p>
+          <c:when test="${uzivatel} == 'null'">
+            <p class="submit"><input type="submit" value="Přidej uživatele"/></p>
           </c:when>
           <c:otherwise>
-            <p class="submit"><input type="submit" value="Update Pet"/></p>
+            <p class="submit"><input type="submit" value="Aktualizuj uživatele"/></p>
           </c:otherwise>
         </c:choose>
       </td>
