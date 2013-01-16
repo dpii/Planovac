@@ -13,23 +13,30 @@
   <table>
     <tr>
       <th>
-        Login: <form:errors path="jmeno" cssClass="errors"/>
+        Login: <form:errors path="login" cssClass="errors"/>
         <br/>
-        <form:input path="jmeno" size="30" maxlength="30"/>
+        <form:input path="login" size="30" maxlength="30"/>
       </th>
     </tr>
     <tr>
       <th>
-        Datum narozeni: <form:errors path="jmeno" cssClass="errors"/>
+        Jméno: <form:errors path="jmeno" cssClass="errors"/>
         <br/>
-        <form:input path="jmeno" size="10" maxlength="10"/> (yyyy-mm-dd)
+        <form:input path="jmeno" size="20" maxlength="20"/>
       </th>
     </tr>
     <tr>
       <th>
-        Type: <form:errors path="mesto" cssClass="errors"/>
+        Příjmení: <form:errors path="prijmeni" cssClass="errors"/>
         <br/>
-        <form:select path="mesto" items="${mesta}"/>
+        <form:input path="prijmeni" size="20" maxlength="20"/>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        E-mail: <form:errors path="email" cssClass="errors"/>
+        <br/>
+        <form:input path="email" size="20" maxlength="30"/>
       </th>
     </tr>
     <tr>

@@ -20,8 +20,10 @@
 
 <body>
 	<div id="logo">
-		<img src="<spring:url value="/resources/logo.jpg" htmlEscape="true" />"
-			align="left" style="position: relative; left: 30px;">
+		<a href="<spring:url value="/" htmlEscape="true" />">
+			<img src="<spring:url value="/resources/logo.jpg" htmlEscape="true" />"
+				align="left" style="position: relative; left: 30px;">
+		</a>
 	</div>
 	<br>
 
