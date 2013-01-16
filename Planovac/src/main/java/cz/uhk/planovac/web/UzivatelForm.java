@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import cz.uhk.planovac.Planovac;
 import cz.uhk.planovac.Uzivatel;
 
 @Controller
@@ -27,24 +28,15 @@ public class UzivatelForm {
 //test
 	
 	
-	//private final Planovac planovac;
+	private final Planovac planovac;
 
 
-	//@Autowired
-	//public UzivatelForm(Clinic clinic) {
-	//	this.clinic = clinic;
-	//}
-
-	@ModelAttribute("jmeno")
-	public String jmeno() {
-		return "Jméno 5";
+	@Autowired
+	public UzivatelForm(Planovac planovac) {
+		this.planovac = planovac;
 	}
 	
-	@ModelAttribute("mesto")
-	public String mesto() {
-		return "Něco";
-	}
-	
+	//šablona pro výběr (nevyužito)
 	@ModelAttribute("mesta")
 	public Collection<String> populatePetTypes() {
 		Collection<String> seznam = new ArrayList<String>();
@@ -55,7 +47,7 @@ public class UzivatelForm {
 	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
+		dataBinder.setDisallowedFields("idUzivatele");
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -72,7 +64,7 @@ public class UzivatelForm {
 			return "novyuzivatel";
 		}
 		else {
-			//this.planovac.storeOwner(uzivatel);
+			this.planovac.ulozUzivatele(uzivatel);
 			status.setComplete();
 			return "redirect:/uzivatele/" + uzivatel.getIdUzivatele();
 		}

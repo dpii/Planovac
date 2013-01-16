@@ -15,7 +15,14 @@
       <th>
         Login: <form:errors path="login" cssClass="errors"/>
         <br/>
-        <form:input path="login" size="30" maxlength="30"/>
+        <form:input path="login" size="15" maxlength="15"/>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        Heslo: <form:errors path="heslo_hash" cssClass="errors"/>
+        <br/>
+        <form:input path="heslo_hash" size="15" maxlength="15"/>
       </th>
     </tr>
     <tr>

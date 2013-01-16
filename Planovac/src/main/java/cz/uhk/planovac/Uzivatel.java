@@ -15,8 +15,6 @@ import javax.persistence.OneToMany;
 @Entity
 public class Uzivatel {// extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUzivatele;
 
 	private String login;
@@ -47,7 +45,9 @@ public class Uzivatel {// extends BaseEntity {
 	private String mesto;
 
 	private String telefon;
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getIdUzivatele() {
 		return idUzivatele;
 	}
