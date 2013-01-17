@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Uzivatel {// extends BaseEntity {
@@ -45,6 +46,11 @@ public class Uzivatel {// extends BaseEntity {
 	private String mesto;
 
 	private String telefon;
+	
+	@Transient
+	public boolean isNew() {
+		return (this.idUzivatele == null);
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

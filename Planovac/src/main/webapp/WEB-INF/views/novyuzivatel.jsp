@@ -2,11 +2,11 @@
 
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <c:choose>
-	<c:when test="${uzivatel} = null"><c:set var="method" value="post"/></c:when>
+	<c:when test="${uzivatel['new']}"><c:set var="method" value="post"/></c:when>
 	<c:otherwise><c:set var="method" value="put"/></c:otherwise>
 </c:choose>
 
-<h2><c:if test="${uzivatel} == 'null'">Novy </c:if>Uzivatel</h2>
+<h2><c:if test="${uzivatel['new']}">Novy </c:if>Uzivatel</h2>
 <p> test </p>
 <br/>
 <form:form modelAttribute="uzivatel" method="${method}">
@@ -27,6 +27,13 @@
     </tr>
     <tr>
       <th>
+        E-mail: <form:errors path="email" cssClass="errors"/>
+        <br/>
+        <form:input path="email" size="20" maxlength="30"/>
+      </th>
+    </tr>
+    <tr>
+      <th>
         Jméno: <form:errors path="jmeno" cssClass="errors"/>
         <br/>
         <form:input path="jmeno" size="20" maxlength="20"/>
@@ -41,15 +48,15 @@
     </tr>
     <tr>
       <th>
-        E-mail: <form:errors path="email" cssClass="errors"/>
+        Telefon: <form:errors path="telefon" cssClass="errors"/>
         <br/>
-        <form:input path="email" size="20" maxlength="30"/>
+        <form:input path="telefon" size="15" maxlength="12"/>
       </th>
     </tr>
     <tr>
       <td>
         <c:choose>
-          <c:when test="${uzivatel} == 'null'">
+          <c:when test="${uzivatel['new']}">
             <p class="submit"><input type="submit" value="Přidej uživatele"/></p>
           </c:when>
           <c:otherwise>

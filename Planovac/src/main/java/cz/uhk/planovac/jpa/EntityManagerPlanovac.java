@@ -38,9 +38,16 @@ public class EntityManagerPlanovac implements Planovac {
 	}
 
 	public void ulozUzivatele(Uzivatel uzivatel) {
-		Uzivatel merged = this.em.merge(uzivatel);
-		this.em.flush();
-		uzivatel.setIdUzivatele(merged.getIdUzivatele());
+		/*if(uzivatel.isNew())//nevyřešilo to problém s nullPointerE., ale někde jsem četl, že se to možná má použít pro nové položky
+		{
+			this.em.persist(uzivatel);
+		}
+		else
+		{*/
+			Uzivatel merged = this.em.merge(uzivatel);
+			this.em.flush();
+			uzivatel.setIdUzivatele(merged.getIdUzivatele());
+		//}
 	}
 
 	public void smazUzivatele(int id) throws DataAccessException {

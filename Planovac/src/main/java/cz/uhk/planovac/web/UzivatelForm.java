@@ -20,10 +20,11 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import cz.uhk.planovac.Planovac;
 import cz.uhk.planovac.Uzivatel;
+import cz.uhk.planovac.validation.UzivatelValidator;
 
 @Controller
 @RequestMapping("novyuzivatel")
-@SessionAttributes("uzivatel")
+@SessionAttributes(types = Uzivatel.class)
 public class UzivatelForm {
 //test
 	
@@ -59,7 +60,7 @@ public class UzivatelForm {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String processSubmit(@ModelAttribute Uzivatel uzivatel, BindingResult result, SessionStatus status) {
-		//new UzivatelValidator().validate(uzivatel, result);
+		new UzivatelValidator().validate(uzivatel, result);
 		if (result.hasErrors()) {
 			return "novyuzivatel";
 		}
