@@ -14,23 +14,20 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="udalosti")
+@Table(name="UDALOSTI")
 public class Udalost{// extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	
 	private Integer idUdalosti;
 	
 	private String nazev;
 	
 	private boolean verejna;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idSkupiny")
+	
 	private Skupina vlastnikSk;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idUzivatele")
+
 	private Uzivatel vlastnikUz;
 	
 	// blob? nebo odkaz
@@ -39,9 +36,6 @@ public class Udalost{// extends BaseEntity {
 	private Date zacatek;
 	
 	private Date konec;
-	
-	
-	
 	
 	
 	
@@ -79,6 +73,8 @@ public class Udalost{// extends BaseEntity {
 		this.konec = konec;
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getIdUdalosti() {
 		return idUdalosti;
 	}
@@ -95,6 +91,8 @@ public class Udalost{// extends BaseEntity {
 		this.verejna = verejna;
 	}
 
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idSkupiny")
 	public Skupina getVlastnikSk() {
 		return vlastnikSk;
 	}
@@ -103,6 +101,8 @@ public class Udalost{// extends BaseEntity {
 		this.vlastnikSk = vlastnikSk;
 	}
 
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idUzivatele")
 	public Uzivatel getVlastnikUz() {
 		return vlastnikUz;
 	}

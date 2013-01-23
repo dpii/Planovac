@@ -11,26 +11,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="SKUPINY")
 public class Skupina { // extends BaseEntity{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private Integer idSkupiny;
 
 	private String nazev;
 
-	@ManyToMany(mappedBy = "seznamSkupin")
 	private Set<Uzivatel> seznamClenu;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idUzivatele")
 	private Uzivatel vedouci;
 
-	@OneToMany(mappedBy = "vlastnikSk", fetch = FetchType.LAZY)
 	private Set<Udalost> seznamUdalosti;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getIdSkupiny() {
 		return idSkupiny;
 	}
@@ -47,6 +46,7 @@ public class Skupina { // extends BaseEntity{
 		this.nazev = nazev;
 	}
 
+	@ManyToMany(mappedBy = "seznamSkupin")
 	public Set<Uzivatel> getSeznamClenu() {
 		return seznamClenu;
 	}
@@ -54,7 +54,9 @@ public class Skupina { // extends BaseEntity{
 	public void setSeznamClenu(Set<Uzivatel> seznamClenu) {
 		this.seznamClenu = seznamClenu;
 	}
-
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idUzivatele")
 	public Uzivatel getVedouci() {
 		return vedouci;
 	}
@@ -63,6 +65,7 @@ public class Skupina { // extends BaseEntity{
 		this.vedouci = vedouci;
 	}
 
+	@OneToMany(mappedBy = "vlastnikSk", fetch = FetchType.LAZY)
 	public Set<Udalost> getSeznamUdalosti() {
 		return seznamUdalosti;
 	}

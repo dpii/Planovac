@@ -9,24 +9,25 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
+@Table(name="UZIVATELE")
 public class Uzivatel {// extends BaseEntity {
 
 	private Integer idUzivatele;
 
 	private String login;
 
-	@OneToMany(mappedBy = "vlastnikUz", fetch = FetchType.LAZY)
 	private Set<Udalost> seznamUdalosti;
-
-	@ManyToMany
+	
 	private Set<Skupina> seznamSkupin;
-
-	@OneToMany(mappedBy = "vedouci", fetch = FetchType.LAZY)
+	
 	private Set<Skupina> vedeneSkupiny;
 
 	private String jmeno;
@@ -70,6 +71,7 @@ public class Uzivatel {// extends BaseEntity {
 		this.login = login;
 	}
 
+	@OneToMany(mappedBy = "vlastnikUz", fetch = FetchType.LAZY)
 	public Set<Udalost> getSeznamUdalosti() {
 		return seznamUdalosti;
 	}
@@ -149,7 +151,11 @@ public class Uzivatel {// extends BaseEntity {
 	public void setPrijmeni(String prijmeni) {
 		this.prijmeni = prijmeni;
 	}
-
+	
+	@ManyToMany
+	@JoinTable(name="SKUPINY_UZIVATELU",
+	   joinColumns=@JoinColumn(name="idUzivatele"),
+	   inverseJoinColumns=@JoinColumn(name="idSkupiny"))
 	public Set<Skupina> getSeznamSkupin() {
 		return seznamSkupin;
 	}
@@ -157,7 +163,11 @@ public class Uzivatel {// extends BaseEntity {
 	public void setSeznamSkupin(Set<Skupina> seznamSkupin) {
 		this.seznamSkupin = seznamSkupin;
 	}
-
+	
+	@OneToMany(mappedBy = "vedouci", fetch = FetchType.LAZY)
+	@JoinTable(name="VEDOUCI_SKUPIN",
+	   joinColumns=@JoinColumn(name="idUzivatele"),
+	   inverseJoinColumns=@JoinColumn(name="idSkupiny"))
 	public Set<Skupina> getVedeneSkupiny() {
 		return vedeneSkupiny;
 	}
