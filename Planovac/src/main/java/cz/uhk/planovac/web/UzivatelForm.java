@@ -37,14 +37,14 @@ public class UzivatelForm {
 		this.planovac = planovac;
 	}
 	
-	//Å¡ablona pro vÃ½bÄ›r (nevyuÅ¾ito)
-	@ModelAttribute("mesta")
+	//šablona pro výbìr (nevyužito)
+	/*@ModelAttribute("mesta")
 	public Collection<String> populatePetTypes() {
 		Collection<String> seznam = new ArrayList<String>();
-		seznam.add("NÄ›co");
-		seznam.add("NÄ›co2");
+		seznam.add("Nìco");
+		seznam.add("Nìco2");
 		return seznam;
-	}
+	}*/
 	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
