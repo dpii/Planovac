@@ -112,6 +112,12 @@ public class Udalost{// extends BaseEntity {
 	}
 	
 	
+	//konstruktor pro ManazerUdalosti - pro dočasné ukládání časových úseků
+	public Udalost(Date zacatek, Date konec) {
+		super();
+		this.zacatek = zacatek;
+		this.konec = konec;
+	}
 
 	
 	
