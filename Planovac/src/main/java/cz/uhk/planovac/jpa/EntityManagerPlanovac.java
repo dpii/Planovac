@@ -37,7 +37,11 @@ public class EntityManagerPlanovac implements Planovac {
 		return this.em.find(Uzivatel.class, id);
 	}
 	
-	@Transactional//p�id�no nav�c
+	public Uzivatel nactiUzivatelePodleLoginu(String login) {
+		return this.em.find(Uzivatel.class, login);
+	}
+	
+	@Transactional//p�id�no nav�c
 	public void ulozUzivatele(Uzivatel uzivatel) {
 		/*if(uzivatel.isNew())//nevyřešilo to problém s nullPointerE., ale někde jsem četl, že se to možná má použít pro nové položky
 		{
