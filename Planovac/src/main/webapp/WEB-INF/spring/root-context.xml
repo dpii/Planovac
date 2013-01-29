@@ -12,40 +12,13 @@
 	
 	<!-- Configurer that replaces ${...} placeholders with values from a properties file -->
 	<!-- (in this case, JDBC-related settings for the JPA EntityManager definition below) -->
+	
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	
-	<!-- DataSource configuration for Apache Commons DBCP. -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
-			p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}"
-			p:username="${jdbc.username}" p:password="${jdbc.password}"/>
+	<import resource="spring-data.xml"/>
 	
-	<!-- JNDI DataSource for JEE environments -->
-	<!--
-	<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/petclinic"/>
-	-->
-
-	<!-- Database initializer. If any of the script fails, the initialization stops. -->
-	<!-- As an alternative, for embedded databases see <jdbc:embedded-database/>. ZAKOMENTOVÁNO!!!
-	<jdbc:initialize-database data-source="dataSource">
-		<jdbc:script location="${jdbc.initLocation}"/>
-		<jdbc:script location="${jdbc.dataLocation}"/>
-	</jdbc:initialize-database> -->
-	
-	<!-- JPA EntityManagerFactory -->
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-			p:dataSource-ref="dataSource">
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-					p:database="${jpa.database}" p:showSql="${jpa.showSql}"/>
-		</property>
-		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
-	</bean>
-
-	<!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory"/>
-		<property name="dataSource" ref="dataSource" />		
-	</bean>
+	<!-- <mvc:annotation-driven /> 
+	<mvc:resources mapping="/resources/**" location="/resources/" />  -->
 	
 	<tx:annotation-driven/>
 	

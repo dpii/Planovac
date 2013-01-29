@@ -14,8 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import repository.UzivatelRepository;
+
 import cz.uhk.planovac.Uzivatel;
-import cz.uhk.planovac.jpa.EntityManagerPlanovac;
 
 
 @Service
@@ -23,7 +24,7 @@ import cz.uhk.planovac.jpa.EntityManagerPlanovac;
 public class CustomUserDetailsService implements UserDetailsService{
 
 	@Autowired
-	private EntityManagerPlanovac em;
+	private UzivatelRepository uzivatelRepository;
 
 	/**
 	 * Returns a populated {@link UserDetails} object. 
@@ -32,21 +33,21 @@ public class CustomUserDetailsService implements UserDetailsService{
 	 */
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 		try {
-			Uzivatel uzivatel = em.nactiUzivatelePodleLoginu(login);
+			Uzivatel uzivatel = uzivatelRepository.findByLogin(login);
 			
 			boolean enabled = true;
 			boolean accountNonExpired = true;
 			boolean credentialsNonExpired = true;
 			boolean accountNonLocked = true;
 			
-			return new User(
-					uzivatel.getLogin(), 
-					uzivatel.getHeslo_hash().toLowerCase(),
-					enabled,
+			Collection<GrantedAuthority> role = new ArrayList<GrantedAuthority>();
+			role.add(new GrantedAuthorityImpl("ROLE_USER"));//prozatím jsou všichni v roli uživatele
+			
+			return new User(uzivatel.getLogin(), uzivatel.getHeslo_hash().toLowerCase(),enabled,
 					accountNonExpired,
 					credentialsNonExpired,
 					accountNonLocked,
-					getAuthorities(1));
+					role);
 					//getAuthorities(uzivatel.getRole().getRole()));
 			
 		} catch (Exception e) {

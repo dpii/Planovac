@@ -1,20 +1,18 @@
 package cz.uhk.planovac.web;
 
-import java.security.Principal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
  
 @Controller
 public class LoginController {
  
 	@RequestMapping(value="/vitejte", method = RequestMethod.GET)
-	public String printWelcome(ModelMap model, Principal principal ) {
- 
-		String name = principal.getName();
-		model.addAttribute("username", name);
-		model.addAttribute("message", "Spring Security Custom Form example");
+	public String login(ModelMap model, @RequestParam(required=false) String message ) {
+		
+		model.addAttribute("message", message);
 		return "home";
  
 	}
@@ -23,7 +21,11 @@ public class LoginController {
 	public String login(ModelMap model) {
  
 		return "login";
- 
+	}
+	
+	@RequestMapping(value = "/denied")
+ 	public String denied() {
+		return "denied";
 	}
  
 	@RequestMapping(value="/loginfailed", method = RequestMethod.GET)
@@ -37,7 +39,7 @@ public class LoginController {
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(ModelMap model) {
  
-		return "login";
+		return "redirect:/login?message=Odhlasen";
  
 	}
  
