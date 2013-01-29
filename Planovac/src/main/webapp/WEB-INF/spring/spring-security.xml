@@ -17,12 +17,12 @@
 		<intercept-url pattern="/logout" access="permitAll"/>
 		<intercept-url pattern="/denied" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/" access="permitAll"/>
-		<intercept-url pattern="/user" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/uzivatel" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 		
 		<form-login login-page="/login" 
-			authentication-failure-url="/login/failure" 
-			default-target-url="/"/>
+			authentication-failure-url="/loginfailed" 
+			default-target-url="/uzivatel"/>
 		
 		<access-denied-handler error-page="/denied"/>
 		
@@ -31,25 +31,39 @@
 			logout-url="/logout"/>
 	</http>
 	
-	<beans:bean id="customUserDetailsService" class="cz.uhk.planovac.security.CustomUserDetailsService"/>
-	
-	<!-- <beans:bean id="daoAuthenticationProvider"
-	 class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-	  <beans:property name="userDetailsService" ref="customUserDetailsService"/>
-	</beans:bean>
-	
-	<beans:bean id="authenticationManager"
-	    class="org.springframework.security.authentication.ProviderManager">
-	  <beans:property name="providers">
-	    <beans:list>
-	      <beans:ref local="daoAuthenticationProvider" />
-	    </beans:list>
-	  </beans:property>
-	</beans:bean> -->
-	
-	<authentication-manager>
+<!-- 	JPA + SPRING-SECURITY! -->
+<!-- 	<beans:bean id="customUserDetailsService" class="cz.uhk.planovac.security.CustomUserDetailsService"/> -->
+<!-- 	<authentication-manager>
 	        <authentication-provider user-service-ref="customUserDetailsService">
 	        		<password-encoder hash="md5"/>
 	        </authentication-provider>
-	</authentication-manager>
+	</authentication-manager> -->
+	
+<!-- 	Jednoduchá security s uživateli tady v xml -->
+<!-- 	<authentication-manager>
+	        <authentication-provider>
+	        		<user-service>
+	        			<user name="nick" password="1234" authorities="ROLE_USER"/>
+	        		</user-service>
+	        </authentication-provider>
+	</authentication-manager> -->
+	
+<!-- 	Pokud o načítání z db bez JPA -->
+	<authentication-manager>
+	   	<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+ 
+		   users-by-username-query="
+		      select login,heslo_hash, povolen 
+		      from UZIVATELE where login=?" 
+ 
+		   authorities-by-username-query="
+		      select login, role from uzivatele 
+		      where login =?  " 
+ 
+			/>
+	   		</authentication-provider>
+		</authentication-manager>
+	
+	
 </beans:beans>

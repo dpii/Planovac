@@ -36,6 +36,10 @@ public class Uzivatel {// extends BaseEntity {
 	private String email;
 
 	private String heslo_hash;
+	
+	private boolean povolen;
+
+	private String role;
 
 	private Date datumZalozeni;
 
@@ -79,6 +83,14 @@ public class Uzivatel {// extends BaseEntity {
 		this.seznamUdalosti = seznamUdalosti;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public String getAdresa() {
 		return adresa;
 	}
@@ -117,6 +129,14 @@ public class Uzivatel {// extends BaseEntity {
 
 	public void setHeslo_hash(String heslo_hash) {
 		this.heslo_hash = heslo_hash;
+	}
+	
+	public boolean isPovolen() {
+		return povolen;
+	}
+
+	public void setPovolen(boolean povolen) {
+		this.povolen = povolen;
 	}
 
 	public Date getDatumZalozeni() {

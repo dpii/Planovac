@@ -65,6 +65,8 @@ public class UzivatelForm {
 			return "novyuzivatel";
 		}
 		else {
+			uzivatel.setRole("ROLE_USER");
+			uzivatel.setPovolen(true);
 			this.planovac.ulozUzivatele(uzivatel);
 			status.setComplete();
 			return "redirect:/uzivatele/" + uzivatel.getIdUzivatele();

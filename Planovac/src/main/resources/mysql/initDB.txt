@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS UZIVATELE (
   prijmeni VARCHAR(30),
   email VARCHAR(30) NOT NULL,
   heslo_hash VARCHAR(30) NOT NULL,
+  povolen tinyint(1) NOT NULL,
+  role VARCHAR(45) NOT NULL,
   datumZalozeni DATE,
   datumPosledniPrihlaseni DATE,
   adresa VARCHAR(30),
