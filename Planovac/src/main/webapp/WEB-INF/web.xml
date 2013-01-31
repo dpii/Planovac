@@ -5,7 +5,7 @@
 
 	<display-name>Planovac</display-name>
 
-	<description>Popis planovace</description>
+	<description>Osobní i skupinový rozvrh</description>
 	
 	<!--
 		Key of the system property that should specify the root directory of this
@@ -32,7 +32,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
-		<url-pattern>/static/*</url-pattern>
+		<url-pattern>/resources/*</url-pattern>
 	</servlet-mapping>
 
 	<!-- Processes application requests -->
@@ -60,7 +60,7 @@
 	
 	
 	<!-- Přidáno navíc z petclinic -->
-<!-- 	<filter>
+	<filter>
 		<filter-name>httpMethodFilter</filter-name>
 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
 	</filter>
@@ -76,9 +76,9 @@
 
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
-		Displays a stack trace
+
 		<location>/WEB-INF/jsp/uncaughtException.jsp</location>
-	</error-page> -->
+	</error-page> 
 
 	<!-- eliminate welcome files -->
 	<!-- useful for Servlet 3 container (Tomcat 7 and Jetty 6) -->

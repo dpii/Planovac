@@ -15,6 +15,8 @@
 <ul>
   <li><a href="<spring:url value="/novyuzivatel" htmlEscape="true" />">Registrace</a></li>
   <li><a href="<spring:url value="/login" htmlEscape="true" />">Login</a></li>
+  <li><a href="<spring:url value="/uzivatele" htmlEscape="true" />">Výpis uživatelů</a></li>
+  <li><a href="<spring:url value="/udalosti" htmlEscape="true" />">Výpis událostí</a></li>
   <sec:authorize access="hasRole('ROLE_USER')">
 	<li><a href="<spring:url value="/uzivatel" htmlEscape="true" />">Uživatelská sekce</a></li>
   </sec:authorize>

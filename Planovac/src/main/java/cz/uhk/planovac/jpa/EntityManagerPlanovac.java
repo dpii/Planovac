@@ -1,9 +1,11 @@
 package cz.uhk.planovac.jpa;
 
+import java.sql.Date;
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -28,7 +30,7 @@ public class EntityManagerPlanovac implements Planovac {
 	public Collection<Uzivatel> vemUzivatele() {
 		return this.em
 				.createQuery(
-						"SELECT uzivatel FROM Uzivatel uzivatel ORDER BY uzivatel.prijmeni, vet.jmeno")
+						"SELECT uzivatel FROM Uzivatel uzivatel ORDER BY uzivatel.prijmeni, uzivatel.jmeno")
 				.getResultList();
 	}
 
@@ -112,5 +114,24 @@ public class EntityManagerPlanovac implements Planovac {
 		Skupina skupina = nactiSkupinu(id);
 		this.em.remove(skupina);
 	}
+	
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public Collection<Uzivatel> nactiUzivateleDlePrijmeni(String prijmeni) {
+		Query query = this.em.createQuery("SELECT uzivatel FROM Uzivatel uzivatel WHERE uzivatel.prijmeni LIKE :prijmeni");
+		query.setParameter("prijmeni", prijmeni + "%");
+		return query.getResultList();
+	}
+
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public Udalost nactiUdalostiDleZacatku(java.util.Date zacatek) throws DataAccessException {
+		Query query = this.em.createQuery("SELECT udalost FROM Udalost udalost WHERE udalost.zacatek LIKE :zacatek");
+		query.setParameter("zacatek", zacatek + "%");
+		
+		//pretypovani? mozna chyba
+		return (Udalost) query.getResultList();
+	}
+
 
 }

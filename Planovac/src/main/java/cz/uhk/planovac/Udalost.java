@@ -1,7 +1,6 @@
 package cz.uhk.planovac;
 
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,36 +9,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="UDALOSTI")
-public class Udalost{// extends BaseEntity {
+@Table(name = "UDALOSTI")
+public class Udalost {// extends BaseEntity {
 
-	
 	private Integer idUdalosti;
-	
+
 	private String nazev;
-	
+
 	private boolean verejna;
-	
-	
+
 	private Skupina vlastnikSk;
-	
 
 	private Uzivatel vlastnikUz;
-	
+
 	// blob? nebo odkaz
 	private String obrazek;
-	
+
 	private Date zacatek;
-	
+
 	private Date konec;
-	
-	
-	
-	
 
 	public String getNazev() {
 		return nazev;
@@ -74,7 +65,7 @@ public class Udalost{// extends BaseEntity {
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getIdUdalosti() {
 		return idUdalosti;
 	}
@@ -91,8 +82,8 @@ public class Udalost{// extends BaseEntity {
 		this.verejna = verejna;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idSkupiny")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idSkupiny")
 	public Skupina getVlastnikSk() {
 		return vlastnikSk;
 	}
@@ -101,8 +92,8 @@ public class Udalost{// extends BaseEntity {
 		this.vlastnikSk = vlastnikSk;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idUzivatele")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idUzivatele")
 	public Uzivatel getVlastnikUz() {
 		return vlastnikUz;
 	}
@@ -110,19 +101,17 @@ public class Udalost{// extends BaseEntity {
 	public void setVlastnikUz(Uzivatel vlastnikUz) {
 		this.vlastnikUz = vlastnikUz;
 	}
-	
-	
-	//konstruktor pro ManazerUdalosti - pro dočasné ukládání časových úseků
+
+	// konstruktor pro ManazerUdalosti - pro dočasné ukládání časových úseků
 	public Udalost(Date zacatek, Date konec) {
 		super();
 		this.zacatek = zacatek;
 		this.konec = konec;
 	}
 
-	
-	
-	
-	
-	
+	// prazdny konstruktor pro form
+	public Udalost() {
+		super();
+	}
+
 }
-	

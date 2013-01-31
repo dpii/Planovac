@@ -1,6 +1,8 @@
 package cz.uhk.planovac;
 
+
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.dao.DataAccessException;
 
@@ -17,6 +19,8 @@ public interface Planovac {
 	
 	Uzivatel nactiUzivatele(int id) throws DataAccessException;
 	
+	Collection<Uzivatel> nactiUzivateleDlePrijmeni(String prijmeni) throws DataAccessException;
+	
 	// operace pro praci s udalostmi
 
 	Collection<Udalost> vemUdalosti() throws DataAccessException;
@@ -26,6 +30,8 @@ public interface Planovac {
 	void smazUdalost(int id) throws DataAccessException;
 	
 	Udalost nactiUdalost(int id) throws DataAccessException;
+	
+	Udalost nactiUdalostiDleZacatku(Date date) throws DataAccessException;
 	
 	// operace pro praci se skupinami
 	

@@ -7,24 +7,24 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cz">
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
-<
-
 
 <head>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <link rel="stylesheet" href="<spring:url value="/resources/default.css" htmlEscape="true" />" type="text/css"/>
-  <title>Plánovač : skupinový i osobní rozvrh</title>	
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="<spring:url value="resources/default.css" htmlEscape="true" />"
+	type="text/css" />
+<title>Plánovač : skupinový i osobní rozvrh</title>
 
 </head>
 
 <body>
-	<div id="logo">
-		<a href="<spring:url value="/" htmlEscape="true" />">
-			<img src="<spring:url value="/resources/logo.jpg" htmlEscape="true" />"
-				align="left" style="position: relative; left: 30px;">
-		</a>
+	<div id="header">
+		<div id="name"><a href="<spring:url value="/" htmlEscape="true" />"></a></div>	
+		<div id="logo"></div>	
+		<div id="login">
+		login	
+		</div>
 	</div>
-	<br>
-
 	<div id="main">
+		<div id="content">
