@@ -1,6 +1,5 @@
 package cz.uhk.planovac.jpa;
 
-import java.sql.Date;
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
@@ -39,22 +38,19 @@ public class EntityManagerPlanovac implements Planovac {
 		return this.em.find(Uzivatel.class, id);
 	}
 	
+	@Transactional(readOnly = true)
 	public Uzivatel nactiUzivatelePodleLoginu(String login) {
-		return this.em.find(Uzivatel.class, login);
+		//return this.em.find(Uzivatel.class, login);
+		Query query = this.em.createQuery("SELECT uzivatel FROM Uzivatel uzivatel WHERE uzivatel.login LIKE :login");
+		query.setParameter("login", login );
+		return (Uzivatel) query.getSingleResult();
 	}
 	
-	@Transactional//p�id�no nav�c
+	//@Transactional//p�id�no nav�c
 	public void ulozUzivatele(Uzivatel uzivatel) {
-		/*if(uzivatel.isNew())//nevyřešilo to problém s nullPointerE., ale někde jsem četl, že se to možná má použít pro nové položky
-		{
-			this.em.persist(uzivatel);
-		}
-		else
-		{*/
 			Uzivatel merged = this.em.merge(uzivatel);
 			this.em.flush();
 			uzivatel.setIdUzivatele(merged.getIdUzivatele());
-		//}
 	}
 
 	public void smazUzivatele(int id) throws DataAccessException {
@@ -125,12 +121,12 @@ public class EntityManagerPlanovac implements Planovac {
 
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
-	public Udalost nactiUdalostiDleZacatku(java.util.Date zacatek) throws DataAccessException {
+	public Collection<Udalost> nactiUdalostiDleZacatku(java.util.Date zacatek) throws DataAccessException {
 		Query query = this.em.createQuery("SELECT udalost FROM Udalost udalost WHERE udalost.zacatek LIKE :zacatek");
 		query.setParameter("zacatek", zacatek + "%");
 		
 		//pretypovani? mozna chyba
-		return (Udalost) query.getResultList();
+		return query.getResultList();
 	}
 
 

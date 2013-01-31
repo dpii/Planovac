@@ -19,6 +19,8 @@ public interface Planovac {
 	
 	Uzivatel nactiUzivatele(int id) throws DataAccessException;
 	
+	Uzivatel nactiUzivatelePodleLoginu(String login) throws DataAccessException;
+	
 	Collection<Uzivatel> nactiUzivateleDlePrijmeni(String prijmeni) throws DataAccessException;
 	
 	// operace pro praci s udalostmi
@@ -31,7 +33,7 @@ public interface Planovac {
 	
 	Udalost nactiUdalost(int id) throws DataAccessException;
 	
-	Udalost nactiUdalostiDleZacatku(Date date) throws DataAccessException;
+	Collection<Udalost> nactiUdalostiDleZacatku(Date date) throws DataAccessException;
 	
 	// operace pro praci se skupinami
 	

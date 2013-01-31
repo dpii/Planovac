@@ -12,7 +12,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet"
-	href="<spring:url value="resources/default.css" htmlEscape="true" />"
+	href="<spring:url value="/resources/default.css" context="planovac" htmlEscape="true" />"
 	type="text/css" />
 <title>Plánovač : skupinový i osobní rozvrh</title>
 

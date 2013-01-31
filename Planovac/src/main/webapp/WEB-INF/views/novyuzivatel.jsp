@@ -7,7 +7,6 @@
 </c:choose>
 
 <h2><c:if test="${uzivatel['new']}">Novy </c:if>Uzivatel</h2>
-<p> test </p>
 <br/>
 <form:form modelAttribute="uzivatel" method="${method}">
   <table>

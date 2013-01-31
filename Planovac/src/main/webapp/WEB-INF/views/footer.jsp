@@ -3,8 +3,11 @@
 
 				</div>
 			</div>
-		<div id="footer">footer 2013</div>
-
+		<div id="footer">
+			<a href="<spring:url value="/" htmlEscape="true" />">Plánovač</a> 2013
+			
+		</div>
+		
 	</body>
 	
 </html>
