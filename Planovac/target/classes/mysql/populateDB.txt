@@ -1,0 +1,1 @@
+insert into UZIVATELE (adresa, datumPosledniPrihlaseni, datumZalozeni, email, heslo_hash, jmeno, login, mesto, povolen, prijmeni, role, telefon) values ("", "", "", "mail@.domena.cz", "1234", "", "nick", "", 1, "", "ROLE_USER", "")
