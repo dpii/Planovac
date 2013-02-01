@@ -38,7 +38,7 @@ public class EntityManagerPlanovac implements Planovac {
 		return this.em.find(Uzivatel.class, id);
 	}
 	
-	@Transactional(readOnly = true)
+	@Transactional
 	public Uzivatel nactiUzivatelePodleLoginu(String login) {
 		//return this.em.find(Uzivatel.class, login);
 		Query query = this.em.createQuery("SELECT uzivatel FROM Uzivatel uzivatel WHERE uzivatel.login LIKE :login");
@@ -46,7 +46,6 @@ public class EntityManagerPlanovac implements Planovac {
 		return (Uzivatel) query.getSingleResult();
 	}
 	
-	//@Transactional//p�id�no nav�c
 	public void ulozUzivatele(Uzivatel uzivatel) {
 			Uzivatel merged = this.em.merge(uzivatel);
 			this.em.flush();
@@ -82,6 +81,14 @@ public class EntityManagerPlanovac implements Planovac {
 	public void smazUdalost(int id) throws DataAccessException {
 		Udalost udalost = nactiUdalost(id);
 		this.em.remove(udalost);
+	}
+	
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public Collection<Udalost> nactiUdalostiDleUzivatele(int idUzivatele) {
+		Query query = this.em.createQuery("SELECT udalost FROM Udalost udalost WHERE Udalost.vlastnikUz.idUzivatele LIKE :idUzivatele");
+		query.setParameter("idUzivatele", idUzivatele );
+		return query.getResultList();
 	}
 
 	// op. se skupinami

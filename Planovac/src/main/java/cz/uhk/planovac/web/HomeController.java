@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cz.uhk.planovac.Planovac;
 import cz.uhk.planovac.Uzivatel;
-import cz.uhk.planovac.Uzivatele;
 
 /**
  * Handles requests for the application home page.
@@ -77,7 +75,10 @@ public class HomeController {
 	@RequestMapping("/uzivatel")
 	public ModelAndView uzivatelHandler() {
 		ModelAndView mav = new ModelAndView("uzivatel");
-		mav.addObject("uzivatel", this.planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName()));
+		Uzivatel uzivatel = this.planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
+		mav.addObject("uzivatel", uzivatel);
+		mav.addObject("seznamUdalosti", uzivatel.getSeznamUdalosti());//planovac.nactiUdalostiDleUzivatele(uzivatel.getIdUzivatele()));
+		mav.addObject("seznamSkupin", uzivatel.getSeznamSkupin());
 		return mav;
 	}
 	

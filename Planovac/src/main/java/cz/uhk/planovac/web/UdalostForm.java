@@ -18,7 +18,7 @@ import cz.uhk.planovac.Udalost;
 import cz.uhk.planovac.validation.UdalostValidator;
 
 @Controller
-@RequestMapping("novaudalost")
+@RequestMapping("/novaudalost")
 @SessionAttributes(types = Udalost.class)
 public class UdalostForm {
 	

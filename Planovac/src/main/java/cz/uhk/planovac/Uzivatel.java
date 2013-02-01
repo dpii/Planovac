@@ -1,7 +1,7 @@
 package cz.uhk.planovac;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.Hibernate;
+
 @Entity
 @Table(name="UZIVATELE")
 public class Uzivatel {// extends BaseEntity {
@@ -23,11 +25,13 @@ public class Uzivatel {// extends BaseEntity {
 
 	private String login;
 
-	private Set<Udalost> seznamUdalosti;
+	private Collection<Udalost> vedeneUdalosti;
 	
-	private Set<Skupina> seznamSkupin;
+	private Collection<Udalost> seznamUdalosti;
 	
-	private Set<Skupina> vedeneSkupiny;
+	private Collection<Skupina> seznamSkupin;
+	
+	private Collection<Skupina> vedeneSkupiny;
 
 	private String jmeno;
 
@@ -75,12 +79,13 @@ public class Uzivatel {// extends BaseEntity {
 	}
 
 	@OneToMany(mappedBy = "vlastnikUz", fetch = FetchType.LAZY)
-	public Set<Udalost> getSeznamUdalosti() {
-		return seznamUdalosti;
+	public Collection<Udalost> getVedeneUdalosti() {
+		Hibernate.initialize(vedeneUdalosti);
+		return vedeneUdalosti;
 	}
 
-	public void setSeznamUdalosti(Set<Udalost> seznamUdalosti) {
-		this.seznamUdalosti = seznamUdalosti;
+	public void setVedeneUdalosti(Collection<Udalost> vedeneUdalosti) {
+		this.vedeneUdalosti = vedeneUdalosti;
 	}
 
 	public String getRole() {
@@ -171,15 +176,16 @@ public class Uzivatel {// extends BaseEntity {
 		this.prijmeni = prijmeni;
 	}
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="SKUPINY_UZIVATELU",
 	   joinColumns=@JoinColumn(name="idUzivatele"),
 	   inverseJoinColumns=@JoinColumn(name="idSkupiny"))
-	public Set<Skupina> getSeznamSkupin() {
+	public Collection<Skupina> getSeznamSkupin() {
+		Hibernate.initialize(seznamSkupin);
 		return seznamSkupin;
 	}
 
-	public void setSeznamSkupin(Set<Skupina> seznamSkupin) {
+	public void setSeznamSkupin(Collection<Skupina> seznamSkupin) {
 		this.seznamSkupin = seznamSkupin;
 	}
 	
@@ -187,12 +193,27 @@ public class Uzivatel {// extends BaseEntity {
 	@JoinTable(name="VEDOUCI_SKUPIN",
 	   joinColumns=@JoinColumn(name="idUzivatele"),
 	   inverseJoinColumns=@JoinColumn(name="idSkupiny"))
-	public Set<Skupina> getVedeneSkupiny() {
+	public Collection<Skupina> getVedeneSkupiny() {
+		Hibernate.initialize(vedeneSkupiny);
 		return vedeneSkupiny;
 	}
 
-	public void setVedeneSkupiny(Set<Skupina> vedeneSkupiny) {
+	public void setVedeneSkupiny(Collection<Skupina> vedeneSkupiny) {
 		this.vedeneSkupiny = vedeneSkupiny;
+	}
+	
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name="UDALOSTI_UZIVATELU",
+	   joinColumns=@JoinColumn(name="idUzivatele"),
+	   inverseJoinColumns=@JoinColumn(name="idUdalosti"))
+	public Collection<Udalost> getSeznamUdalosti() {
+		Hibernate.initialize(seznamUdalosti);
+		return seznamUdalosti;
+	}
+	
+	public void setSeznamUdalosti(Collection<Udalost> seznamUdalosti) {
+		this.seznamUdalosti = seznamUdalosti;
 	}
 
 }

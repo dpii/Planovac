@@ -6,7 +6,12 @@
 	<c:otherwise><c:set var="method" value="put"/></c:otherwise>
 </c:choose>
 
-<h2><c:if test="${uzivatel['new']}">Novy </c:if>Uzivatel</h2>
+<h2>
+	<c:choose>
+	<c:when test="${uzivatel['new']}">Nový uživatel</c:when>
+	<c:otherwise>Úprava údajů</c:otherwise>
+	</c:choose>
+</h2>
 <br/>
 <form:form modelAttribute="uzivatel" method="${method}">
   <table>

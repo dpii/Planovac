@@ -35,6 +35,8 @@ public interface Planovac {
 	
 	Collection<Udalost> nactiUdalostiDleZacatku(Date date) throws DataAccessException;
 	
+	Collection<Udalost> nactiUdalostiDleUzivatele(int idUzivatele) throws DataAccessException;
+	
 	// operace pro praci se skupinami
 	
 	Collection<Skupina> vemSkupiny() throws DataAccessException;

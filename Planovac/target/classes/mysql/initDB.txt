@@ -50,10 +50,10 @@ CREATE TABLE IF NOT EXISTS SKUPINY_UZIVATELU (
   UNIQUE (idSkupiny,idUzivatele)
 ) engine=InnoDB;
 
-CREATE TABLE IF NOT EXISTS SKUPINY_UZIVATELU (
-  idSkupiny INT(4) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS UDALOSTI_UZIVATELU (
+  idUdalosti INT(4) UNSIGNED NOT NULL,
   idUzivatele INT(4) UNSIGNED NOT NULL,
-  FOREIGN KEY (idSkupiny) REFERENCES SKUPINY(idSkupiny),
+  FOREIGN KEY (idUdalosti) REFERENCES UDALOSTI(idUdalosti),
   FOREIGN KEY (idUzivatele) REFERENCES UZIVATELE(idUzivatele),
-  UNIQUE (idSkupiny,idUzivatele)
+  UNIQUE (idUdalosti,idUzivatele)
 ) engine=InnoDB;
