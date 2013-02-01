@@ -3,6 +3,7 @@ package cz.uhk.planovac;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -178,8 +179,8 @@ public class Uzivatel {// extends BaseEntity {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="SKUPINY_UZIVATELU",
-	   joinColumns=@JoinColumn(name="idUzivatele"),
-	   inverseJoinColumns=@JoinColumn(name="idSkupiny"))
+	   joinColumns={@JoinColumn(name="idUzivatele")},
+	   inverseJoinColumns={@JoinColumn(name="idSkupiny")})
 	public Collection<Skupina> getSeznamSkupin() {
 		Hibernate.initialize(seznamSkupin);
 		return seznamSkupin;
@@ -191,8 +192,8 @@ public class Uzivatel {// extends BaseEntity {
 	
 	@OneToMany(mappedBy = "vedouci", fetch = FetchType.LAZY)
 	@JoinTable(name="VEDOUCI_SKUPIN",
-	   joinColumns=@JoinColumn(name="idUzivatele"),
-	   inverseJoinColumns=@JoinColumn(name="idSkupiny"))
+	   joinColumns={@JoinColumn(name="idUzivatele")},
+	   inverseJoinColumns={@JoinColumn(name="idSkupiny")})
 	public Collection<Skupina> getVedeneSkupiny() {
 		Hibernate.initialize(vedeneSkupiny);
 		return vedeneSkupiny;
@@ -203,10 +204,10 @@ public class Uzivatel {// extends BaseEntity {
 	}
 	
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.ALL})
 	@JoinTable(name="UDALOSTI_UZIVATELU",
-	   joinColumns=@JoinColumn(name="idUzivatele"),
-	   inverseJoinColumns=@JoinColumn(name="idUdalosti"))
+	   joinColumns={@JoinColumn(name="idUzivatele")},
+	   inverseJoinColumns={@JoinColumn(name="idUdalosti")})
 	public Collection<Udalost> getSeznamUdalosti() {
 		Hibernate.initialize(seznamUdalosti);
 		return seznamUdalosti;

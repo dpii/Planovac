@@ -73,9 +73,10 @@ public class EntityManagerPlanovac implements Planovac {
 	}
 
 	public void ulozUdalost(Udalost udalost) {
-		Udalost merged = this.em.merge(udalost);
+		/*Udalost merged = this.em.merge(udalost);
 		this.em.flush();
-		udalost.setIdUdalosti(merged.getIdUdalosti());
+		udalost.setIdUdalosti(merged.getIdUdalosti());*/
+		this.em.persist(udalost);
 	}
 
 	public void smazUdalost(int id) throws DataAccessException {

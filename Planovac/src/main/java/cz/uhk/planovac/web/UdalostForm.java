@@ -2,6 +2,7 @@
 package cz.uhk.planovac.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import cz.uhk.planovac.Planovac;
 import cz.uhk.planovac.Udalost;
+import cz.uhk.planovac.Uzivatel;
 import cz.uhk.planovac.validation.UdalostValidator;
 
 @Controller
@@ -50,10 +52,22 @@ public class UdalostForm {
 			return "novaudalost";
 		}
 		else {
-			this.planovac.ulozUdalost(udalost);
+			Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
+			udalost.setVlastnikUz(uzivatel);
+			uzivatel.getSeznamUdalosti().add(udalost);
+			this.planovac.ulozUzivatele(uzivatel);
 			status.setComplete();
-			return "redirect:/udalosti/" + udalost.getIdUdalosti();
+			return "redirect:/uzivatel";
 		}
 	}
 
 }
+
+/*SessionFactory sf = HibernateUtil.getSessionFactory();
+Session session = sf.openSession();
+session.beginTransaction();
+ 
+session.save(udalost);
+ 
+session.getTransaction().commit();
+session.close();*/
