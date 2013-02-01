@@ -25,7 +25,7 @@ throws IOException, ServletException
  // Respect the client-specified character encoding
  // (see HTTP specification section 3.4.1)
  if(null == request.getCharacterEncoding())
-   request.setCharacterEncoding(encoding);
+   request.setCharacterEncoding("UTF-8");
 
 
  /**
