@@ -25,9 +25,14 @@
 	float: left;
 	border-width: 0px;
 	background-repeat: no-repeat;
+	border: none;
+
 }
 
+
+
 #logo {
+
 	margin-left: 24%;
 	margin-top: 18px;
 	
@@ -39,6 +44,7 @@
 	background-repeat: no-repeat;
 	float: left;
 	border-width: 0px;
+	border: none;
 }
 
 #login {
@@ -47,6 +53,11 @@
 	border-width: 0px;
 	border-color: white;
 	float: left;
+	border: none;
+}
+
+a img {
+ border: none;
 }
 
 #main {

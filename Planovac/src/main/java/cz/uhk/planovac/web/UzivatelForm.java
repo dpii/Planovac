@@ -32,16 +32,7 @@ public class UzivatelForm {
 	public UzivatelForm(Planovac planovac) {
 		this.planovac = planovac;
 	}
-	
-	//šablona pro výbìr (nevyužito)
-	/*@ModelAttribute("mesta")
-	public Collection<String> populatePetTypes() {
-		Collection<String> seznam = new ArrayList<String>();
-		seznam.add("Nìco");
-		seznam.add("Nìco2");
-		return seznam;
-	}*/
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("idUzivatele");
