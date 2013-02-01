@@ -20,11 +20,24 @@
 
 <body>
 	<div id="header">
-		<div id="name"><a href="<spring:url value="/" htmlEscape="true" />"></a></div>	
-		<div id="logo"></div>	
-		<div id="login">
-		login	
+
+		<div id="logo">
+			<a href="<spring:url value="/" htmlEscape="true" />"> <img
+				src="<spring:url value="/resources/logo.png" htmlEscape="true" />"></a>
 		</div>
+		<div id="name">
+
+			<a href="<spring:url value="/" htmlEscape="true" />"> <img
+				src="<spring:url value="/resources/name.png" htmlEscape="true" />"></a>
+		</div>
+
+
+		<div id="login">
+			login: <input type="text" size="10" /> heslo: <input type="text"
+				size="10" /> <input type="button" size="10" onclick="whatever"
+				value="Přihlásit"></input>
+		</div>
+	</div>
 	</div>
 	<div id="main">
 		<div id="content">

@@ -7,7 +7,5 @@
 			<a href="<spring:url value="/" htmlEscape="true" />">Plánovač</a> 2013
 			
 		</div>
-		
 	</body>
-	
 </html>

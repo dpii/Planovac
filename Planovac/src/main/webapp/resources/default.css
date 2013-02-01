@@ -10,42 +10,41 @@
 	position: fixed;
 }
 
-
-
-
 #menu {
 	background-color: #7e827a;
 	text-align: center;
 	color: #e3cda4;
 	width: 500px;
-	
 }
 
 #name {
-	margin-left: 40%;
+	margin-left: 20px;
 	margin-top: 20px;
 	width: 178px;
 	height: 38px;
 	float: left;
-	/*background-image: url(name.png);*/
+	border-width: 0px;
 	background-repeat: no-repeat;
 }
 
 #logo {
+	margin-left: 24%;
 	margin-top: 18px;
-	margin-left: 10px;
+	
 	width: 30px;
 	height: 43px;
 	repeat: none;
-	/*background-image: url(logo.png);*/
+	border-width: 0px;
+
 	background-repeat: no-repeat;
 	float: left;
+	border-width: 0px;
 }
 
 #login {
-	margin-left: 30px;
+	margin-left: 320px;
 	margin-top: 10px;
-	border-width: 3px;
+	border-width: 0px;
 	border-color: white;
 	float: left;
 }
@@ -54,7 +53,6 @@
 	width: 100%;
 	background-color: #e4e4dc;
 	margin: 0px;
-	
 }
 
 #content {
@@ -95,14 +93,12 @@
 	padding: 40px;
 	color: #e3cda4;
 }
+
 #footer a {
-	color:  #e3cda4;
+	color: #e3cda4;
 }
-
-
 
 body {
 	margin: 0;
-	
-	}
+}
 }
