@@ -1,5 +1,6 @@
 package cz.uhk.planovac;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -59,6 +60,18 @@ public class Uzivatel {// extends BaseEntity {
 	@Transient
 	public boolean isNew() {
 		return (this.idUzivatele == null);
+	}
+	
+	@Transient
+	public ArrayList<Udalost>  getVedeneUdalostiSerazene() {
+		ManazerUdalosti mu = new ManazerUdalosti();
+		return mu.seradUdalosti(vedeneUdalosti);
+	}
+	
+	@Transient
+	public ArrayList<Udalost>  getSeznamUdalostiSerazene() {
+		ManazerUdalosti mu = new ManazerUdalosti();
+		return mu.seradUdalosti(seznamUdalosti);
 	}
 	
 	@Id
@@ -177,7 +190,7 @@ public class Uzivatel {// extends BaseEntity {
 		this.prijmeni = prijmeni;
 	}
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.ALL})
 	@JoinTable(name="SKUPINY_UZIVATELU",
 	   joinColumns={@JoinColumn(name="idUzivatele")},
 	   inverseJoinColumns={@JoinColumn(name="idSkupiny")})
@@ -191,9 +204,6 @@ public class Uzivatel {// extends BaseEntity {
 	}
 	
 	@OneToMany(mappedBy = "vedouci", fetch = FetchType.LAZY)
-	@JoinTable(name="VEDOUCI_SKUPIN",
-	   joinColumns={@JoinColumn(name="idUzivatele")},
-	   inverseJoinColumns={@JoinColumn(name="idSkupiny")})
 	public Collection<Skupina> getVedeneSkupiny() {
 		Hibernate.initialize(vedeneSkupiny);
 		return vedeneSkupiny;

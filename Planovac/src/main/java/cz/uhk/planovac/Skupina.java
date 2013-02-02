@@ -13,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.Hibernate;
-
 @Entity
 @Table(name="SKUPINY")
 public class Skupina { // extends BaseEntity{
@@ -50,7 +48,7 @@ public class Skupina { // extends BaseEntity{
 
 	@ManyToMany(mappedBy = "seznamSkupin", fetch = FetchType.LAZY)
 	public Collection<Uzivatel> getSeznamClenu() {
-		Hibernate.initialize(seznamClenu);
+		//Hibernate.initialize(seznamClenu);
 		return seznamClenu;
 	}
 
@@ -62,7 +60,7 @@ public class Skupina { // extends BaseEntity{
 	@JoinColumn(name = "idVedouciho")
 	public Uzivatel getVedouci() {
 
-		Hibernate.initialize(vedouci);
+		//Hibernate.initialize(vedouci);
 		return vedouci;
 	}
 
@@ -72,7 +70,7 @@ public class Skupina { // extends BaseEntity{
 
 	@OneToMany(mappedBy = "vlastnikSk", fetch = FetchType.LAZY)
 	public Collection<Udalost> getSeznamUdalosti() {
-		Hibernate.initialize(seznamUdalosti);
+		//Hibernate.initialize(seznamUdalosti);
 		return seznamUdalosti;
 	}
 

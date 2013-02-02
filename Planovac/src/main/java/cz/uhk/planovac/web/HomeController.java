@@ -1,6 +1,7 @@
 package cz.uhk.planovac.web;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import cz.uhk.planovac.ManazerUdalosti;
 import cz.uhk.planovac.Planovac;
+import cz.uhk.planovac.Udalost;
 import cz.uhk.planovac.Uzivatel;
 
 /**
@@ -26,6 +29,7 @@ public class HomeController {
 	
 	
 	private final Planovac planovac;
+	private ManazerUdalosti manazerUdalosti = new ManazerUdalosti();
 
 
 	@Autowired
@@ -65,7 +69,7 @@ public class HomeController {
 		Uzivatel uzivatel = this.planovac.nactiUzivatele(idUzivatele);
 		String prihlaseny = SecurityContextHolder.getContext().getAuthentication().getName();
 		if(prihlaseny.compareTo(uzivatel.getLogin())==0)
-			mav = new ModelAndView("uzivatel");
+			mav = new ModelAndView("redirect:/uzivatel");
 		else
 			mav = new ModelAndView("jinyUzivatel");
 		mav.addObject("uzivatel",uzivatel);
@@ -77,7 +81,8 @@ public class HomeController {
 		ModelAndView mav = new ModelAndView("uzivatel");
 		Uzivatel uzivatel = this.planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
 		mav.addObject("uzivatel", uzivatel);
-		mav.addObject("seznamUdalosti", uzivatel.getSeznamUdalosti());//planovac.nactiUdalostiDleUzivatele(uzivatel.getIdUzivatele()));
+		ArrayList<Udalost> udalosti = new ArrayList<Udalost>(manazerUdalosti.seradUdalosti(uzivatel.getSeznamUdalosti()));
+		mav.addObject("seznamUdalosti", manazerUdalosti.getNAktualnichUdalosti(udalosti, 5));//planovac.nactiUdalostiDleUzivatele(uzivatel.getIdUzivatele()));
 		mav.addObject("seznamSkupin", uzivatel.getSeznamSkupin());
 		return mav;
 	}

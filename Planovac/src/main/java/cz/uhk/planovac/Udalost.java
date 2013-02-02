@@ -124,7 +124,7 @@ public class Udalost {// extends BaseEntity {
 	}
 	
 	
-	@ManyToMany(mappedBy = "seznamUdalosti",fetch=FetchType.LAZY)
+	@ManyToMany(mappedBy = "seznamUdalosti")
 	public Collection<Uzivatel> getUcastnici() {
 		Hibernate.initialize(ucastnici);
 		return ucastnici;

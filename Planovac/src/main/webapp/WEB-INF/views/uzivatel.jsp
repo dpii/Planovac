@@ -28,7 +28,7 @@
 </table>
 <a href="<spring:url value="/uzivatel/upravit" htmlEscape="true" />">Upravit údaje</a>
 	
-	<h3>Události</h3>
+	<h3>Nejbližší události</h3>
 <table>
   <thead>
   	<th>Název</th>
@@ -48,6 +48,7 @@
   </c:forEach>
 </table>
 <a href="<spring:url value="/novaudalost" htmlEscape="true" />">Přidat událost</a>
+<a href="<spring:url value="/uzivatel/udalosti" htmlEscape="true" />">Všechny události</a>
 
 	<h3>Skupiny</h3>
 <table>
