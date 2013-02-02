@@ -9,7 +9,9 @@
 
 
 <head>
-
+<script type="text/javascript" src="<spring:url value="/resources/scripts/jquery-1.4.1.min.js" htmlEscape="true" />"></script>
+<script type="text/javascript" src="<spring:url value="/resources/scripts/jquery-ui-1.7.2.custom.min.js" htmlEscape="true" />"></script>
+<script type="text/javascript" src="<spring:url value="/resources/scripts/jquery.tabs.setup.js" htmlEscape="true" />"></script>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
 <link rel="stylesheet"
 	href="<spring:url value="/resources/default.css" context="planovac" htmlEscape="true" />"
@@ -38,6 +40,6 @@
 				value="Přihlásit"></input>
 		</div>
 	</div>
-	</div>
+
 	<div id="main">
 		<div id="content">

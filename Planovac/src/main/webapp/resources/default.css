@@ -7,7 +7,6 @@
 	float: left;
 	text-align: center;
 	color: #e3cda4;
-	position: fixed;
 }
 
 #menu {
@@ -26,21 +25,15 @@
 	border-width: 0px;
 	background-repeat: no-repeat;
 	border: none;
-
 }
 
-
-
 #logo {
-
 	margin-left: 24%;
 	margin-top: 18px;
-	
 	width: 30px;
 	height: 43px;
 	repeat: none;
 	border-width: 0px;
-
 	background-repeat: no-repeat;
 	float: left;
 	border-width: 0px;
@@ -57,18 +50,20 @@
 }
 
 a img {
- border: none;
+	border: none;
 }
 
 #main {
+	min-height: 700px;
 	width: 100%;
-	background-color: #e4e4dc;
-	margin: 0px;
+	background-image: url("mainbg.jpg");
+	background-repeat: repeat-x; *
+
 }
 
-#content {
-	background-color: white;
-	padding: 60px;
+#content { /*background-color: white;*/
+	min-height: 700px;
+	padding-top: 100px;
 	width: 760px;
 	margin-left: 25%;
 	text-align: left;
@@ -112,4 +107,113 @@ a img {
 body {
 	margin: 0;
 }
-}
+
+
+/* slides */
+
+#featured_slide{
+	display:block;
+	position:relative;
+	width:950px;
+	height:300px;
+	margin:0;
+	padding:5px;
+	overflow:hidden;
+	color:#666666;
+	background-color:#FFFFFF;
+	}
+
+#featured_slide a{
+	background:transparent;
+	}
+
+#featured_slide a, #featured_slide ul, #featured_slide img{
+	margin:0;
+	padding:0;
+	border:none;
+	outline:none;
+	list-style:none;
+	text-decoration:none;
+	}
+
+/* ----------------------------------------------Generalise-------------------------------------*/
+
+#featured_content, .featured_box, .featured_box img{
+	display:block;
+	width:950px;
+	height:250px;
+	overflow:hidden;
+	}
+
+.featured_box, .featured_box img{
+	position:relative;
+	}
+
+/* ----------------------------------------------Content-------------------------------------*/
+
+.featured_box .floater{
+	display:block;
+	position:absolute;
+	top: 25px;
+	right:25px;
+	width:290px;
+	height:140px;
+	margin:0;
+	padding:30px;
+	background-image:url("./slides/featured_slide_trans.png");
+	overflow:hidden;
+	}
+
+.featured_box p{
+	margin:0;
+	padding:0;
+	line-height:1.6em;
+	}
+
+.featured_box p.readmore{text-align:right; margin:0;}
+
+/* ----------------------------------------------Tabbed Navigation-------------------------------------*/
+
+#featured_slide .ui-tabs-hide{
+	display:none;
+	}
+
+#featured_slide ul#featured_tabs{
+	display:block;
+	position:absolute;
+	bottom:5px;
+	left:5px;
+	width:949px;
+	height:50px;
+	overflow:hidden;
+	font-size:12px;
+	}
+
+#featured_slide ul#featured_tabs li{
+	/* This block makes it IE6 compatible*/
+	display:block;
+	float:left;
+	}
+
+#featured_slide ul#featured_tabs li a{
+	display:block;
+	float:left;
+	width:169px;
+	height:40px;
+	padding:10px 10px 0 10px;
+	color:#666666;
+	background-color:#DEDACB;
+	font-weight:bold;
+	text-align:center;
+	text-transform:uppercase;
+	border-right:1px solid #666666;
+	}
+
+#featured_slide ul#featured_tabs li.last a{
+	border-right:none;
+	}
+
+#featured_slide ul#featured_tabs li a:hover, #featured_slide ul#featured_tabs li.ui-state-active a{
+	color:#FFFFFF;
+	background-color:#333333;
+	}
