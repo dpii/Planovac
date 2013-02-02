@@ -1,6 +1,8 @@
 
 package cz.uhk.planovac.web;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,8 @@ public class UdalostForm {
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(Model model) {
 		Udalost udalost = new Udalost();
+		udalost.setZacatek(new Date());
+		udalost.setKonec(new Date());
 		model.addAttribute(udalost);
 		return "novaudalost";
 	}

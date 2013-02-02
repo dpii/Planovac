@@ -19,11 +19,8 @@ import cz.uhk.planovac.Uzivatel;
 import cz.uhk.planovac.validation.UzivatelValidator;
 
 @Controller
-//@RequestMapping("novyuzivatel")
 @SessionAttributes(types = Uzivatel.class)
-public class UzivatelForm {
-//test
-	
+public class UzivatelForm {	
 	
 	private final Planovac planovac;
 

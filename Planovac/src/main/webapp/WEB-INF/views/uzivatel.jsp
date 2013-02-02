@@ -58,7 +58,7 @@
   <c:forEach var="skupina" items="${seznamSkupin}">
     <tr>
       <td>
-          <spring:url value="/skupina/${skupina.idSkupiny}" context="planovac" var="skupinaUrl" htmlEscape="true">
+          <spring:url value="/skupiny/${skupina.idSkupiny}" context="planovac" var="skupinaUrl" htmlEscape="true">
 			</spring:url>
           <a href="${fn:escapeXml(skupinaUrl)}">${skupina.nazev}</a>
       </td>
@@ -66,5 +66,7 @@
   </c:forEach>
 </table>
 <a href="<spring:url value="/novaskupina" htmlEscape="true" />">Vytvořit novou skupinu</a>
+<br/>
+<a href="<spring:url value="/vyhledatTermin" htmlEscape="true" />">Najít volné termíny</a>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

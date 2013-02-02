@@ -18,6 +18,7 @@
 		<intercept-url pattern="/denied" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/" access="permitAll"/>
 		<intercept-url pattern="/uzivatel" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/vyhledatTermin" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 		
 		<form-login login-page="/login" 

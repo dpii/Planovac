@@ -12,6 +12,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.Hibernate;
+import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 @Table(name="SKUPINY")
@@ -45,10 +49,13 @@ public class Skupina { // extends BaseEntity{
 	public void setNazev(String nazev) {
 		this.nazev = nazev;
 	}
-
+	
+	//@Transactional(readOnly = true) - nefunguje ani s tím
+	
+	//EAGER zmìnit na LAZY až se najde øešení "could not initialize" chyby!
 	@ManyToMany(mappedBy = "seznamSkupin", fetch = FetchType.LAZY)
 	public Collection<Uzivatel> getSeznamClenu() {
-		//Hibernate.initialize(seznamClenu);
+		Hibernate.initialize(seznamClenu);
 		return seznamClenu;
 	}
 
@@ -56,10 +63,10 @@ public class Skupina { // extends BaseEntity{
 		this.seznamClenu = seznamClenu;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	//EAGER zmìnit na LAZY až se najde øešení "could not initialize" chyby!
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idVedouciho")
 	public Uzivatel getVedouci() {
-
 		//Hibernate.initialize(vedouci);
 		return vedouci;
 	}
@@ -70,12 +77,24 @@ public class Skupina { // extends BaseEntity{
 
 	@OneToMany(mappedBy = "vlastnikSk", fetch = FetchType.LAZY)
 	public Collection<Udalost> getSeznamUdalosti() {
-		//Hibernate.initialize(seznamUdalosti);
+		Hibernate.initialize(seznamUdalosti);
 		return seznamUdalosti;
 	}
 
 	public void setSeznamUdalosti(Collection<Udalost> seznamUdalosti) {
 		this.seznamUdalosti = seznamUdalosti;
+	}
+	
+	public Skupina()
+	{
+		super();
+	}
+	
+	@Transient
+	@Override
+	public String toString()
+	{
+		return getNazev();
 	}
 
 }

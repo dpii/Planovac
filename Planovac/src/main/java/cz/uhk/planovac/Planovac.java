@@ -1,6 +1,7 @@
 package cz.uhk.planovac;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -37,6 +38,8 @@ public interface Planovac {
 	
 	Collection<Udalost> nactiUdalostiDleUzivatele(int idUzivatele) throws DataAccessException;
 	
+	ArrayList<ArrayList<Udalost>> nactiVsechnyUdalostiClenuSkupiny(Skupina skupina) throws DataAccessException;
+	
 	// operace pro praci se skupinami
 	
 	Collection<Skupina> vemSkupiny() throws DataAccessException;
@@ -46,6 +49,8 @@ public interface Planovac {
 	void smazSkupinu(int id) throws DataAccessException;
 	
 	Skupina nactiSkupinu(int id) throws DataAccessException;
+
+	Collection<Uzivatel> nactiUzivateleDleSkupiny(int idSkupiny) throws DataAccessException;;
 	
 
 }

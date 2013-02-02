@@ -2,6 +2,7 @@ package cz.uhk.planovac.web;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cz.uhk.planovac.ManazerUdalosti;
 import cz.uhk.planovac.Planovac;
+import cz.uhk.planovac.Skupina;
 import cz.uhk.planovac.Udalost;
 import cz.uhk.planovac.Uzivatel;
 
@@ -97,6 +100,25 @@ public class HomeController {
 	//	mav.addObject("visits", this.planovac.nactiUdalost(idUdalosti));
 	//	return mav;
 	//	}
+	
+	@RequestMapping("/skupiny/{idSkupiny}")
+	public ModelAndView skupinaHandler(@PathVariable("idSkupiny") int idSkupiny) {
+		ModelAndView mav  = new ModelAndView("skupina");
+		
+		Skupina skupina = this.planovac.nactiSkupinu(idSkupiny);
+		
+		Collection<Uzivatel> cleni = planovac.nactiUzivateleDleSkupiny(idSkupiny);
+		//Collection<Uzivatel> cleni = skupina.getSeznamClenu(); //chyba: "collection is not associated with any session"
+		
+		skupina.setSeznamClenu(cleni);
+		mav.addObject("cleni", planovac.nactiUzivateleDleSkupiny(idSkupiny));
+		
+		Uzivatel vedouci = skupina.getVedouci();
+		mav.addObject("vedouci", vedouci);
+		
+		mav.addObject("skupina",skupina);
+		return mav;
+	}
 	
 	
 }

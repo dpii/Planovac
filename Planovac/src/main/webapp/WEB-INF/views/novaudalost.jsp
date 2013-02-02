@@ -17,23 +17,30 @@
   <table>
     <tr>
       <th>
-        Nazev: <form:errors path="nazev" cssClass="errors"/>
+        Název: <form:errors path="nazev" cssClass="errors"/>
         <br/>
-        <form:input path="nazev" size="15" maxlength="15"/>
+        <form:input path="nazev" size="15" maxlength="20"/>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        Popis: <form:errors path="popis" cssClass="errors"/>
+        <br/>
+        <form:input type="textarea" path="popis" size="30" maxlength="50"/>
       </th>
     </tr>
     <tr>
       <th>
         Začátek: <form:errors path="zacatek" cssClass="errors"/>
         <br/>
-        <form:input path="zacatek" size="15" maxlength="15"/>
+        <form:input path="zacatek" size="20" maxlength="20"/>(rrrr-MM-dd hh:mm:ss)
       </th>
     </tr>
     <tr>
       <th>
         Konec: <form:errors path="konec" cssClass="errors"/>
         <br/>
-        <form:input path="konec" size="20" maxlength="30"/>
+        <form:input path="konec" size="20" maxlength="20"/>(rrrr-MM-dd hh:mm:ss)
       </th>
     </tr>
      <tr>

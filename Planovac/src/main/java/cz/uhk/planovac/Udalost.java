@@ -23,6 +23,8 @@ public class Udalost {// extends BaseEntity {
 	private Integer idUdalosti;
 
 	private String nazev;
+	
+	private String popis;
 
 	private boolean verejna;
 
@@ -132,6 +134,14 @@ public class Udalost {// extends BaseEntity {
 
 	public void setUcastnici(Collection<Uzivatel> ucastnici) {
 		this.ucastnici = ucastnici;
+	}
+	
+	public String getPopis() {
+		return popis;
+	}
+
+	public void setPopis(String popis) {
+		this.popis = popis;
 	}
 
 	@Transient

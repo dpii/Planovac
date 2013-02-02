@@ -18,18 +18,24 @@ public class ManazerUdalosti {
 		ArrayList<Udalost> vhodneTerminy = new ArrayList<Udalost>();
 		
 		int minimum = seznamPlanu.size();
-		int minIndex = -1;
 		for(int i=0;i<poctyKonfliktu.size();i++)
 		{
 			if(poctyKonfliktu.get(i)<minimum)
 			{
 				minimum = poctyKonfliktu.get(i);
-				minIndex = i;
 			}
 		}
-		if(minIndex>-1)
-			vhodneTerminy.add(mozneTerminy.get(minIndex));//zatím vrací jen jeden - nejvhodnejsi a dava prednost drivejsimu datu
-		return vhodneTerminy;
+		for(int i=0;i<poctyKonfliktu.size();i++)
+		{
+			if(poctyKonfliktu.get(i)==minimum)
+			{
+				Udalost u = mozneTerminy.get(i);
+				u.setNazev(poctyKonfliktu.get(i).toString());
+				vhodneTerminy.add(u);
+			}
+		}
+		//return vhodneTerminy;
+		return mozneTerminy;
 	}
 	
 	
@@ -46,7 +52,7 @@ public class ManazerUdalosti {
 					int x = konflikt(mozneTerminy.get(j), udalosti.get(i));
 					if(x==0)
 						pocetKonfliktu++;
-					if(x<1)
+					if(x>1)//POZOR test - naopak!!!
 						i=udalosti.size();
 				}
 			}
@@ -87,25 +93,40 @@ public class ManazerUdalosti {
 		ArrayList<Udalost> mozneTerminy = new ArrayList<Udalost>();
 		Calendar cas1 = Calendar.getInstance();
 		Calendar cas2 = Calendar.getInstance();
+		Calendar konec = Calendar.getInstance();
 		
+		konec.setTime(maxKonec);
+		konec = zaokrouhli(konec);
+		konec.add(Calendar.DAY_OF_MONTH, 1);
 	    cas1.setTime(minZacatek);
-	    while (cas2.getTime().after(maxKonec))
+	    cas1 = zaokrouhli(cas1);
+	    
+	    String test1 = cas1.toString();//testovací!!!
+	    String test2 = cas2.toString();//testovací!!!
+	    String test3 = konec.toString();//testovací!!!
+	    
+	    cas1.set(Calendar.HOUR_OF_DAY, odHodin);
+	    cas2.setTime(cas1.getTime());
+	    cas2.add(Calendar.SECOND, pozadovanaDelka);
+	    while (cas2.compareTo(konec)<=0)
 	    {
-		    cas2.setTime(cas1.getTime()); 
-		    cas2.add(Calendar.SECOND, pozadovanaDelka);
-		    if(cas2.get(Calendar.HOUR_OF_DAY)<doHodin)
+	    	
+		    if(cas2.get(Calendar.HOUR_OF_DAY)<=doHodin && cas2.get(Calendar.HOUR_OF_DAY)>=odHodin)
 		    {
 		    	mozneTerminy.add(new Udalost(cas1.getTime(),cas2.getTime()));
 		    	cas1.add(Calendar.SECOND, vyhledavaniPo);
 		    }
 		    else
 		    {
-		    	cas1.add(Calendar.DAY_OF_MONTH, 1);
+		    	if(cas2.get(Calendar.HOUR_OF_DAY)>doHodin)
+		    		cas1.add(Calendar.DAY_OF_MONTH, 1);
 		    	cas1.set(Calendar.HOUR_OF_DAY, odHodin);
 		    }
+		    cas2.setTime(cas1.getTime()); 
+		    cas2.add(Calendar.SECOND, pozadovanaDelka);
 		}
 	    
-		return null;
+		return mozneTerminy;
 	}
 	
 	public ArrayList<Udalost> seradUdalosti(Collection<Udalost> udalosti)
@@ -125,4 +146,13 @@ public class ManazerUdalosti {
 		}
 		return udalosti.subList(0,0);
 	} 
+	
+	private Calendar zaokrouhli(Calendar cal)
+	{
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal;
+	}
 }

@@ -213,7 +213,7 @@ public class Uzivatel {// extends BaseEntity {
 		this.vedeneSkupiny = vedeneSkupiny;
 	}
 	
-
+	//EAGER zmìnit na LAZY až se najde øešení "could not initialize" chyby!
 	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.ALL})
 	@JoinTable(name="UDALOSTI_UZIVATELU",
 	   joinColumns={@JoinColumn(name="idUzivatele")},
@@ -221,6 +221,11 @@ public class Uzivatel {// extends BaseEntity {
 	public Collection<Udalost> getSeznamUdalosti() {
 		Hibernate.initialize(seznamUdalosti);
 		return seznamUdalosti;
+	}
+	
+	public Uzivatel()
+	{
+		super();
 	}
 	
 	public void setSeznamUdalosti(Collection<Udalost> seznamUdalosti) {
