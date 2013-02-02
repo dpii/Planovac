@@ -24,16 +24,16 @@ public class UzivatelValidator {
 
 	public void validate(Uzivatel uzivatel, Errors errors) {
 		if (!StringUtils.hasLength(uzivatel.getLogin())) {
-			errors.rejectValue("login", "required", "povinnÃ© pole");
+			errors.rejectValue("login", "required", "Povinné pole");
 		}
 		if (!StringUtils.hasLength(uzivatel.getHeslo_hash())) {
-			errors.rejectValue("heslo_hash", "required", "povinnÃ© pole");
+			errors.rejectValue("heslo_hash", "required", "Povinné pole");
 		}
 		if (!StringUtils.hasLength(uzivatel.getEmail())) {
-			errors.rejectValue("email", "required", "povinnÃ© pole");
+			errors.rejectValue("email", "required", "Povinné pole");
 		}
 		if (!jeMailOk(uzivatel.getEmail())) {
-			errors.rejectValue("email", "email" ,"Å¡patnÃ½ formÃ¡t");
+			errors.rejectValue("email", "email" ,"Špatný formát");
 		}
 
 		String telefon = uzivatel.getTelefon();
@@ -41,7 +41,7 @@ public class UzivatelValidator {
 		{
 			for (int i = 0; i < telefon.length(); ++i) {
 				if ((Character.isDigit(telefon.charAt(i))) == false) {
-					errors.rejectValue("telefon", "nonNumeric", "musÃ­ obsahovat pouze ÄÃ­sla");
+					errors.rejectValue("telefon", "nonNumeric", "Mùže obsahovat pouze èíslice");
 					break;
 				}
 			}

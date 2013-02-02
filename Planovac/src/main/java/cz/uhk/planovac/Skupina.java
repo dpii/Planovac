@@ -1,6 +1,6 @@
 package cz.uhk.planovac;
 
-import java.util.Set;
+import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,11 +22,11 @@ public class Skupina { // extends BaseEntity{
 
 	private String nazev;
 
-	private Set<Uzivatel> seznamClenu;
+	private Collection<Uzivatel> seznamClenu;
 
 	private Uzivatel vedouci;
 
-	private Set<Udalost> seznamUdalosti;
+	private Collection<Udalost> seznamUdalosti;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,18 +46,21 @@ public class Skupina { // extends BaseEntity{
 		this.nazev = nazev;
 	}
 
-	@ManyToMany(mappedBy = "seznamSkupin")
-	public Set<Uzivatel> getSeznamClenu() {
+	@ManyToMany(mappedBy = "seznamSkupin", fetch = FetchType.LAZY)
+	public Collection<Uzivatel> getSeznamClenu() {
+		//Hibernate.initialize(seznamClenu);
 		return seznamClenu;
 	}
 
-	public void setSeznamClenu(Set<Uzivatel> seznamClenu) {
+	public void setSeznamClenu(Collection<Uzivatel> seznamClenu) {
 		this.seznamClenu = seznamClenu;
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idUzivatele")
+	@JoinColumn(name = "idVedouciho")
 	public Uzivatel getVedouci() {
+
+		//Hibernate.initialize(vedouci);
 		return vedouci;
 	}
 
@@ -66,11 +69,12 @@ public class Skupina { // extends BaseEntity{
 	}
 
 	@OneToMany(mappedBy = "vlastnikSk", fetch = FetchType.LAZY)
-	public Set<Udalost> getSeznamUdalosti() {
+	public Collection<Udalost> getSeznamUdalosti() {
+		//Hibernate.initialize(seznamUdalosti);
 		return seznamUdalosti;
 	}
 
-	public void setSeznamUdalosti(Set<Udalost> seznamUdalosti) {
+	public void setSeznamUdalosti(Collection<Udalost> seznamUdalosti) {
 		this.seznamUdalosti = seznamUdalosti;
 	}
 

@@ -1,1 +1,7 @@
 insert into UZIVATELE (adresa, datumPosledniPrihlaseni, datumZalozeni, email, heslo_hash, jmeno, login, mesto, povolen, prijmeni, role, telefon) values ("", "", "", "mail@.domena.cz", "1234", "", "nick", "", 1, "", "ROLE_USER", "")
+
+
+insert into UDALOSTI (konec, nazev, obrazek, verejna, idVlastnikaSk, idVlastnikaUz, zacatek) values ('2013-02-01', 'Událost', '', 0, null, '1', '2013-01-01')
+
+
+insert into UDALOSTI_UZIVATELU (idUzivatele,idUdalosti) values (1, 1)

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import cz.uhk.planovac.Planovac;
 import cz.uhk.planovac.Udalost;
-import cz.uhk.planovac.Uzivatel;
 
 @Controller
 public class NajdiUdalostForm {

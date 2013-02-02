@@ -2,7 +2,10 @@ package cz.uhk.planovac;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class ManazerUdalosti {
 	
@@ -25,12 +28,12 @@ public class ManazerUdalosti {
 			}
 		}
 		if(minIndex>-1)
-			vhodneTerminy.add(mozneTerminy.get(minIndex));//zatím vrací jen jeden - nejvhodnější a dává přednost dřívějšímu datu
+			vhodneTerminy.add(mozneTerminy.get(minIndex));//zat�m vrac� jen jeden - nejvhodnejsi a dava prednost drivejsimu datu
 		return vhodneTerminy;
 	}
 	
 	
-	public ArrayList<Integer> vyhledaniPoctuKonfliktu (ArrayList<Udalost> mozneTerminy, ArrayList<ArrayList<Udalost>> seznam)//předpokládá chronologické řazení událostí v seznamu!
+	public ArrayList<Integer> vyhledaniPoctuKonfliktu (ArrayList<Udalost> mozneTerminy, ArrayList<ArrayList<Udalost>> seznam)//predpoklada chronologicke razeni udalosti v seznamu!
 	{
 		ArrayList<Integer> poctyKonfliktu = new ArrayList<Integer>();
 		int pocetKonfliktu = 0;
@@ -53,14 +56,14 @@ public class ManazerUdalosti {
 		return poctyKonfliktu;
 	}
 	
-	public int konfliktSeznamu (ArrayList<Udalost> udalosti1, ArrayList<Udalost> udalosti2)//předpokládá chronologické řazení událostí v seznamu!
+	public int konfliktSeznamu (ArrayList<Udalost> udalosti1, ArrayList<Udalost> udalosti2)//predpoklada chronologicke razeni udalosti v seznamu!
 	{
 		int pocetKonfliktu = 0;
 		for (Udalost udalost : udalosti1) {
 			for(int i=0;i<udalosti2.size();i++)
 			{
 				int x = konflikt(udalost, udalosti2.get(i));
-				if(x==0 && udalost.getIdUdalosti()!=udalosti2.get(i).getIdUdalosti())//vyžaduje idUdalosti (ostatní metody ne - kvůli prázdným událostem použitým jen na časové rozmezí) - aby nevyhodnotilo jako konflikt, když se 2 lidé účastní stejné události
+				if(x==0 && udalost.getIdUdalosti()!=udalosti2.get(i).getIdUdalosti())//vyzaduje idUdalosti (ostatni metody ne - kvuli prazdnym udalostem pouzitym jen na casove rozmezi) - aby nevyhodnotilo jako konflikt, kdyz se 2 lide ucastni stejne udalosti
 					pocetKonfliktu++;
 				if(x<1)
 					i=udalosti2.size();
@@ -69,13 +72,13 @@ public class ManazerUdalosti {
 		return pocetKonfliktu;
 	}
 	
-	public int konflikt (Udalost udalost1, Udalost udalost2)//předpokládá, že každá událost má začátek dříve než konec!
+	public int konflikt (Udalost udalost1, Udalost udalost2)//predpoklada, ze kazda udalost bude mit drive zacatek nez konec!
 	{
 		if(udalost1.getZacatek().after(udalost2.getKonec()))
-			return -1;//událost 2 je před událostí 1
+			return -1;//udalost 2 je pred udalosti 1
 		if(udalost2.getZacatek().after(udalost1.getKonec()))
-			return 1;//událost 1 je před událostí 2
-		return 0;//existuje konflikt mezi událostmi
+			return 1;//udalost 1 je pred udalosti 2
+		return 0;//existuje konflikt mezi udalostmi
 	}
 	
 	
@@ -104,4 +107,22 @@ public class ManazerUdalosti {
 	    
 		return null;
 	}
+	
+	public ArrayList<Udalost> seradUdalosti(Collection<Udalost> udalosti)
+	{
+		ArrayList<Udalost> serazenyList = new ArrayList<Udalost>(udalosti);
+		Collections.sort(serazenyList, new UdalostComparator());
+		return serazenyList;
+	}
+	
+	public List<Udalost> getNAktualnichUdalosti(ArrayList<Udalost> udalosti, int pocet)
+	{
+		Calendar ted = Calendar.getInstance();
+		for(int i = 0;i<udalosti.size();i++)
+		{
+			if(udalosti.get(i).getKonec().after(ted.getTime()))
+				return udalosti.subList(i, Math.min(i+pocet, udalosti.size()));
+		}
+		return udalosti.subList(0,0);
+	} 
 }

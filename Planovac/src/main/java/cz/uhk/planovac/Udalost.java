@@ -1,5 +1,6 @@
 package cz.uhk.planovac;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,8 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.Hibernate;
 
 @Entity
 @Table(name = "UDALOSTI")
@@ -24,6 +29,8 @@ public class Udalost {// extends BaseEntity {
 	private Skupina vlastnikSk;
 
 	private Uzivatel vlastnikUz;
+	
+	private Collection<Uzivatel> ucastnici;
 
 	// blob? nebo odkaz
 	private String obrazek;
@@ -83,8 +90,9 @@ public class Udalost {// extends BaseEntity {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idSkupiny")
+	@JoinColumn(name = "idVlastnikaSk")
 	public Skupina getVlastnikSk() {
+		Hibernate.initialize(vlastnikSk);
 		return vlastnikSk;
 	}
 
@@ -93,8 +101,9 @@ public class Udalost {// extends BaseEntity {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idUzivatele")
+	@JoinColumn(name = "idVlastnikaUz")
 	public Uzivatel getVlastnikUz() {
+		Hibernate.initialize(vlastnikUz);
 		return vlastnikUz;
 	}
 
@@ -112,6 +121,22 @@ public class Udalost {// extends BaseEntity {
 	// prazdny konstruktor pro form
 	public Udalost() {
 		super();
+	}
+	
+	
+	@ManyToMany(mappedBy = "seznamUdalosti")
+	public Collection<Uzivatel> getUcastnici() {
+		Hibernate.initialize(ucastnici);
+		return ucastnici;
+	}
+
+	public void setUcastnici(Collection<Uzivatel> ucastnici) {
+		this.ucastnici = ucastnici;
+	}
+
+	@Transient
+	public boolean isNew() {
+		return (this.idUdalosti == null);
 	}
 
 }
