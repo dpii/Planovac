@@ -1,6 +1,7 @@
 
 package cz.uhk.planovac.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -44,8 +45,9 @@ public class UdalostForm {
 	@ModelAttribute("skupiny")
 	public Collection<Skupina> nactiSkupiny() {
 		Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
-		Collection<Skupina> skupiny = uzivatel.getVedeneSkupiny();
-		//skupiny.add(null);
+		Collection<Skupina> skupiny = new ArrayList<Skupina>();
+		skupiny.add(new Skupina());
+		skupiny.addAll(uzivatel.getVedeneSkupiny());
 		return skupiny;
 	}
 
@@ -107,6 +109,20 @@ public class UdalostForm {
 	public String deletePet(@PathVariable("idUdalosti") int idUdalosti) {
 		this.planovac.smazUdalost(idUdalosti);
 		return "redirect:/uzivatel";
+	}
+	
+	@RequestMapping(value = "/udalost/{idUdalosti}/pridatSe")
+	public String pridatSe(@PathVariable("idUdalosti") int idUdalosti) {
+		Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
+		this.planovac.pridatUzivateleKUdalosti(uzivatel.getIdUzivatele(),idUdalosti);
+		return "redirect:/udalost/"+idUdalosti;
+	}
+	
+	@RequestMapping(value = "/udalost/{idUdalosti}/odebratSe")
+	public String odebratSe(@PathVariable("idUdalosti") int idUdalosti) {
+		Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
+		this.planovac.odebratUzivateleZUdalosti(uzivatel.getIdUzivatele(),idUdalosti);
+		return "redirect:/udalost/"+idUdalosti;
 	}
 
 }

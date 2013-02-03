@@ -122,6 +122,14 @@ public class EntityManagerPlanovac implements Planovac {
 				.getResultList();
 
 	}
+	
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public Collection<Skupina> vemVerejneSkupiny() {
+		return this.em.createQuery(
+				"SELECT skupina FROM Skupina skupina WHERE skupina.verejna LIKE 1 ORDER BY skupina.nazev")
+				.getResultList();
+	}
 
 	@Transactional(readOnly = true)
 	public Skupina nactiSkupinu(int id) {
@@ -135,8 +143,42 @@ public class EntityManagerPlanovac implements Planovac {
 	}
 
 	public void smazSkupinu(int id) throws DataAccessException {
-		Skupina skupina = nactiSkupinu(id);
-		this.em.remove(skupina);
+		Collection<Udalost> udalosti = nactiUdalostiDleSkupiny(id);
+		for (Udalost udalost : udalosti) {
+			smazUdalost(udalost.getIdUdalosti());
+		}
+		Query query = this.em.createNativeQuery("DELETE FROM skupiny_uzivatelu WHERE idSkupiny LIKE :id");
+		query.setParameter("id", id );
+		query.executeUpdate();
+		query = this.em.createNativeQuery("DELETE FROM skupiny WHERE idSkupiny LIKE :id");
+		query.setParameter("id", id );
+		query.executeUpdate();
+	}
+	
+	public void pridatUzivateleDoSkupiny(int idUzivatele, int idSkupiny) throws DataAccessException {
+		Query query = this.em.createNativeQuery("INSERT IGNORE INTO skupiny_uzivatelu (`idSkupiny`, `idUzivatele`) VALUES (:idSkupiny, :idUzivatele)");
+		query.setParameter("idUzivatele", idUzivatele );
+		query.setParameter("idSkupiny", idSkupiny );
+		query.executeUpdate();
+	}
+	public void odebratUzivateleZeSkupiny(int idUzivatele, int idSkupiny) throws DataAccessException {
+		Query query = this.em.createNativeQuery("DELETE FROM skupiny_uzivatelu WHERE idSkupiny LIKE :idSkupiny AND idUzivatele LIKE :idUzivatele");
+		query.setParameter("idUzivatele", idUzivatele );
+		query.setParameter("idSkupiny", idSkupiny );
+		query.executeUpdate();
+	}
+	
+	public void pridatUzivateleKUdalosti(int idUzivatele, int idUdalosti) throws DataAccessException {
+		Query query = this.em.createNativeQuery("INSERT IGNORE INTO udalosti_uzivatelu (`idUdalosti`, `idUzivatele`) VALUES (:idUdalosti, :idUzivatele)");
+		query.setParameter("idUzivatele", idUzivatele );
+		query.setParameter("idUdalosti", idUdalosti );
+		query.executeUpdate();
+	}
+	public void odebratUzivateleZUdalosti(int idUzivatele, int idUdalosti) throws DataAccessException {
+		Query query = this.em.createNativeQuery("DELETE FROM udalosti_uzivatelu WHERE idUdalosti LIKE :idUdalosti AND idUzivatele LIKE :idUzivatele");
+		query.setParameter("idUzivatele", idUzivatele );
+		query.setParameter("idUdalosti", idUdalosti );
+		query.executeUpdate();
 	}
 	
 	@Transactional(readOnly = true)
@@ -181,6 +223,13 @@ public class EntityManagerPlanovac implements Planovac {
 		Collection<Uzivatel> cleni = udalost.getUcastnici();
 		return cleni;
 	}
-
+	
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public Collection<Udalost> nactiUdalostiDleSkupiny(int idSkupiny) throws DataAccessException {
+		Query query = this.em.createQuery("SELECT udalost FROM Udalost udalost JOIN udalost.vlastnikSk skupina WHERE skupina.idSkupiny LIKE :idSkupiny");
+		query.setParameter("idSkupiny", idSkupiny );
+		return query.getResultList();
+	}
 
 }

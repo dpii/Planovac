@@ -38,6 +38,8 @@ public interface Planovac {
 	
 	Collection<Udalost> nactiUdalostiDleUzivatele(int idUzivatele) throws DataAccessException;
 	
+	Collection<Udalost> nactiUdalostiDleSkupiny(int idSkupiny) throws DataAccessException;
+	
 	ArrayList<ArrayList<Udalost>> nactiVsechnyUdalostiClenuSkupiny(Skupina skupina) throws DataAccessException;
 	
 	Collection<Uzivatel> nactiUzivateleDleUdalosti(int idUdalosti) throws DataAccessException;
@@ -46,13 +48,23 @@ public interface Planovac {
 	
 	Collection<Udalost> vemVerejneUdalosti() throws DataAccessException;
 	
+	void pridatUzivateleKUdalosti(int idUzivatele, int idSkupiny) throws DataAccessException;
+	
+	void odebratUzivateleZUdalosti(int idUzivatele, int idSkupiny) throws DataAccessException;
+	
 	// operace pro praci se skupinami
 	
 	Collection<Skupina> vemSkupiny() throws DataAccessException;
+	
+	Collection<Skupina> vemVerejneSkupiny() throws DataAccessException;
 
 	void ulozSkupinu(Skupina Skupina) throws DataAccessException;
 
 	void smazSkupinu(int id) throws DataAccessException;
+	
+	void pridatUzivateleDoSkupiny(int idUzivatele, int idSkupiny) throws DataAccessException;
+	
+	void odebratUzivateleZeSkupiny(int idUzivatele, int idSkupiny) throws DataAccessException;
 	
 	Skupina nactiSkupinu(int id) throws DataAccessException;
 

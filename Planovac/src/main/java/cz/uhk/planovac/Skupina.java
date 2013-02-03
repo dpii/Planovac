@@ -28,8 +28,30 @@ public class Skupina { // extends BaseEntity{
 	private Collection<Uzivatel> seznamClenu;
 
 	private Uzivatel vedouci;
+	
+	private boolean verejna;
+	
+	private String popis;
 
 	private Collection<Udalost> seznamUdalosti;
+
+	
+	
+	public boolean isVerejna() {
+		return verejna;
+	}
+
+	public void setVerejna(boolean verejna) {
+		this.verejna = verejna;
+	}
+
+	public String getPopis() {
+		return popis;
+	}
+
+	public void setPopis(String popis) {
+		this.popis = popis;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,6 +116,11 @@ public class Skupina { // extends BaseEntity{
 	public String toString()
 	{
 		return getNazev();
+	}
+	
+	@Transient
+	public boolean isNew() {
+		return (this.idSkupiny == null);
 	}
 
 }

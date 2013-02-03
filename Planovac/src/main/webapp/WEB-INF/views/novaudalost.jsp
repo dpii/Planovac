@@ -26,7 +26,7 @@
       <th>
         Popis: <form:errors path="popis" cssClass="errors"/>
         <br/>
-        <form:input type="textarea" path="popis" size="30" maxlength="50"/>
+        <form:input type="textarea" path="popis" size="30" maxlength="200"/>
       </th>
     </tr>
     <tr>

@@ -23,9 +23,6 @@ import cz.uhk.planovac.Skupina;
 import cz.uhk.planovac.Udalost;
 import cz.uhk.planovac.Uzivatel;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
 	
@@ -41,9 +38,6 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! the client locale is "+ locale.toString());
@@ -66,7 +60,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/uzivatele/{idUzivatele}")
-	public ModelAndView ownerHandler(@PathVariable("idUzivatele") int idUzivatele) {
+	public ModelAndView uzivatelHandler(@PathVariable("idUzivatele") int idUzivatele) {
 		ModelAndView mav;
 		Uzivatel uzivatel = this.planovac.nactiUzivatele(idUzivatele);
 		String prihlaseny = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -79,7 +73,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/uzivatel")
-	public ModelAndView uzivatelHandler() {
+	public ModelAndView prihlasenyHandler() {
 		ModelAndView mav = new ModelAndView("uzivatel");
 		Uzivatel uzivatel = this.planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
 		mav.addObject("uzivatel", uzivatel);
@@ -104,7 +98,7 @@ public class HomeController {
 	public ModelAndView udalostiHandler() {
 		ModelAndView mav = new ModelAndView("udalosti");
 		ArrayList<Udalost> udalosti = new ArrayList<Udalost>(manazerUdalosti.seradUdalosti(planovac.vemVerejneUdalosti()));
-		mav.addObject("seznamUdalosti", udalosti);
+		mav.addObject("seznamUdalosti", manazerUdalosti.getNAktualnichUdalosti(udalosti, 100));
 		mav.addObject("nadpis", "Nejbližší veøejné události");
 		return mav;
 	}
@@ -123,19 +117,37 @@ public class HomeController {
 	@RequestMapping("/skupiny/{idSkupiny}")
 	public ModelAndView skupinaHandler(@PathVariable("idSkupiny") int idSkupiny) {
 		ModelAndView mav  = new ModelAndView("skupina");
-		
+		boolean opravneni = false;
+		int neniVeSkupine = 0;
 		Skupina skupina = this.planovac.nactiSkupinu(idSkupiny);
-		
+		Uzivatel vedouci = skupina.getVedouci();
 		Collection<Uzivatel> cleni = planovac.nactiUzivateleDleSkupiny(idSkupiny);
 		//Collection<Uzivatel> cleni = skupina.getSeznamClenu(); //chyba: "collection is not associated with any session"
-		
 		skupina.setSeznamClenu(cleni);
+		String prihlasenyLogin= SecurityContextHolder.getContext().getAuthentication().getName();
+		if(prihlasenyLogin.compareToIgnoreCase("anonymousUser")!=0)
+		{
+			if(skupina.isVerejna())
+				neniVeSkupine = 1;
+			Uzivatel prihlaseny = this.planovac.nactiUzivatelePodleLoginu(prihlasenyLogin);
+			for (Uzivatel uzivatel : cleni) {
+				if(uzivatel.getIdUzivatele().equals(prihlaseny.getIdUzivatele()))
+					neniVeSkupine = 2;
+			}
+			if (vedouci.getIdUzivatele().equals(prihlaseny.getIdUzivatele()))
+				opravneni = true;
+			
+		}
+		
+		
 		mav.addObject("cleni", planovac.nactiUzivateleDleSkupiny(idSkupiny));
 		
-		Uzivatel vedouci = skupina.getVedouci();
+		Collection<Udalost> seznamUdalosti = planovac.nactiUdalostiDleSkupiny(idSkupiny);
 		mav.addObject("vedouci", vedouci);
-		
+		mav.addObject("seznamUdalosti", seznamUdalosti);
 		mav.addObject("skupina",skupina);
+		mav.addObject("opravneni",opravneni);
+		mav.addObject("neniVeSkupine",neniVeSkupine);
 		return mav;
 	}
 	
