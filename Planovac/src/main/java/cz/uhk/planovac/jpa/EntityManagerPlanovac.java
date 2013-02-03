@@ -33,6 +33,17 @@ public class EntityManagerPlanovac implements Planovac {
 						"SELECT uzivatel FROM Uzivatel uzivatel ORDER BY uzivatel.prijmeni, uzivatel.jmeno")
 				.getResultList();
 	}
+	
+	public void ulozUzivatele(Uzivatel uzivatel) {
+			Uzivatel merged = this.em.merge(uzivatel);
+			this.em.flush();
+			uzivatel.setIdUzivatele(merged.getIdUzivatele());
+	}
+
+	public void smazUzivatele(int id) throws DataAccessException {
+		Uzivatel uzivatel = nactiUzivatele(id);
+		this.em.remove(uzivatel);
+	}
 
 	@Transactional(readOnly = true)
 	public Uzivatel nactiUzivatele(int id) {
@@ -47,15 +58,36 @@ public class EntityManagerPlanovac implements Planovac {
 		return (Uzivatel) query.getSingleResult();
 	}
 	
-	public void ulozUzivatele(Uzivatel uzivatel) {
-			Uzivatel merged = this.em.merge(uzivatel);
-			this.em.flush();
-			uzivatel.setIdUzivatele(merged.getIdUzivatele());
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public Collection<Uzivatel> nactiUzivateleDlePrijmeni(String prijmeni) {
+		Query query = this.em.createQuery("SELECT uzivatel FROM Uzivatel uzivatel WHERE uzivatel.prijmeni LIKE :prijmeni");
+		query.setParameter("prijmeni", prijmeni + "%");
+		return query.getResultList();
 	}
-
-	public void smazUzivatele(int id) throws DataAccessException {
-		Uzivatel uzivatel = nactiUzivatele(id);
-		this.em.remove(uzivatel);
+	
+	@Transactional
+	public boolean jeLoginVolny(String login) {
+		//return this.em.find(Uzivatel.class, login);
+		Query query = this.em.createQuery("SELECT uzivatel FROM Uzivatel uzivatel WHERE uzivatel.login LIKE :login");
+		query.setParameter("login", login );
+		if(query.getResultList().size()==0)
+			return true;
+		return false;
+	}
+	
+	@Transactional(readOnly = true)
+	public Collection<Uzivatel> nactiUzivateleDleSkupiny(int idSkupiny) throws DataAccessException {
+		Skupina skupina = nactiSkupinu(idSkupiny);
+		Collection<Uzivatel> cleni = skupina.getSeznamClenu();
+		return cleni;
+	}
+	
+	@Transactional(readOnly = true)
+	public Collection<Uzivatel> nactiUzivateleDleUdalosti(int idUdalosti) throws DataAccessException {
+		Udalost udalost = nactiUdalost(idUdalosti);
+		Collection<Uzivatel> cleni = udalost.getUcastnici();
+		return cleni;
 	}
 
 	// op. s udalostmi
@@ -66,19 +98,6 @@ public class EntityManagerPlanovac implements Planovac {
 		return this.em.createQuery(
 				"SELECT udalost FROM Udalost udalost ORDER BY udalost.nazev")
 				.getResultList();
-	}
-	
-	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
-	public Collection<Udalost> vemVerejneUdalosti() {
-		return this.em.createQuery(
-				"SELECT udalost FROM Udalost udalost WHERE udalost.verejna LIKE 1 ORDER BY udalost.nazev")
-				.getResultList();
-	}
-
-	@Transactional(readOnly = true)
-	public Udalost nactiUdalost(int id) {
-		return this.em.find(Udalost.class, id);
 	}
 
 	public void ulozUdalost(Udalost udalost) {
@@ -96,6 +115,19 @@ public class EntityManagerPlanovac implements Planovac {
 		query.setParameter("id", id );
 		query.executeUpdate();
 	}
+
+	@Transactional(readOnly = true)
+	public Udalost nactiUdalost(int id) {
+		return this.em.find(Udalost.class, id);
+	}
+
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public Collection<Udalost> nactiUdalostiDleZacatku(java.util.Date zacatek) throws DataAccessException {
+		Query query = this.em.createQuery("SELECT udalost FROM Udalost udalost WHERE udalost.zacatek LIKE :zacatek");
+		query.setParameter("zacatek", zacatek + "%");
+		return query.getResultList();
+	}
 	
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
@@ -105,11 +137,53 @@ public class EntityManagerPlanovac implements Planovac {
 		return query.getResultList();
 	}
 	
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public Collection<Udalost> nactiUdalostiDleSkupiny(int idSkupiny) throws DataAccessException {
+		Query query = this.em.createQuery("SELECT udalost FROM Udalost udalost JOIN udalost.vlastnikSk skupina WHERE skupina.idSkupiny LIKE :idSkupiny");
+		query.setParameter("idSkupiny", idSkupiny );
+		return query.getResultList();
+	}
+	
+	@Transactional(readOnly = true)
+	public ArrayList<ArrayList<Udalost>> nactiVsechnyUdalostiClenuSkupiny(Skupina skupina) throws DataAccessException {
+		ArrayList<ArrayList<Udalost>> seznam = new ArrayList<ArrayList<Udalost>>();
+		
+		//Collection<Uzivatel> cleni = skupina.getSeznamClenu();//dataAccessFailure
+		Collection<Uzivatel> cleni = nactiUzivateleDleSkupiny(skupina.getIdSkupiny());
+		for (Uzivatel uzivatel : cleni) {
+			uzivatel.setSeznamUdalosti(nactiUdalostiDleUzivatele(uzivatel.getIdUzivatele()));
+			seznam.add(uzivatel.getSeznamUdalostiSerazene());
+		}
+		return seznam;
+	}
+	
 	public Uzivatel nactiVlastnikaUdalosti(int idUdalosti) throws DataAccessException
 	{
 		Query query = this.em.createQuery("SELECT uzivatel FROM Udalost udalost JOIN udalost.vlastnikUz uzivatel WHERE udalost.idUdalosti LIKE :idUdalosti");
 		query.setParameter("idUdalosti", idUdalosti );
 		return (Uzivatel)query.getSingleResult();
+	}
+	
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public Collection<Udalost> vemVerejneUdalosti() {
+		return this.em.createQuery(
+				"SELECT udalost FROM Udalost udalost WHERE udalost.verejna LIKE 1 ORDER BY udalost.nazev")
+				.getResultList();
+	}
+	
+	public void pridatUzivateleKUdalosti(int idUzivatele, int idUdalosti) throws DataAccessException {
+		Query query = this.em.createNativeQuery("INSERT IGNORE INTO udalosti_uzivatelu (`idUdalosti`, `idUzivatele`) VALUES (:idUdalosti, :idUzivatele)");
+		query.setParameter("idUzivatele", idUzivatele );
+		query.setParameter("idUdalosti", idUdalosti );
+		query.executeUpdate();
+	}
+	public void odebratUzivateleZUdalosti(int idUzivatele, int idUdalosti) throws DataAccessException {
+		Query query = this.em.createNativeQuery("DELETE FROM udalosti_uzivatelu WHERE idUdalosti LIKE :idUdalosti AND idUzivatele LIKE :idUzivatele");
+		query.setParameter("idUzivatele", idUzivatele );
+		query.setParameter("idUdalosti", idUdalosti );
+		query.executeUpdate();
 	}
 
 	// op. se skupinami
@@ -166,70 +240,6 @@ public class EntityManagerPlanovac implements Planovac {
 		query.setParameter("idUzivatele", idUzivatele );
 		query.setParameter("idSkupiny", idSkupiny );
 		query.executeUpdate();
-	}
-	
-	public void pridatUzivateleKUdalosti(int idUzivatele, int idUdalosti) throws DataAccessException {
-		Query query = this.em.createNativeQuery("INSERT IGNORE INTO udalosti_uzivatelu (`idUdalosti`, `idUzivatele`) VALUES (:idUdalosti, :idUzivatele)");
-		query.setParameter("idUzivatele", idUzivatele );
-		query.setParameter("idUdalosti", idUdalosti );
-		query.executeUpdate();
-	}
-	public void odebratUzivateleZUdalosti(int idUzivatele, int idUdalosti) throws DataAccessException {
-		Query query = this.em.createNativeQuery("DELETE FROM udalosti_uzivatelu WHERE idUdalosti LIKE :idUdalosti AND idUzivatele LIKE :idUzivatele");
-		query.setParameter("idUzivatele", idUzivatele );
-		query.setParameter("idUdalosti", idUdalosti );
-		query.executeUpdate();
-	}
-	
-	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
-	public Collection<Uzivatel> nactiUzivateleDlePrijmeni(String prijmeni) {
-		Query query = this.em.createQuery("SELECT uzivatel FROM Uzivatel uzivatel WHERE uzivatel.prijmeni LIKE :prijmeni");
-		query.setParameter("prijmeni", prijmeni + "%");
-		return query.getResultList();
-	}
-
-	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
-	public Collection<Udalost> nactiUdalostiDleZacatku(java.util.Date zacatek) throws DataAccessException {
-		Query query = this.em.createQuery("SELECT udalost FROM Udalost udalost WHERE udalost.zacatek LIKE :zacatek");
-		query.setParameter("zacatek", zacatek + "%");
-		return query.getResultList();
-	}
-	
-	@Transactional(readOnly = true)
-	public ArrayList<ArrayList<Udalost>> nactiVsechnyUdalostiClenuSkupiny(Skupina skupina) throws DataAccessException {
-		ArrayList<ArrayList<Udalost>> seznam = new ArrayList<ArrayList<Udalost>>();
-		
-		//Collection<Uzivatel> cleni = skupina.getSeznamClenu();//dataAccessFailure
-		Collection<Uzivatel> cleni = nactiUzivateleDleSkupiny(skupina.getIdSkupiny());
-		for (Uzivatel uzivatel : cleni) {
-			uzivatel.setSeznamUdalosti(nactiUdalostiDleUzivatele(uzivatel.getIdUzivatele()));
-			seznam.add(uzivatel.getSeznamUdalostiSerazene());
-		}
-		return seznam;
-	}
-	
-	@Transactional(readOnly = true)
-	public Collection<Uzivatel> nactiUzivateleDleSkupiny(int idSkupiny) throws DataAccessException {
-		Skupina skupina = nactiSkupinu(idSkupiny);
-		Collection<Uzivatel> cleni = skupina.getSeznamClenu();
-		return cleni;
-	}
-	
-	@Transactional(readOnly = true)
-	public Collection<Uzivatel> nactiUzivateleDleUdalosti(int idUdalosti) throws DataAccessException {
-		Udalost udalost = nactiUdalost(idUdalosti);
-		Collection<Uzivatel> cleni = udalost.getUcastnici();
-		return cleni;
-	}
-	
-	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
-	public Collection<Udalost> nactiUdalostiDleSkupiny(int idSkupiny) throws DataAccessException {
-		Query query = this.em.createQuery("SELECT udalost FROM Udalost udalost JOIN udalost.vlastnikSk skupina WHERE skupina.idSkupiny LIKE :idSkupiny");
-		query.setParameter("idSkupiny", idSkupiny );
-		return query.getResultList();
 	}
 
 }

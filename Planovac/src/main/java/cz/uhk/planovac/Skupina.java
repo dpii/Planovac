@@ -18,7 +18,7 @@ import org.hibernate.Hibernate;
 
 @Entity
 @Table(name="SKUPINY")
-public class Skupina { // extends BaseEntity{
+public class Skupina {
 
 	
 	private Integer idSkupiny;

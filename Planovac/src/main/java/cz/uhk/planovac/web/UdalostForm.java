@@ -106,7 +106,7 @@ public class UdalostForm {
 	}
 	
 	@RequestMapping(value = "/udalost/{idUdalosti}/upravit", method = RequestMethod.DELETE)
-	public String deletePet(@PathVariable("idUdalosti") int idUdalosti) {
+	public String deleteUdalost(@PathVariable("idUdalosti") int idUdalosti) {
 		this.planovac.smazUdalost(idUdalosti);
 		return "redirect:/uzivatel";
 	}

@@ -14,16 +14,6 @@ import org.springframework.web.context.request.WebRequest;
 import cz.uhk.planovac.Planovac;
 import cz.uhk.planovac.Skupina;
 
-
-/**
- * Shared WebBindingInitializer for PetClinic's custom editors.
- *
- * <p>Alternatively, such init-binder code may be put into
- * {@link org.springframework.web.bind.annotation.InitBinder}
- * annotated methods on the controller classes themselves.
- *
- * @author Juergen Hoeller
- */
 public class PlanovacBindingInitializer implements WebBindingInitializer {
 
 	@Autowired

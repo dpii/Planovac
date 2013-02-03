@@ -24,6 +24,12 @@ public interface Planovac {
 	
 	Collection<Uzivatel> nactiUzivateleDlePrijmeni(String prijmeni) throws DataAccessException;
 	
+	boolean jeLoginVolny(String login) throws DataAccessException;
+	
+	Collection<Uzivatel> nactiUzivateleDleUdalosti(int idUdalosti) throws DataAccessException;
+
+	Collection<Uzivatel> nactiUzivateleDleSkupiny(int idSkupiny) throws DataAccessException;
+	
 	// operace pro praci s udalostmi
 
 	Collection<Udalost> vemUdalosti() throws DataAccessException;
@@ -42,8 +48,6 @@ public interface Planovac {
 	
 	ArrayList<ArrayList<Udalost>> nactiVsechnyUdalostiClenuSkupiny(Skupina skupina) throws DataAccessException;
 	
-	Collection<Uzivatel> nactiUzivateleDleUdalosti(int idUdalosti) throws DataAccessException;
-	
 	Uzivatel nactiVlastnikaUdalosti(int idUdalosti) throws DataAccessException;
 	
 	Collection<Udalost> vemVerejneUdalosti() throws DataAccessException;
@@ -57,6 +61,8 @@ public interface Planovac {
 	Collection<Skupina> vemSkupiny() throws DataAccessException;
 	
 	Collection<Skupina> vemVerejneSkupiny() throws DataAccessException;
+	
+	Skupina nactiSkupinu(int id) throws DataAccessException;
 
 	void ulozSkupinu(Skupina Skupina) throws DataAccessException;
 
@@ -65,10 +71,6 @@ public interface Planovac {
 	void pridatUzivateleDoSkupiny(int idUzivatele, int idSkupiny) throws DataAccessException;
 	
 	void odebratUzivateleZeSkupiny(int idUzivatele, int idSkupiny) throws DataAccessException;
-	
-	Skupina nactiSkupinu(int id) throws DataAccessException;
-
-	Collection<Uzivatel> nactiUzivateleDleSkupiny(int idSkupiny) throws DataAccessException;;
 	
 
 }
