@@ -89,6 +89,26 @@ public class HomeController {
 		return mav;
 	}
 	
+	@RequestMapping("/uzivatel/udalosti")
+	public ModelAndView vsechnyUdalostiHandler() {
+		ModelAndView mav = new ModelAndView("udalosti");
+		Uzivatel uzivatel = this.planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
+		mav.addObject("uzivatel", uzivatel);
+		ArrayList<Udalost> udalosti = new ArrayList<Udalost>(manazerUdalosti.seradUdalosti(uzivatel.getSeznamUdalosti()));
+		mav.addObject("seznamUdalosti", udalosti);
+		mav.addObject("nadpis", "Všechny vaše události");
+		return mav;
+	}
+	
+	@RequestMapping("/udalosti")
+	public ModelAndView udalostiHandler() {
+		ModelAndView mav = new ModelAndView("udalosti");
+		ArrayList<Udalost> udalosti = new ArrayList<Udalost>(manazerUdalosti.seradUdalosti(planovac.vemVerejneUdalosti()));
+		mav.addObject("seznamUdalosti", udalosti);
+		mav.addObject("nadpis", "Nejbližší veøejné události");
+		return mav;
+	}
+	
 	
 	
 	// T0D0 udalosti uzivatelu

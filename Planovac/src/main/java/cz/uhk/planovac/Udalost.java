@@ -91,7 +91,7 @@ public class Udalost {// extends BaseEntity {
 		this.verejna = verejna;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idVlastnikaSk")
 	public Skupina getVlastnikSk() {
 		Hibernate.initialize(vlastnikSk);

@@ -67,6 +67,14 @@ public class EntityManagerPlanovac implements Planovac {
 				"SELECT udalost FROM Udalost udalost ORDER BY udalost.nazev")
 				.getResultList();
 	}
+	
+	@Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public Collection<Udalost> vemVerejneUdalosti() {
+		return this.em.createQuery(
+				"SELECT udalost FROM Udalost udalost WHERE udalost.verejna LIKE 1 ORDER BY udalost.nazev")
+				.getResultList();
+	}
 
 	@Transactional(readOnly = true)
 	public Udalost nactiUdalost(int id) {
@@ -95,6 +103,13 @@ public class EntityManagerPlanovac implements Planovac {
 		Query query = this.em.createQuery("SELECT udalost FROM Udalost udalost WHERE Udalost.vlastnikUz.idUzivatele LIKE :idUzivatele");
 		query.setParameter("idUzivatele", idUzivatele );
 		return query.getResultList();
+	}
+	
+	public Uzivatel nactiVlastnikaUdalosti(int idUdalosti) throws DataAccessException
+	{
+		Query query = this.em.createQuery("SELECT uzivatel FROM Udalost udalost JOIN udalost.vlastnikUz uzivatel WHERE udalost.idUdalosti LIKE :idUdalosti");
+		query.setParameter("idUdalosti", idUdalosti );
+		return (Uzivatel)query.getSingleResult();
 	}
 
 	// op. se skupinami
