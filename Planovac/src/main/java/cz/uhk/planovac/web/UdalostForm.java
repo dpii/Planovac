@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -22,7 +23,6 @@ import cz.uhk.planovac.Uzivatel;
 import cz.uhk.planovac.validation.UdalostValidator;
 
 @Controller
-@RequestMapping("/novaudalost")
 @SessionAttributes(types = Udalost.class)
 public class UdalostForm {
 	
@@ -34,13 +34,12 @@ public class UdalostForm {
 		this.planovac = planovac;
 	}
 	
-	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("idUdalosti");
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/novaudalost", method = RequestMethod.GET)
 	public String setupForm(Model model) {
 		Udalost udalost = new Udalost();
 		udalost.setZacatek(new Date());
@@ -49,7 +48,7 @@ public class UdalostForm {
 		return "novaudalost";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/novaudalost", method = RequestMethod.POST)
 	public String processSubmit(@ModelAttribute Udalost udalost, BindingResult result, SessionStatus status) {
 		new UdalostValidator().validate(udalost, result);
 		if (result.hasErrors()) {
@@ -64,14 +63,37 @@ public class UdalostForm {
 			return "redirect:/uzivatel";
 		}
 	}
+	
+	@RequestMapping(value = "/udalost/{idUdalosti}/upravit", method = RequestMethod.GET)
+	public String setupFormUprava(Model model, @PathVariable("idUdalosti") int idUdalosti) {
+		Udalost udalost = planovac.nactiUdalost(idUdalosti);
+		model.addAttribute(udalost);
+		return "novaudalost";
+	}
+
+	@RequestMapping(value = "/udalost/{idUdalosti}/upravit", method = RequestMethod.PUT)
+	public String processSubmitUprava(@ModelAttribute Udalost udalost, BindingResult result, SessionStatus status, @PathVariable("idUdalosti") int idUdalosti) {
+		new UdalostValidator().validate(udalost, result);
+		if (result.hasErrors()) {
+			return "novaudalost";
+		}
+		else {
+			udalost.setUcastnici(planovac.nactiUzivateleDleUdalosti(idUdalosti));
+			Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
+			udalost.setVlastnikUz(uzivatel);
+			//uzivatel.getSeznamUdalosti().add(udalost);
+			//this.planovac.smazUdalost(idUdalosti);
+			//this.planovac.ulozUzivatele(uzivatel);
+			this.planovac.ulozUdalost(udalost);
+			status.setComplete();
+			return "redirect:/udalost/"+udalost.getIdUdalosti();
+		}
+	}
+	
+	@RequestMapping(value = "/udalost/{idUdalosti}/upravit", method = RequestMethod.DELETE)
+	public String deletePet(@PathVariable("idUdalosti") int idUdalosti) {
+		this.planovac.smazUdalost(idUdalosti);
+		return "redirect:/uzivatel";
+	}
 
 }
-
-/*SessionFactory sf = HibernateUtil.getSessionFactory();
-Session session = sf.openSession();
-session.beginTransaction();
- 
-session.save(udalost);
- 
-session.getTransaction().commit();
-session.close();*/

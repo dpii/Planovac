@@ -74,15 +74,19 @@ public class EntityManagerPlanovac implements Planovac {
 	}
 
 	public void ulozUdalost(Udalost udalost) {
-		/*Udalost merged = this.em.merge(udalost);
+		Udalost merged = this.em.merge(udalost);
 		this.em.flush();
-		udalost.setIdUdalosti(merged.getIdUdalosti());*/
-		this.em.persist(udalost);
+		udalost.setIdUdalosti(merged.getIdUdalosti());
+		//this.em.persist(udalost);
 	}
 
 	public void smazUdalost(int id) throws DataAccessException {
-		Udalost udalost = nactiUdalost(id);
-		this.em.remove(udalost);
+		Query query = this.em.createNativeQuery("DELETE FROM udalosti_uzivatelu WHERE idUdalosti LIKE :id");
+		query.setParameter("id", id );
+		query.executeUpdate();
+		query = this.em.createNativeQuery("DELETE FROM udalosti WHERE idUdalosti LIKE :id");
+		query.setParameter("id", id );
+		query.executeUpdate();
 	}
 	
 	@Transactional(readOnly = true)
@@ -153,6 +157,13 @@ public class EntityManagerPlanovac implements Planovac {
 	public Collection<Uzivatel> nactiUzivateleDleSkupiny(int idSkupiny) throws DataAccessException {
 		Skupina skupina = nactiSkupinu(idSkupiny);
 		Collection<Uzivatel> cleni = skupina.getSeznamClenu();
+		return cleni;
+	}
+	
+	@Transactional(readOnly = true)
+	public Collection<Uzivatel> nactiUzivateleDleUdalosti(int idUdalosti) throws DataAccessException {
+		Udalost udalost = nactiUdalost(idUdalosti);
+		Collection<Uzivatel> cleni = udalost.getUcastnici();
 		return cleni;
 	}
 

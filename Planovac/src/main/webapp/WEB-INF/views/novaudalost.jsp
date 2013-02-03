@@ -58,4 +58,10 @@
     </table>
 </form:form>
 
+<c:if test="${!udalost['new']}">
+  <form:form method="delete">
+    <p class="submit"><input type="submit" value="Smazat událost"/></p>
+  </form:form>
+</c:if>    
+
 <%@ include file="/WEB-INF/views/footer.jsp" %>
