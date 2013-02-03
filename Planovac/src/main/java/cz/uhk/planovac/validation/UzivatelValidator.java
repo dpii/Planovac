@@ -8,12 +8,6 @@ import org.springframework.validation.Errors;
 
 import cz.uhk.planovac.Uzivatel;
 
-/**
- * <code>Validator</code> for <code>Owner</code> forms.
- *
- * @author Ken Krebs
- * @author Juergen Hoeller
- */
 public class UzivatelValidator {
 	
 	private Pattern pattern;

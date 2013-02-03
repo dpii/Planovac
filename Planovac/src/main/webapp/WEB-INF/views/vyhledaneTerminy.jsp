@@ -7,7 +7,7 @@
   <thead>
   	<th>Začátek</th>
     <th>Konec</th>
-    <td>Nalezené konflikty</td>
+    <th>Nalezené konflikty</th>
   </thead>
   <c:forEach var="udalost" items="${vysledky}">
     <tr>

@@ -1,6 +1,5 @@
 package cz.uhk.planovac.validation;
 
-import java.text.DateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,12 +8,6 @@ import org.springframework.validation.Errors;
 
 import cz.uhk.planovac.Udalost;
 
-/**
- * <code>Validator</code> for <code>Owner</code> forms.
- *
- * @author Ken Krebs
- * @author Juergen Hoeller
- */
 public class UdalostValidator {
 	
 	private Pattern pattern;
@@ -25,9 +18,12 @@ public class UdalostValidator {
 
 	public void validate(Udalost udalost, Errors errors) {
 		if (!StringUtils.hasLength(udalost.getNazev())) {
-			errors.rejectValue("nazev", "required", "povinnÃ© pole");
+			errors.rejectValue("nazev", "required", "Povinné pole");
 		}
-	
+		
+		if (udalost.getZacatek().after(udalost.getKonec())) {
+			errors.rejectValue("zacatek", "date", "Zaèátek události nesmí být po konci");
+		}
 		
 		
 	}

@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.Hibernate;
-import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 @Table(name="SKUPINY")

@@ -9,8 +9,13 @@ import java.util.List;
 
 public class ManazerUdalosti {
 	
-	int vyhledavaniPo = 30*60 ;//časové úseky (s) po kterých se bude zkoušet shoda s termínem - větší číslo znamená méně možných termínů, ale je to rychlejší 
+	int vyhledavaniPo = 30 ;//časové úseky (s) po kterých se bude zkoušet shoda s termínem - větší číslo znamená méně možných termínů, ale je to rychlejší 
 	
+	public void setVyhledavaniPo(int vyhledavaniPo) {
+		this.vyhledavaniPo = vyhledavaniPo;
+	}
+
+
 	public ArrayList<Udalost> najdiVhodnyCasProUdalost (Date minZacatek, Date maxKonec, int pozadovanaDelka, int odHodin, int doHodin, ArrayList<ArrayList<Udalost>> seznamPlanu)
 	{
 		ArrayList<Udalost> mozneTerminy = vytvorSeznamMoznychTerminu(minZacatek, maxKonec, pozadovanaDelka, odHodin, doHodin);
@@ -30,9 +35,10 @@ public class ManazerUdalosti {
 			if(poctyKonfliktu.get(i)==minimum)
 			{
 				Udalost u = mozneTerminy.get(i);
-				u.setNazev(poctyKonfliktu.get(i).toString());
+				u.setNazev(""+poctyKonfliktu.get(i));
 				vhodneTerminy.add(u);
 			}
+			mozneTerminy.get(i).setNazev(""+poctyKonfliktu.get(i));//testov�n�!!!
 		}
 		//return vhodneTerminy;
 		return mozneTerminy;
@@ -42,22 +48,24 @@ public class ManazerUdalosti {
 	public ArrayList<Integer> vyhledaniPoctuKonfliktu (ArrayList<Udalost> mozneTerminy, ArrayList<ArrayList<Udalost>> seznam)//predpoklada chronologicke razeni udalosti v seznamu!
 	{
 		ArrayList<Integer> poctyKonfliktu = new ArrayList<Integer>();
-		int pocetKonfliktu = 0;
+		int pocetKonfliktu;
 		for (int j=0;j<mozneTerminy.size();j++)
 		{
+			pocetKonfliktu = 0;
 			for (ArrayList<Udalost> udalosti : seznam) 
 			{
 				for(int i=0;i<udalosti.size();i++)
 				{
+					//String test2 = mozneTerminy.get(j).getZacatek().toString()+" a� "+mozneTerminy.get(j).getKonec().toString();//testovac�!!!
+			    	//String test3 = udalosti.get(i).getZacatek().toString()+" a� "+udalosti.get(i).getKonec().toString();//testovac�!!!
 					int x = konflikt(mozneTerminy.get(j), udalosti.get(i));
 					if(x==0)
 						pocetKonfliktu++;
-					if(x>1)//POZOR test - naopak!!!
+					if(x>-1)
 						i=udalosti.size();
 				}
 			}
 			poctyKonfliktu.add(pocetKonfliktu);
-			pocetKonfliktu=0;
 		}
 		return poctyKonfliktu;
 	}
@@ -101,29 +109,27 @@ public class ManazerUdalosti {
 	    cas1.setTime(minZacatek);
 	    cas1 = zaokrouhli(cas1);
 	    
-	    String test1 = cas1.toString();//testovac�!!!
-	    String test2 = cas2.toString();//testovac�!!!
-	    String test3 = konec.toString();//testovac�!!!
-	    
 	    cas1.set(Calendar.HOUR_OF_DAY, odHodin);
 	    cas2.setTime(cas1.getTime());
-	    cas2.add(Calendar.SECOND, pozadovanaDelka);
+	    cas2.add(Calendar.MINUTE, pozadovanaDelka);
 	    while (cas2.compareTo(konec)<=0)
 	    {
-	    	
-		    if(cas2.get(Calendar.HOUR_OF_DAY)<=doHodin && cas2.get(Calendar.HOUR_OF_DAY)>=odHodin)
+	    	/*String test1 = cas1.getTime().toString();//testovac�!!!
+	    	String test2 = cas2.getTime().toString();//testovac�!!!
+	    	String test3 = konec.getTime().toString();//testovac�!!!
+*/		    if(cas2.get(Calendar.HOUR_OF_DAY)<doHodin && cas2.get(Calendar.HOUR_OF_DAY)>=odHodin)
 		    {
 		    	mozneTerminy.add(new Udalost(cas1.getTime(),cas2.getTime()));
-		    	cas1.add(Calendar.SECOND, vyhledavaniPo);
+		    	cas1.add(Calendar.MINUTE, vyhledavaniPo);
 		    }
 		    else
 		    {
-		    	if(cas2.get(Calendar.HOUR_OF_DAY)>doHodin)
+		    	//if(cas2.get(Calendar.HOUR_OF_DAY)>doHodin)
 		    		cas1.add(Calendar.DAY_OF_MONTH, 1);
 		    	cas1.set(Calendar.HOUR_OF_DAY, odHodin);
 		    }
 		    cas2.setTime(cas1.getTime()); 
-		    cas2.add(Calendar.SECOND, pozadovanaDelka);
+		    cas2.add(Calendar.MINUTE, pozadovanaDelka);
 		}
 	    
 		return mozneTerminy;
@@ -147,12 +153,36 @@ public class ManazerUdalosti {
 		return udalosti.subList(0,0);
 	} 
 	
-	private Calendar zaokrouhli(Calendar cal)
+	public Calendar zaokrouhli(Calendar cal)
 	{
 		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal;
+	}
+	
+	public Date zaokrouhli(Date dat)
+	{
+		return zaokrouhli(dat, 0);
+	}
+	
+	public Date zaokrouhli(Date dat, int hodina)
+	{
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dat);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		cal.set(Calendar.HOUR_OF_DAY, hodina);
+		dat = cal.getTime();
+		return dat;
+	}
+	
+	public int rozdilDat(Date cal1, Date cal2)
+	{
+		long rozdil = cal1.getTime() - cal2.getTime();
+		int rozdilMin = (int)(rozdil / (60 * 1000)); 
+		return Math.abs(rozdilMin);
 	}
 }

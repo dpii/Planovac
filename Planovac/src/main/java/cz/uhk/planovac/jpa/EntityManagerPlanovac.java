@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.hibernate.Hibernate;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -139,11 +138,10 @@ public class EntityManagerPlanovac implements Planovac {
 	
 	@Transactional(readOnly = true)
 	public ArrayList<ArrayList<Udalost>> nactiVsechnyUdalostiClenuSkupiny(Skupina skupina) throws DataAccessException {
-		//Query query = this.em.createQuery("SELECT uzivatel FROM Uzivatel uzivatel WHERE uzivatel.seznamSkupin.idSkupiny LIKE :idSkupiny");
-		//query.setParameter("idSkupiny", idSkupiny);
-		//Collection<Uzivatel> cleni = query.getResultList()
 		ArrayList<ArrayList<Udalost>> seznam = new ArrayList<ArrayList<Udalost>>();
-		Collection<Uzivatel> cleni = skupina.getSeznamClenu();
+		
+		//Collection<Uzivatel> cleni = skupina.getSeznamClenu();//dataAccessFailure
+		Collection<Uzivatel> cleni = nactiUzivateleDleSkupiny(skupina.getIdSkupiny());
 		for (Uzivatel uzivatel : cleni) {
 			uzivatel.setSeznamUdalosti(nactiUdalostiDleUzivatele(uzivatel.getIdUzivatele()));
 			seznam.add(uzivatel.getSeznamUdalostiSerazene());

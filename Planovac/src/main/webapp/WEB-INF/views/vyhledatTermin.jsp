@@ -9,14 +9,14 @@
       <th>
         Od data: <form:errors path="odData" cssClass="errors"/>
         <br/>
-        <form:input path="odData" size="20" maxlength="20"/>(yyyy-mm-dd)
+        <form:input path="odData" size="20" maxlength="19"/>(yyyy-mm-dd)
       </th>
     </tr>
     <tr>
       <th>
         Do data: <form:errors path="doData" cssClass="errors"/>
         <br/>
-        <form:input path="doData" size="20" maxlength="20"/>(yyyy-mm-dd)
+        <form:input path="doData" size="20" maxlength="19"/>(yyyy-mm-dd)
       </th>
     </tr>
     <tr>
@@ -30,7 +30,7 @@
       <th>
         Do hodiny: <form:errors path="doHodiny" cssClass="errors"/>
         <br/>
-        <form:input path="doHodiny" size="10" maxlength="2"/>(od 0 do 24)
+        <form:input path="doHodiny" size="10" maxlength="2"/>(od 1 do 24)
       </th>
     </tr>
     <tr>
@@ -52,6 +52,13 @@
         Nebo jen pro osobní plán: <form:errors path="jenVOsobnimPlanu" cssClass="errors"/>
         <br/>
         <form:checkbox path="jenVOsobnimPlanu"/>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        Vyhledávat po: <form:errors path="vyhledavaniPo" cssClass="errors"/>
+        <br/>
+        <form:input path="vyhledavaniPo" size="10" maxlength="4"/>(v minutách)
       </th>
     </tr>
     <tr>

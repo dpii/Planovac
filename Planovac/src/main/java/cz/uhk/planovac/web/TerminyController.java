@@ -21,6 +21,7 @@ import cz.uhk.planovac.Skupina;
 import cz.uhk.planovac.Udalost;
 import cz.uhk.planovac.Uzivatel;
 import cz.uhk.planovac.Vyhledavani;
+import cz.uhk.planovac.validation.VyhledavaniValidator;
  
 @Controller
 @SessionAttributes(types = Vyhledavani.class)
@@ -46,21 +47,27 @@ public class TerminyController {
 	@RequestMapping(value = "/vyhledatTermin", method = RequestMethod.GET)
 	public String setupForm(Model model) {
 		Vyhledavani vyhledavani = new Vyhledavani();
-		vyhledavani.setOdData(new Date());
-		vyhledavani.setDoData(new Date());
 		vyhledavani.setOdHodiny(0);
 		vyhledavani.setDoHodiny(24);
-		vyhledavani.setDelka(3000);
+		vyhledavani.setOdData(new Date());
+		vyhledavani.setDoData(new Date());
+		vyhledavani.setDelka(30);
+		vyhledavani.setVyhledavaniPo(30);
 		model.addAttribute(vyhledavani);
 		return "vyhledatTermin";
 	}
 
 	@RequestMapping(value = "/vyhledatTermin", method = RequestMethod.POST)
 	public String processSubmit(@ModelAttribute("vyhledavani") Vyhledavani vyhledavani, BindingResult result, Model model) {
-		vyhledavani.setDelka(vyhledavani.getDelka()*60);
-		ArrayList<Udalost> vysledky = vyhledavani.provedHledani(SecurityContextHolder.getContext().getAuthentication().getName(),this.planovac);
-		model.addAttribute("vysledky", vysledky);
-		return "vyhledaneTerminy";
+		new VyhledavaniValidator().validate(vyhledavani, result);
+		if (result.hasErrors()) {
+			return "vyhledatTermin";
+		}
+		else {
+			ArrayList<Udalost> vysledky = vyhledavani.provedHledani(SecurityContextHolder.getContext().getAuthentication().getName(),this.planovac);
+			model.addAttribute("vysledky", vysledky);
+			return "vyhledaneTerminy";
+		}
 	}
  
 }
