@@ -18,7 +18,7 @@ import org.hibernate.Hibernate;
 
 @Entity
 @Table(name = "UDALOSTI")
-public class Udalost {// extends BaseEntity {
+public class Udalost {
 
 	private Integer idUdalosti;
 
@@ -91,7 +91,7 @@ public class Udalost {// extends BaseEntity {
 		this.verejna = verejna;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idVlastnikaSk")
 	public Skupina getVlastnikSk() {
 		Hibernate.initialize(vlastnikSk);

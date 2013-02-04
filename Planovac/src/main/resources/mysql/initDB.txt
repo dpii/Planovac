@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS SKUPINY (
   idSkupiny INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nazev VARCHAR(30),
   idVedouciho INT(4) UNSIGNED NOT NULL,
+  popis VARCHAR(255),
+  verejna BOOLEAN,
   INDEX(nazev),
   FOREIGN KEY (idVedouciho) REFERENCES UZIVATELE(idUzivatele)
 ) engine=InnoDB;
@@ -35,8 +37,9 @@ CREATE TABLE IF NOT EXISTS UDALOSTI (
   idVlastnikaSk INT(4) UNSIGNED,
   idVlastnikaUz INT(4) UNSIGNED,
   obrazek VARCHAR(30),
-  zacatek DATE,
-  konec DATE,
+  zacatek DATETIME,
+  konec DATETIME,
+  popis VARCHAR(255),
   INDEX(nazev),
   FOREIGN KEY (idVlastnikaSk) REFERENCES SKUPINY(idSkupiny),
   FOREIGN KEY (idVlastnikaUz) REFERENCES UZIVATELE(idUzivatele)

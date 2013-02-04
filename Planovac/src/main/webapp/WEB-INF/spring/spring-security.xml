@@ -20,6 +20,10 @@
 		<intercept-url pattern="/uzivatel" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/vyhledatTermin" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/udalost/{idUdalosti}/upravit" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/uzivatel/upravit" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/uzivatel/udalosti" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/skupina/{idSkupiny}/upravit" access="hasRole('ROLE_USER')"/>
 		
 		<form-login login-page="/login" 
 			authentication-failure-url="/loginfailed" 

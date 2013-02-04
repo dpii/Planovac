@@ -44,7 +44,7 @@ public class UzivatelForm {
 
 	@RequestMapping(value = "/novyuzivatel", method = RequestMethod.POST)
 	public String processSubmit(@ModelAttribute Uzivatel uzivatel, BindingResult result, SessionStatus status) {
-		new UzivatelValidator().validate(uzivatel, result);
+		new UzivatelValidator().validate(uzivatel, result, this.planovac);
 		if (result.hasErrors()) {
 			return "novyuzivatel";
 		}
@@ -67,7 +67,13 @@ public class UzivatelForm {
 
 	@RequestMapping(value = "/uzivatel/upravit", method = RequestMethod.PUT)
 	public String processSubmitUprava(@ModelAttribute Uzivatel uzivatel, BindingResult result, SessionStatus status) {
-		new UzivatelValidator().validate(uzivatel, result);
+		//kdyby si zmìnil login
+		String prihlaseny = SecurityContextHolder.getContext().getAuthentication().getName();
+		if(prihlaseny.compareTo(uzivatel.getLogin())==0)
+			new UzivatelValidator().validate(uzivatel, result);
+		else
+			new UzivatelValidator().validate(uzivatel, result, this.planovac);
+		
 		if (result.hasErrors()) {
 			return "novyuzivatel";
 		}
@@ -76,8 +82,13 @@ public class UzivatelForm {
 			uzivatel.setPovolen(true);
 			this.planovac.ulozUzivatele(uzivatel);
 			status.setComplete();
-			return "redirect:/uzivatel";
+			//kdyby si zmìnil login
+			if(prihlaseny.compareTo(uzivatel.getLogin())==0)
+				return "redirect:/uzivatel";
+			else
+				return "redirect:/logout";
 		}
 	}
+
 
 }

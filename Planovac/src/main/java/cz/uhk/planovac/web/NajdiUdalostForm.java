@@ -39,26 +39,20 @@ public class NajdiUdalostForm {
 		@RequestMapping(value = "/udalost", method = RequestMethod.GET)
 		public String processSubmit(Udalost udalost, BindingResult result, Model model) {
 
-			// allow parameterless GET request for /owners to return all records
 			if (udalost.getNazev() == null) {
-				udalost.setZacatek(null); // empty string signifies broadest possible search
+				udalost.setZacatek(null);
 			}
-
-			// find owners by last name
 			
 			Collection<Udalost> results = this.planovac.nactiUdalostiDleZacatku(udalost.getZacatek());
 			if (results.size() < 1) {
-				// no owners found
 				result.rejectValue("zacatek", "nenalezeno", "nenalezeno");
 				return "udalosti/hledat";
 			}
 			if (results.size() > 1) {
-				// multiple owners found
 				model.addAttribute("selections", results);
 				return "udalosti/list";
 			}
 			else {
-				// 1 owner found
 				udalost = results.iterator().next();
 				return "redirect:/udalosti/" + udalost.getIdUdalosti();
 			}

@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 
+import cz.uhk.planovac.Planovac;
 import cz.uhk.planovac.Uzivatel;
 
 public class UzivatelValidator {
@@ -16,6 +17,7 @@ public class UzivatelValidator {
 	private static final String EMAIL_PATTERN = 
             "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
+	//nezjiöùuje dostupnost loginu
 	public void validate(Uzivatel uzivatel, Errors errors) {
 		if (!StringUtils.hasLength(uzivatel.getLogin())) {
 			errors.rejectValue("login", "required", "PovinnÈ pole");
@@ -40,6 +42,14 @@ public class UzivatelValidator {
 				}
 			}
 		}
+	}
+	//zjiöùuje dostupnost loginu
+	public void validate(Uzivatel uzivatel, Errors errors, Planovac planovac) {
+		
+		if (!planovac.jeLoginVolny(uzivatel.getLogin())) {
+			errors.rejectValue("login", "duplicity", "Tento login uû je obsazen˝, zvolte jin˝");
+		}
+		validate(uzivatel, errors);
 	}
 	
 	private boolean jeMailOk(String mail) {

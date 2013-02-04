@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ManazerUdalosti {
 	
-	int vyhledavaniPo = 30 ;//časové úseky (s) po kterých se bude zkoušet shoda s termínem - větší číslo znamená méně možných termínů, ale je to rychlejší 
+	int vyhledavaniPo = 30 ;//casove useky (min) po kterych se bude zkouset shoda se zadanim - vetsi cislo znamena vice moznych terminu, ale je to pomalejsi 
 	
 	public void setVyhledavaniPo(int vyhledavaniPo) {
 		this.vyhledavaniPo = vyhledavaniPo;

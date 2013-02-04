@@ -26,7 +26,7 @@
       <th>
         Popis: <form:errors path="popis" cssClass="errors"/>
         <br/>
-        <form:input type="textarea" path="popis" size="30" maxlength="50"/>
+        <form:input type="textarea" path="popis" size="30" maxlength="200"/>
       </th>
     </tr>
     <tr>
@@ -41,6 +41,20 @@
         Konec: <form:errors path="konec" cssClass="errors"/>
         <br/>
         <form:input path="konec" size="20" maxlength="20"/>(rrrr-MM-dd hh:mm:ss)
+      </th>
+    </tr>
+    <tr>
+      <th>
+        Pro skupinu: <form:errors path="vlastnikSk" cssClass="errors"/>
+        <br/>
+        <form:select path="vlastnikSk" items="${skupiny}"/>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        Veřejně přístupná: <form:errors path="verejna" cssClass="errors"/>
+        <br/>
+        <form:checkbox path="verejna"/>
       </th>
     </tr>
      <tr>
