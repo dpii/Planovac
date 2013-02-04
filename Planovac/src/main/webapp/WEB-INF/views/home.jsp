@@ -11,46 +11,46 @@
     <div id="featured_content">
       <div class="featured_box" id="fc1"><img src="<spring:url value="/resources/slides/1.gif" htmlEscape="true" />">
         <div class="floater">
-          <h2>Nullamlacus dui ipsum</h2>
-          <p>Attincidunt vel nam a maurisus lacinia consectetus magnisl sed ac morbi. Inmaurisus habitur pretium eu et ac vest penatibus id lacus parturpis.</p>
-          <p class="readmore"><a href="#">Continue Reading &raquo;</a></p>
+          <h2>Zapište si důležité termíny</h2>
+          <p>Plánovač je jednoduchá, přehledná aplikace k vytvoření časového hamonogramu. Plánovač Vám dá vědet o blížícím se termínu nebo schůzce. </p>
+          <p class="readmore"><a href="#">Více &raquo;</a></p>
         </div>
       </div>
       <div class="featured_box" id="fc2"><img src="<spring:url value="/resources/slides/2.gif" htmlEscape="true" />">
         <div class="floater">
-          <h2>Aliquatjusto quisque nam</h2>
-          <p>Attincidunt vel nam a maurisus lacinia consectetus magnisl sed ac morbi. Inmaurisus habitur pretium eu et ac vest penatibus id lacus parturpis.</p>
-          <p class="readmore"><a href="#">Continue Reading &raquo;</a></p>
+          <h2>Začněte ihned</h2>
+          <p>Vytvořte si svůj účet, přihlašte se a přidávejte nadcházející události. Nejblizší termíny už nezmeškáte. </p>
+          <p class="readmore"><a href="#">Více &raquo;</a></p>
         </div>
       </div>
       <div class="featured_box" id="fc3"><img src="<spring:url value="/resources/slides/3.gif" htmlEscape="true" />">
         <div class="floater">
-          <h2>Aliquatjusto quisque nam</h2>
-          <p>Attincidunt vel nam a maurisus lacinia consectetus magnisl sed ac morbi. Inmaurisus habitur pretium eu et ac vest penatibus id lacus parturpis.</p>
-          <p class="readmore"><a href="#">Continue Reading &raquo;</a></p>
+          <h2>Osobní i pracovní využití</h2>
+          <p>Plánovač můžete využít k plánování jak Vašich osobních termínů tak i pracovních schůzek.</p>
+          <p class="readmore"><a href="#">Více &raquo;</a></p>
         </div>
       </div>
       <div class="featured_box" id="fc4"><img src="<spring:url value="/resources/slides/4.gif" htmlEscape="true" />">
         <div class="floater">
-          <h2>Aliquatjusto quisque nam</h2>
-          <p>Attincidunt vel nam a maurisus lacinia consectetus magnisl sed ac morbi. Inmaurisus habitur pretium eu et ac vest penatibus id lacus parturpis.</p>
-          <p class="readmore"><a href="#">Continue Reading &raquo;</a></p>
+          <h2>Můj rozvrh</h2>
+          <p>Plánovač dokáze najít vhodny termín pro novou událost v rámci skupiny, kam můžete přídat své kolegy a přátele.</p>
+          <p class="readmore"><a href="#">Více &raquo;</a></p>
         </div>
       </div>
       <div class="featured_box" id="fc5"><img src="<spring:url value="/resources/slides/5.gif" htmlEscape="true" />">
         <div class="floater">
-          <h2>Dapiensociis temper donec</h2>
-          <p>Attincidunt vel nam a maurisus lacinia consectetus magnisl sed ac morbi. Inmaurisus habitur pretium eu et ac vest penatibus id lacus parturpis.</p>
-          <p class="readmore"><a href="#">Continue Reading &raquo;</a></p>
+          <h2>Kdy mají ostatní čas?</h2>
+          <p>Možná ani sami nevíte, kdy se daná událost hodí Vám a vaším kolegům. Plánovač může najít vhodné řešení.</p>
+          <p class="readmore"><a href="#">Více &raquo;</a></p>
         </div>
       </div>
     </div>
     <ul id="featured_tabs">
-      <li><a href="#fc1">All About The University</a></li>
-      <li><a href="#fc2">Why You Should Study With Us</a></li>
-      <li><a href="#fc3">Education And Student Experience</a></li>
-      <li><a href="#fc4">Alumni And Its Donors</a></li>
-      <li class="last"><a href="#fc5">Latest University News &amp; Events</a></li>
+      <li><a href="#fc1">O plánovači</a></li>
+      <li><a href="#fc2">Jak začit</a></li>
+      <li><a href="#fc3">Vytvořte si svůj rozvrh</a></li>
+      <li><a href="#fc4">Plánujte s ostatními</a></li>
+      <li class="last"><a href="#fc5">Najděte společné termíny</a></li>
     </ul>
 
     <!-- ###### -->

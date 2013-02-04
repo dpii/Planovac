@@ -16,6 +16,10 @@
 <link rel="stylesheet"
 	href="<spring:url value="/resources/default.css" context="planovac" htmlEscape="true" />"
 	type="text/css" />
+	
+	<link rel="stylesheet"
+	href="<spring:url value="http://fonts.googleapis.com/css?family=Cantarell:regular,italic,bold,bolditalic" context="planovac" htmlEscape="true" />"
+	type="text/css" />
 <title>Plánovač : skupinový i osobní rozvrh</title>
 
 </head>
