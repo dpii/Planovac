@@ -9,15 +9,18 @@
 
 
 <head>
-<script type="text/javascript" src="<spring:url value="/resources/scripts/jquery-1.4.1.min.js" htmlEscape="true" />"></script>
-<script type="text/javascript" src="<spring:url value="/resources/scripts/jquery-ui-1.7.2.custom.min.js" htmlEscape="true" />"></script>
-<script type="text/javascript" src="<spring:url value="/resources/scripts/jquery.tabs.setup.js" htmlEscape="true" />"></script>
+<script type="text/javascript"
+	src="<spring:url value="/resources/scripts/jquery-1.4.1.min.js" htmlEscape="true" />"></script>
+<script type="text/javascript"
+	src="<spring:url value="/resources/scripts/jquery-ui-1.7.2.custom.min.js" htmlEscape="true" />"></script>
+<script type="text/javascript"
+	src="<spring:url value="/resources/scripts/jquery.tabs.setup.js" htmlEscape="true" />"></script>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
 <link rel="stylesheet"
-	href="<spring:url value="/resources/default.css" context="planovac" htmlEscape="true" />"
+	href="<spring:url value="/resources/planovac.css" context="planovac" htmlEscape="true" />"
 	type="text/css" />
-	
-	<link rel="stylesheet"
+
+<link rel="stylesheet"
 	href="<spring:url value="http://fonts.googleapis.com/css?family=Cantarell:regular,italic,bold,bolditalic" context="planovac" htmlEscape="true" />"
 	type="text/css" />
 <title>Plánovač : skupinový i osobní rozvrh</title>
@@ -37,11 +40,40 @@
 				src="<spring:url value="/resources/name.png" htmlEscape="true" />"></a>
 		</div>
 
+		<div id="user_login">
 
-		<div id="login">
-			login: <input type="text" size="10" /> heslo: <input type="text"
-				size="10" /> <input type="button" size="10" onclick="whatever"
-				value="Přihlásit"></input>
+
+			<sec:authorize access="hasRole('ROLE_ANONYMOUS')">
+				<c:if test="${not empty error}">
+					<div class="errorblock">
+						Pokus o přihlášení nebyl úspěšný.<br /> Důvod :
+						${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+					</div>
+				</c:if>
+
+				<form name='f' action="<c:url value='j_spring_security_check' />"
+					method="post">
+
+					<table>
+						<tr>
+							<td>Login:</td>
+							<td><input type='text' name='j_username' value=''></td>
+							<td>Heslo:</td>
+							<td><input type='password' name='j_password' /></td>
+
+
+							<td colspan='2'><input name="submit" type="submit"
+								value="Přihlásit" /></td>
+						</tr>
+					</table>
+
+				</form>
+
+			</sec:authorize>
+			<sec:authorize access="hasRole('ROLE_USER')">
+
+				<a href="<spring:url value="/logout" htmlEscape="true" />">Logout</a>
+			</sec:authorize>
 		</div>
 	</div>
 

@@ -15,7 +15,7 @@
 <br/>
 <form:form modelAttribute="uzivatel" method="${method}">
   <table>
-    <tr>
+     <tr>
       <th>
         Login: <form:errors path="login" cssClass="errors"/>
         <br/>

@@ -20,19 +20,19 @@ public class LoginController {
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public String login(ModelMap model) {
  
-		return "login";
+		return "home";
 	}
 	
 	@RequestMapping(value = "/denied")
  	public String denied() {
-		return "denied";
+		return "home";
 	}
  
 	@RequestMapping(value="/loginfailed", method = RequestMethod.GET)
 	public String loginerror(ModelMap model) {
  
 		model.addAttribute("error", "true");
-		return "login";
+		return "home";
  
 	}
  

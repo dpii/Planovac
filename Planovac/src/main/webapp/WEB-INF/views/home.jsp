@@ -12,7 +12,7 @@
       <div class="featured_box" id="fc1"><img src="<spring:url value="/resources/slides/1.gif" htmlEscape="true" />">
         <div class="floater">
           <h2>Zapište si důležité termíny</h2>
-          <p>Plánovač je jednoduchá, přehledná aplikace k vytvoření časového hamonogramu. Plánovač Vám dá vědet o blížícím se termínu nebo schůzce. </p>
+          <p>Plánovač je jednoduchá, přehledná webová aplikace k vytvoření časového hamonogramu. Plánovač Vám dá vědet o blížícím se termínu nebo schůzce. </p>
           <p class="readmore"><a href="#">Více &raquo;</a></p>
         </div>
       </div>

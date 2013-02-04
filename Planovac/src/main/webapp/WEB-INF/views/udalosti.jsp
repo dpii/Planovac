@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/header.jsp" %>
 	
 	<h2>Události:</h2>
-	
+	ščřšř
 	<h3>${nadpis}</h3>
 <table>
   <thead>
