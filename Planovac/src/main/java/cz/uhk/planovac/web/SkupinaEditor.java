@@ -17,6 +17,8 @@ public class SkupinaEditor extends PropertyEditorSupport {
 
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
+		if (text.equals(""))
+			setValue(null);
 		for (Skupina skupina : this.planovac.vemSkupiny()) {
 			if (skupina.getNazev().equals(text)) {
 				setValue(skupina);

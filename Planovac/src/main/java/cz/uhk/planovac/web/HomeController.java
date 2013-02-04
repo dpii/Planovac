@@ -99,7 +99,8 @@ public class HomeController {
 		ArrayList<Udalost> udalosti = new ArrayList<Udalost>(
 				manazerUdalosti.seradUdalosti(uzivatel.getSeznamUdalosti()));
 		mav.addObject("seznamUdalosti", udalosti);
-		mav.addObject("nadpis", "Vï¿½echny vaï¿½e udï¿½losti");
+		mav.addObject("nadpis", "Všechny vaše události");
+		mav.addObject("verejne", false);
 		return mav;
 	}
 
@@ -110,7 +111,8 @@ public class HomeController {
 				manazerUdalosti.seradUdalosti(planovac.vemVerejneUdalosti()));
 		mav.addObject("seznamUdalosti",
 				manazerUdalosti.getNAktualnichUdalosti(udalosti, 100));
-		mav.addObject("nadpis", "NejbliÅ¾Å¡Ã­ veÅ™ejnÃ© udÃ¡losti");
+		mav.addObject("nadpis", "Nejbližší veøejné události");
+		mav.addObject("verejne", true);
 		return mav;
 	}
 

@@ -32,7 +32,7 @@
     </tr>
   </c:forEach>
 </table>
-<c:if test="${nadpis!='Nejbližší veřejné události'}">
+<c:if test="${!verejne}">
 <a href="<spring:url value="/novaudalost" htmlEscape="true" />">Přidat událost</a>
 <br/>
 <a href="<spring:url value="/vyhledatTermin" htmlEscape="true" />">Najít volné termíny</a>
