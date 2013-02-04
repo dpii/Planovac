@@ -12,7 +12,7 @@
       <div class="featured_box" id="fc1"><img src="<spring:url value="/resources/slides/1.gif" htmlEscape="true" />">
         <div class="floater">
           <h2>Zapište si důležité termíny</h2>
-          <p>Plánovač je jednoduchá, přehledná webová aplikace k vytvoření časového hamonogramu. Plánovač Vám dá vědet o blížícím se termínu nebo schůzce. </p>
+          <p>Plánovač je přehledná webová aplikace k vytvoření časového hamonogramu. Plánovač Vám dá vědet o blížícím se termínu nebo schůzce. </p>
           <p class="readmore"><a href="#">Více &raquo;</a></p>
         </div>
       </div>
@@ -26,7 +26,7 @@
       <div class="featured_box" id="fc3"><img src="<spring:url value="/resources/slides/3.gif" htmlEscape="true" />">
         <div class="floater">
           <h2>Osobní i pracovní využití</h2>
-          <p>Plánovač můžete využít k plánování jak Vašich osobních termínů tak i pracovních schůzek.</p>
+          <p>Plánovač můžete využít k plánování volného času, aktivit s přáteli tak i pracovních schůzek.</p>
           <p class="readmore"><a href="#">Více &raquo;</a></p>
         </div>
       </div>
@@ -40,7 +40,7 @@
       <div class="featured_box" id="fc5"><img src="<spring:url value="/resources/slides/5.gif" htmlEscape="true" />">
         <div class="floater">
           <h2>Kdy mají ostatní čas?</h2>
-          <p>Možná ani sami nevíte, kdy se daná událost hodí Vám a vaším kolegům. Plánovač může najít vhodné řešení.</p>
+          <p>Plánovač dokáže nalézt vhodný termín pro Vás i Vaše kolegy.</p>
           <p class="readmore"><a href="#">Více &raquo;</a></p>
         </div>
       </div>

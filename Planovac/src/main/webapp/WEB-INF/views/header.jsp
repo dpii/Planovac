@@ -60,8 +60,6 @@
 							<td><input type='text' name='j_username' value=''></td>
 							<td>Heslo:</td>
 							<td><input type='password' name='j_password' /></td>
-
-
 							<td colspan='2'><input name="submit" type="submit"
 								value="Přihlásit" /></td>
 						</tr>

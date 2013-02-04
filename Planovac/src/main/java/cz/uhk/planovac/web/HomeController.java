@@ -120,28 +120,28 @@ public class HomeController {
 		boolean opravneni = false;
 		int neniVeSkupine = 0;
 		Udalost udalost = this.planovac.nactiUdalost(idUdalosti);
-		//Uzivatel vedouci = skupina.getVedouci();
-		//Collection<Udalost> udalosti = planovac
-			//	.nactiUzivateleDleSkupiny(idSkupiny);
-		//Collection<Uzivatel> cleni = skupina.getSeznamClenu(); //chyba:
-		// "collection is not associated with any session"
-		//skupina.setSeznamClenu(cleni);
+		Uzivatel vlastnik = udalost.getVlastnikUz();
 		
 		
 		String prihlasenyLogin = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
+		
+		Uzivatel prihlaseny = this.planovac
+				.nactiUzivatelePodleLoginu(prihlasenyLogin);
+				
+		/*
 		if (prihlasenyLogin.compareToIgnoreCase("anonymousUser") != 0) {
+			if (skupina.isVerejna())
+				neniVeSkupine = 1;
 			
+		}*/
 			
+			if (vlastnik.getIdUzivatele().equals(prihlaseny.getIdUzivatele()))
+				opravneni = true;
 
-
-		}
-
-
-	//	mav.addObject("skupina", skupina);
-		//mav.addObject("opravneni", opravneni);
-	//	mav.addObject("neniVeSkupine", neniVeSkupine);
 		mav.addObject("udalost", udalost);
+		mav.addObject("opravneni", opravneni);
+		
 		return mav;
 	}
 
