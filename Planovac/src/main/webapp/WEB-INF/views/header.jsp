@@ -44,13 +44,6 @@
 
 
 			<sec:authorize access="hasRole('ROLE_ANONYMOUS')">
-				<c:if test="${not empty error}">
-					<div class="errorblock">
-						Pokus o přihlášení nebyl úspěšný.<br /> Důvod :
-						${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
-					</div>
-				</c:if>
-
 				<form name='f' action="<c:url value='j_spring_security_check' />"
 					method="post">
 
@@ -73,6 +66,14 @@
 				<a href="<spring:url value="/logout" htmlEscape="true" />">Logout</a>
 			</sec:authorize>
 		</div>
+			<sec:authorize access="hasRole('ROLE_ANONYMOUS')">
+				<c:if test="${not empty error}">
+					<div class="errorblock">
+						Zadali jste špatně jméno nebo heslo.<br />
+						${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+					</div>
+				</c:if>
+			</sec:authorize>
 	</div>
 
 	<div id="main">

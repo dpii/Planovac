@@ -58,14 +58,15 @@
 
 
 <h1>
-	Hello world!  test znaků ěščřžýáíéČŘŤ
+	PPRO 2013
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
+<P>  ${serverTime}. Na projektu stále pracujeme.</P>
 
 <ul>
-  <li><a href="<spring:url value="/novyuzivatel" htmlEscape="true" />">Registrace</a></li>
+  
   <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
+  <li><a href="<spring:url value="/novyuzivatel" htmlEscape="true" />">Registrace</a></li>
 	<li><a href="<spring:url value="/login" htmlEscape="true" />">Login</a></li>
   </sec:authorize>
   <li><a href="<spring:url value="/uzivatele" htmlEscape="true" />">Výpis uživatelů</a></li>

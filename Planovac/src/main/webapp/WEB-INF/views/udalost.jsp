@@ -23,5 +23,16 @@
 		<a href="<spring:url value="/udalost/${udalost.idUdalosti}/upravit" htmlEscape="true" />">Upravit událost</a>
 		<br/>
 	</c:if>
+	<!--
+	<c:if test="${ucastniSeUdalosti==1}">
+		<a href="<spring:url value="/udalosti/${skupina.idSkupiny}/pridatSe" htmlEscape="true" />">Přidat se ke skupině</a>
+		<br/>
+	</c:if>
+	<c:if test="${neniVeSkupine==2}">
+		<a href="<spring:url value="/udalosti/${skupina.idSkupiny}/odebratSe" htmlEscape="true" />">Odebrat se od skupiny</a>
+		<br/>
+	</c:if>
+	-->
+	<a href="JavaScript:history.back()">Zpět</a>
 
 <%@ include file="/WEB-INF/views/footer.jsp"%>

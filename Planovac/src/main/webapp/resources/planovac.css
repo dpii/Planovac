@@ -16,6 +16,13 @@
 	width: 500px;
 }
 
+#errorblock {
+	
+	width: 350px;
+	float: left;
+	
+}
+
 #name {
 	margin-left: 20px;
 	margin-top: 20px;
