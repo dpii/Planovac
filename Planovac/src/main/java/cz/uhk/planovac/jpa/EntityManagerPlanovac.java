@@ -2,6 +2,7 @@ package cz.uhk.planovac.jpa;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -110,12 +111,15 @@ public class EntityManagerPlanovac implements Planovac {
 	}
 
 	public void smazUdalost(int id) throws DataAccessException {
-		Query query = this.em.createNativeQuery("DELETE FROM udalosti_uzivatelu WHERE idUdalosti LIKE :id");
-		query.setParameter("id", id );
-		query.executeUpdate();
-		query = this.em.createNativeQuery("DELETE FROM udalosti WHERE idUdalosti LIKE :id");
-		query.setParameter("id", id );
-		query.executeUpdate();
+		//em extended - je potøeba navíc
+		Udalost udalost = nactiUdalost(id);
+		for (Uzivatel uzivatel : udalost.getUcastnici()) {
+			for (Iterator<Udalost> it = uzivatel.getSeznamUdalosti().iterator(); it.hasNext(); )
+		        if (it.next().getIdUdalosti() == id)
+		            it.remove();
+			ulozUzivatele(uzivatel);
+		}
+		this.em.remove(udalost);
 	}
 
 	@Transactional(readOnly = true)
@@ -223,12 +227,23 @@ public class EntityManagerPlanovac implements Planovac {
 		for (Udalost udalost : udalosti) {
 			smazUdalost(udalost.getIdUdalosti());
 		}
-		Query query = this.em.createNativeQuery("DELETE FROM skupiny_uzivatelu WHERE idSkupiny LIKE :id");
+		//em extended - není potøeba
+		/*Query query = this.em.createNativeQuery("DELETE FROM skupiny_uzivatelu WHERE idSkupiny LIKE :id");
 		query.setParameter("id", id );
 		query.executeUpdate();
 		query = this.em.createNativeQuery("DELETE FROM skupiny WHERE idSkupiny LIKE :id");
 		query.setParameter("id", id );
-		query.executeUpdate();
+		query.executeUpdate();*/
+		
+		//em extended - je potøeba navíc
+		Skupina skupina = nactiSkupinu(id);
+		for (Uzivatel uzivatel : skupina.getSeznamClenu()) {
+			for (Iterator<Skupina> it = uzivatel.getSeznamSkupin().iterator(); it.hasNext(); )
+		        if (it.next().getIdSkupiny() == id)
+		            it.remove();
+			ulozUzivatele(uzivatel);
+		}
+		this.em.remove(skupina);
 	}
 	
 	public void pridatUzivateleDoSkupiny(int idUzivatele, int idSkupiny) throws DataAccessException {

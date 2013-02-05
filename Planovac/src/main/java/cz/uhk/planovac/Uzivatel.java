@@ -190,7 +190,7 @@ public class Uzivatel {
 		this.prijmeni = prijmeni;
 	}
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.ALL})
+	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.MERGE})
 	@JoinTable(name="SKUPINY_UZIVATELU",
 	   joinColumns={@JoinColumn(name="idUzivatele")},
 	   inverseJoinColumns={@JoinColumn(name="idSkupiny")})
@@ -214,7 +214,7 @@ public class Uzivatel {
 	}
 	
 	//EAGER zmìnit na LAZY až se najde øešení "could not initialize" chyby!
-	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.ALL})
+	@ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.MERGE})
 	@JoinTable(name="UDALOSTI_UZIVATELU",
 	   joinColumns={@JoinColumn(name="idUzivatele")},
 	   inverseJoinColumns={@JoinColumn(name="idUdalosti")})

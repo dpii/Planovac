@@ -1,6 +1,7 @@
 
 package cz.uhk.planovac.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -57,6 +58,11 @@ public class SkupinaForm {
 		else {
 			Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
 			skupina.setVedouci(uzivatel);
+			//em extended - je potøeba navíc
+				Collection<Uzivatel> seznamClenu = new ArrayList<Uzivatel>();
+				seznamClenu.add(uzivatel);
+				skupina.setSeznamClenu(seznamClenu);
+			
 			uzivatel.getSeznamSkupin().add(skupina);
 			this.planovac.ulozUzivatele(uzivatel);
 			status.setComplete();

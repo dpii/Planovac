@@ -70,6 +70,11 @@ public class UdalostForm {
 		else {
 			Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
 			udalost.setVlastnikUz(uzivatel);
+			//em extended - je potøeba navíc
+				Collection<Uzivatel> seznamUcastniku = new ArrayList<Uzivatel>();
+				seznamUcastniku.add(uzivatel);
+				udalost.setUcastnici(seznamUcastniku);
+			
 			uzivatel.getSeznamUdalosti().add(udalost);
 			this.planovac.ulozUzivatele(uzivatel);
 			status.setComplete();

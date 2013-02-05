@@ -1,6 +1,9 @@
 
 package cz.uhk.planovac.web;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import cz.uhk.planovac.Planovac;
+import cz.uhk.planovac.Skupina;
+import cz.uhk.planovac.Udalost;
 import cz.uhk.planovac.Uzivatel;
 import cz.uhk.planovac.validation.UzivatelValidator;
 
@@ -51,6 +56,10 @@ public class UzivatelForm {
 		else {
 			uzivatel.setRole("ROLE_USER");
 			uzivatel.setPovolen(true);
+			Collection<Udalost> seznam1 = new ArrayList<Udalost>();
+			uzivatel.setSeznamUdalosti(seznam1);
+			Collection<Skupina> seznam2 = new ArrayList<Skupina>();
+			uzivatel.setSeznamSkupin(seznam2);
 			this.planovac.ulozUzivatele(uzivatel);
 			status.setComplete();
 			return "redirect:/uzivatele/" + uzivatel.getIdUzivatele();
