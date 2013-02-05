@@ -48,6 +48,7 @@
 					method="post">
 
 					<table>
+					
 						<tr>
 							<td>Login:</td>
 							<td><input type='text' name='j_username' value=''></td>
@@ -57,23 +58,22 @@
 								value="Přihlásit" /></td>
 						</tr>
 					</table>
-
+					<c:if test="${not empty error}">
+								<div id="errorblock">Zadali jste špatně jméno nebo heslo.</div>
+							</c:if>
 				</form>
+				</sec:authorize>
+				</div>
+		
+		
 
-			</sec:authorize>
-			<sec:authorize access="hasRole('ROLE_USER')">
+		
+		<sec:authorize access="hasRole('ROLE_USER')">
+<div id="user_login">
+			<a href="<spring:url value="/logout" htmlEscape="true" />">Logout</a>
+			</div>
+		</sec:authorize>
 
-				<a href="<spring:url value="/logout" htmlEscape="true" />">Logout</a>
-			</sec:authorize>
-		</div>
-			<sec:authorize access="hasRole('ROLE_ANONYMOUS')">
-				<c:if test="${not empty error}">
-					<div class="errorblock">
-						Zadali jste špatně jméno nebo heslo.<br />
-						${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
-					</div>
-				</c:if>
-			</sec:authorize>
 	</div>
 
 	<div id="main">
