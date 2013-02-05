@@ -126,29 +126,37 @@ public class HomeController {
 	public ModelAndView udalostHandler(@PathVariable("idUdalosti") int idUdalosti) {
 		ModelAndView mav = new ModelAndView("udalost");
 		boolean opravneni = false;
-		int neniVeSkupine = 0;
+		int ucastniSeUdalosti = 0;
 		Udalost udalost = this.planovac.nactiUdalost(idUdalosti);
 		Uzivatel vlastnik = udalost.getVlastnikUz();
 		
 		
 		String prihlasenyLogin = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
+		//em extended - není potøeba
+		Collection<Uzivatel> ucastnici = planovac.nactiUzivateleDleUdalosti(idUdalosti);
+		//Collection<Uzivatel> ucastnici = udalost.getUcastnici();
 		
-		Uzivatel prihlaseny = this.planovac
-				.nactiUzivatelePodleLoginu(prihlasenyLogin);
-				
-		/*
+		udalost.setUcastnici(ucastnici);
 		if (prihlasenyLogin.compareToIgnoreCase("anonymousUser") != 0) {
-			if (skupina.isVerejna())
-				neniVeSkupine = 1;
-			
-		}*/
-			
+			if (udalost.isVerejna())
+				ucastniSeUdalosti = 1;
+			Uzivatel prihlaseny = this.planovac
+					.nactiUzivatelePodleLoginu(prihlasenyLogin);
+			for (Uzivatel uzivatel : ucastnici) {
+				if (uzivatel.getIdUzivatele().equals(
+						prihlaseny.getIdUzivatele()))
+					ucastniSeUdalosti = 2;
+			}
 			if (vlastnik.getIdUzivatele().equals(prihlaseny.getIdUzivatele()))
 				opravneni = true;
 
+		}
+
 		mav.addObject("udalost", udalost);
 		mav.addObject("opravneni", opravneni);
+		mav.addObject("ucastniSeUdalosti", ucastniSeUdalosti);
+		mav.addObject("seznamUcastniku", ucastnici);
 		
 		return mav;
 	}
@@ -160,10 +168,9 @@ public class HomeController {
 		int neniVeSkupine = 0;
 		Skupina skupina = this.planovac.nactiSkupinu(idSkupiny);
 		Uzivatel vedouci = skupina.getVedouci();
-		Collection<Uzivatel> cleni = planovac
-				.nactiUzivateleDleSkupiny(idSkupiny);
-		// Collection<Uzivatel> cleni = skupina.getSeznamClenu(); //chyba:
-		// "collection is not associated with any session"
+		//em extended - není potøeba
+		//Collection<Uzivatel> cleni = planovac.nactiUzivateleDleSkupiny(idSkupiny);
+		 Collection<Uzivatel> cleni = skupina.getSeznamClenu(); //chyba:"collection is not associated with any session" EDIT-05.02-už ne!
 		skupina.setSeznamClenu(cleni);
 		String prihlasenyLogin = SecurityContextHolder.getContext()
 				.getAuthentication().getName();

@@ -1,8 +1,12 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/header.jsp"%>
 
-<h2>Skupina ${skupina.nazev} (${vedouci.jmeno}
-	${vedouci.prijmeni}):</h2>
+<h2>Skupina ${skupina.nazev} - vedoucí: ${vedouci.login} 
+	<c:if test="${!(vedouci.jmeno==null && vedouci.prijmeni==null)}">
+	(${vedouci.jmeno}
+	${vedouci.prijmeni})
+	</c:if>
+	</h2>
 <h3>Popis</h3>
 <div>${skupina.popis}</div>
 <h3>Seznam členů</h3>

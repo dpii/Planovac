@@ -23,7 +23,10 @@
 		<intercept-url pattern="/udalost/{idUdalosti}/upravit" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/uzivatel/upravit" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/uzivatel/udalosti" access="hasRole('ROLE_USER')"/>
-		<intercept-url pattern="/skupina/{idSkupiny}/upravit" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/udalost/{idUdalosti}/pridatSe" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/udalost/{idUdalosti}/odebratSe" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/skupiny/{idSkupiny}/pridatSe" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/skupiny/{idSkupiny}/odebratSe" access="hasRole('ROLE_USER')"/>
 		
 		<form-login login-page="/login" 
 			authentication-failure-url="/loginfailed" 

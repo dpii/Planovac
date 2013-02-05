@@ -113,7 +113,7 @@ public class Udalost {
 		this.vlastnikUz = vlastnikUz;
 	}
 
-	// konstruktor pro ManazerUdalosti - pro doÄ�asnÃ© uklÃ¡dÃ¡nÃ­ Ä�asovÃ½ch ÃºsekÅ¯
+	// konstruktor pro ManazerUdalosti
 	public Udalost(Date zacatek, Date konec) {
 		super();
 		this.zacatek = zacatek;

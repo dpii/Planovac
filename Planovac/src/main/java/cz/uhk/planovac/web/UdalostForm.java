@@ -4,6 +4,7 @@ package cz.uhk.planovac.web;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -79,7 +80,8 @@ public class UdalostForm {
 	@RequestMapping(value = "/udalost/{idUdalosti}/upravit", method = RequestMethod.GET)
 	public String setupFormUprava(Model model, @PathVariable("idUdalosti") int idUdalosti) {
 		Udalost udalost = planovac.nactiUdalost(idUdalosti);
-		udalost.setVlastnikUz(planovac.nactiVlastnikaUdalosti(idUdalosti));
+		//em extended - není potøeba
+		//udalost.setVlastnikUz(planovac.nactiVlastnikaUdalosti(idUdalosti));
 		if(udalost.getVlastnikUz().getLogin().compareToIgnoreCase(SecurityContextHolder.getContext().getAuthentication().getName())!=0)
 			return "redirect:/denied";
 		model.addAttribute(udalost);
@@ -93,12 +95,10 @@ public class UdalostForm {
 			return "novaudalost";
 		}
 		else {
-			udalost.setUcastnici(planovac.nactiUzivateleDleUdalosti(idUdalosti));
-			Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
-			udalost.setVlastnikUz(uzivatel);
-			//uzivatel.getSeznamUdalosti().add(udalost);
-			//this.planovac.smazUdalost(idUdalosti);
-			//this.planovac.ulozUzivatele(uzivatel);
+			//em extended - není potøeba
+				//udalost.setUcastnici(planovac.nactiUzivateleDleUdalosti(idUdalosti));
+				//Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
+				//udalost.setVlastnikUz(uzivatel);
 			this.planovac.ulozUdalost(udalost);
 			status.setComplete();
 			return "redirect:/udalost/"+udalost.getIdUdalosti();
@@ -114,14 +114,43 @@ public class UdalostForm {
 	@RequestMapping(value = "/udalost/{idUdalosti}/pridatSe")
 	public String pridatSe(@PathVariable("idUdalosti") int idUdalosti) {
 		Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
-		this.planovac.pridatUzivateleKUdalosti(uzivatel.getIdUzivatele(),idUdalosti);
+		
+		//em extended - není potøeba
+			//this.planovac.pridatUzivateleKUdalosti(uzivatel.getIdUzivatele(),idUdalosti);
+		
+		
+		
+		//em extended - je potøeba navíc
+			Udalost udalost = planovac.nactiUdalost(idUdalosti);
+			Collection<Uzivatel> seznamUcastniku = udalost.getUcastnici();
+			seznamUcastniku.add(uzivatel);
+			udalost.setUcastnici(seznamUcastniku);
+			
+			Collection<Udalost> seznamUdalosti = uzivatel.getSeznamUdalosti();
+			seznamUdalosti.add(udalost);
+			uzivatel.setSeznamUdalosti(seznamUdalosti);
+			planovac.ulozUzivatele(uzivatel);
+		
 		return "redirect:/udalost/"+idUdalosti;
 	}
 	
 	@RequestMapping(value = "/udalost/{idUdalosti}/odebratSe")
-	public String odebratSe(@PathVariable("idUdalosti") int idUdalosti) {
+	public String odebratSe(@PathVariable("idUdalosti") int idUdalosti) {		
 		Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
-		this.planovac.odebratUzivateleZUdalosti(uzivatel.getIdUzivatele(),idUdalosti);
+		//em extended - není potøeba
+			//this.planovac.odebratUzivateleZUdalosti(uzivatel.getIdUzivatele(),idUdalosti);
+		
+		//em extended - je potøeba navíc
+			for (Iterator<Udalost> it = uzivatel.getSeznamUdalosti().iterator(); it.hasNext(); )
+		        if (it.next().getIdUdalosti() == idUdalosti)
+		            it.remove();
+			Udalost udalost = planovac.nactiUdalost(idUdalosti);
+			for (Iterator<Uzivatel> it = udalost.getUcastnici().iterator(); it.hasNext(); )
+		        if (it.next().getIdUzivatele() == uzivatel.getIdUzivatele())
+		            it.remove();
+			
+			planovac.ulozUzivatele(uzivatel);
+			
 		return "redirect:/udalost/"+idUdalosti;
 	}
 

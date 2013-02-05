@@ -16,9 +16,9 @@ INSERT INTO `planovac`.`skupiny_uzivatelu` (`idSkupiny`, `idUzivatele`) VALUES (
 INSERT INTO `planovac`.`skupiny_uzivatelu` (`idSkupiny`, `idUzivatele`) VALUES ('3', '5');
 INSERT INTO `planovac`.`skupiny_uzivatelu` (`idSkupiny`, `idUzivatele`) VALUES ('3', '2');
 
-INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Akce', '1', '2', '5', NULL, '2013-02-06 18:00:00', '2013-02-06 22:00:00', 'Každý je zván!');
-INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Porada', '0', '1', '1', NULL, '2013-02-06 14:00:00', '2013-02-06 15:30:00', '');
-INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Osobní záležitisti', '0', NULL, '5', NULL, '2013-02-06 10:00:00', '2013-02-06 15:00:00', '');
+INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Akce', '1', '1', '5', NULL, '2013-02-06 18:00:00', '2013-02-06 22:00:00', 'Každý je zván!');
+INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Porada', '0', '2', '1', NULL, '2013-02-06 14:00:00', '2013-02-06 15:30:00', '');
+INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Osobní záležitosti', '0', NULL, '5', NULL, '2013-02-06 10:00:00', '2013-02-06 15:00:00', '');
 INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Nemám èas!', '0', NULL, '3', NULL, '2013-02-06 01:00:00', '2013-02-07 10:00:00', 'Nerušit!');
 
 insert into UDALOSTI_UZIVATELU (idUzivatele,idUdalosti) values (1, 2);

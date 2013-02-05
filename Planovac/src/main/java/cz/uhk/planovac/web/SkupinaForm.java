@@ -1,6 +1,9 @@
 
 package cz.uhk.planovac.web;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import cz.uhk.planovac.Planovac;
 import cz.uhk.planovac.Skupina;
+import cz.uhk.planovac.Udalost;
 import cz.uhk.planovac.Uzivatel;
 import cz.uhk.planovac.validation.SkupinaValidator;
 
@@ -63,7 +67,8 @@ public class SkupinaForm {
 	@RequestMapping(value = "/skupiny/{idSkupiny}/upravit", method = RequestMethod.GET)
 	public String setupFormUprava(Model model, @PathVariable("idSkupiny") int idSkupiny) {
 		Skupina skupina = planovac.nactiSkupinu(idSkupiny);
-		//skupina.setVedouci(planovac.nactiVedoucihoSkupiny(idSkupiny));
+		//em extended - není potøeba
+			//skupina.setVedouci(planovac.nactiVedoucihoSkupiny(idSkupiny));
 		if(skupina.getVedouci().getLogin().compareToIgnoreCase(SecurityContextHolder.getContext().getAuthentication().getName())!=0)
 			return "redirect:/denied";
 		model.addAttribute(skupina);
@@ -77,8 +82,9 @@ public class SkupinaForm {
 			return "novaskupina";
 		}
 		else {
-			skupina.setSeznamClenu(planovac.nactiUzivateleDleSkupiny(idSkupiny));
-			skupina.setSeznamUdalosti(planovac.nactiUdalostiDleSkupiny(idSkupiny));
+			//em extended - není potøeba
+				//skupina.setSeznamClenu(planovac.nactiUzivateleDleSkupiny(idSkupiny));
+				//skupina.setSeznamUdalosti(planovac.nactiUdalostiDleSkupiny(idSkupiny));
 			Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
 			skupina.setVedouci(uzivatel);
 			//uzivatel.getSeznamUdalosti().add(udalost);
@@ -99,14 +105,41 @@ public class SkupinaForm {
 	@RequestMapping(value = "/skupiny/{idSkupiny}/pridatSe")
 	public String pridatSe(@PathVariable("idSkupiny") int idSkupiny) {
 		Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
-		this.planovac.pridatUzivateleDoSkupiny(uzivatel.getIdUzivatele(),idSkupiny);
+			
+		//em extended - není potøeba
+			//this.planovac.pridatUzivateleDoSkupiny(uzivatel.getIdUzivatele(),idSkupiny);
+		
+		//em extended - je potøeba navíc
+			Skupina skupina = planovac.nactiSkupinu(idSkupiny);
+			Collection<Uzivatel> seznamClenu = skupina.getSeznamClenu();
+			seznamClenu.add(uzivatel);
+			skupina.setSeznamClenu(seznamClenu);
+			
+			Collection<Skupina> seznamUdalosti = uzivatel.getSeznamSkupin();
+			seznamUdalosti.add(skupina);
+			uzivatel.setSeznamSkupin(seznamUdalosti);
+			planovac.ulozUzivatele(uzivatel);
+		
 		return "redirect:/skupiny/"+idSkupiny;
 	}
 	
 	@RequestMapping(value = "/skupiny/{idSkupiny}/odebratSe")
 	public String odebratSe(@PathVariable("idSkupiny") int idSkupiny) {
 		Uzivatel uzivatel = planovac.nactiUzivatelePodleLoginu(SecurityContextHolder.getContext().getAuthentication().getName());
-		this.planovac.odebratUzivateleZeSkupiny(uzivatel.getIdUzivatele(),idSkupiny);
+		//em extended - není potøeba
+			//this.planovac.odebratUzivateleZeSkupiny(uzivatel.getIdUzivatele(),idSkupiny);
+		
+		//em extended - je potøeba navíc
+		for (Iterator<Skupina> it = uzivatel.getSeznamSkupin().iterator(); it.hasNext(); )
+	        if (it.next().getIdSkupiny() == idSkupiny)
+	            it.remove();
+		Skupina skupina = planovac.nactiSkupinu(idSkupiny);
+		for (Iterator<Uzivatel> it = skupina.getSeznamClenu().iterator(); it.hasNext(); )
+	        if (it.next().getIdUzivatele() == uzivatel.getIdUzivatele())
+	            it.remove();
+		
+		planovac.ulozUzivatele(uzivatel);
+		
 		return "redirect:/skupiny/"+idSkupiny;
 	}
 
