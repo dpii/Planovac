@@ -16,6 +16,6 @@
       <td>${udalost.nazev}</td>
     </tr>
   </c:forEach>
-</table>
+
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

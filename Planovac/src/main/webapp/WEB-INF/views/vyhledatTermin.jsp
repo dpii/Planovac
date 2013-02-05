@@ -67,6 +67,7 @@
       </td>
     </tr>
   </table>
+
 </form:form>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

@@ -3,6 +3,7 @@
 
 <h2>Detail události:</h2>
 <h3>${udalost.nazev}</h3>
+
 <table>
 	<thead>
 		<th>Název</th>
@@ -18,6 +19,7 @@
 
 	</tr>
 </table>
+
 <div>
 	<c:if test="${opravneni}">
 		<a href="<spring:url value="/udalost/${udalost.idUdalosti}/upravit" htmlEscape="true" />">Upravit událost</a>

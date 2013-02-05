@@ -4,6 +4,7 @@
 	<h2>Události:</h2>
 	ščřšř
 	<h3>${nadpis}</h3>
+
 <table>
   <thead>
   	<th>Název</th>
@@ -32,6 +33,7 @@
     </tr>
   </c:forEach>
 </table>
+
 <c:if test="${!verejne}">
 <a href="<spring:url value="/novaudalost" htmlEscape="true" />">Přidat událost</a>
 <br/>

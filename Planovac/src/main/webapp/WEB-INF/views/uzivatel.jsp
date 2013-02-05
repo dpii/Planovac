@@ -4,6 +4,7 @@
 	<h2>Uživatelská sekce:</h2>
 
 <h3>Údaje o uživateli</h3>
+
 <table>
   <thead>
   	<th>Login</th>
@@ -17,7 +18,7 @@
       <td>
           <spring:url value="/uzivatel" context="planovac" var="uzivatelUrl" htmlEscape="true">
 			</spring:url>
-          <a href="${fn:escapeXml(uzivatelUrl)}">${uzivatel.login}</a>
+          <a href="${uzivatelUrl}">${uzivatel.login}</a>
       </td>
       <td>${uzivatel.jmeno} ${uzivatel.prijmeni}</td>
       <td>${uzivatel.email}</td>
@@ -26,6 +27,7 @@
       <td>${uzivatel.telefon}</td>
     </tr>
 </table>
+
 <a href="<spring:url value="/uzivatel/upravit" htmlEscape="true" />">Upravit údaje</a>
 	
 	<h3>Nejbližší události</h3>
@@ -40,7 +42,7 @@
       <td>
           <spring:url value="/udalost/${udalost.idUdalosti}" context="planovac" var="udalostUrl" htmlEscape="true">
 			</spring:url>
-          <a href="${fn:escapeXml(udalostUrl)}">${udalost.nazev}</a>
+          <a href="${udalostUrl}">${udalost.nazev}</a>
       </td>
       <td>${udalost.zacatek}</td>
       <td>${udalost.konec}</td>
@@ -60,11 +62,12 @@
       <td>
           <spring:url value="/skupiny/${skupina.idSkupiny}" context="planovac" var="skupinaUrl" htmlEscape="true">
 			</spring:url>
-          <a href="${fn:escapeXml(skupinaUrl)}">${skupina.nazev}</a>
+          <a href="${skupinaUrl}">${skupina.nazev}</a>
       </td>
     </tr>
   </c:forEach>
 </table>
+
 <a href="<spring:url value="/novaskupina" htmlEscape="true" />">Vytvořit novou skupinu</a>
 <br/>
 <a href="<spring:url value="/vyhledatTermin" htmlEscape="true" />">Najít volné termíny</a>
