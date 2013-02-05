@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
@@ -20,7 +21,8 @@ import cz.uhk.planovac.Uzivatel;
 @Transactional
 public class EntityManagerPlanovac implements Planovac {
 
-	@PersistenceContext
+	//@PersistenceContext
+	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
 
 	// op. s uzivateli

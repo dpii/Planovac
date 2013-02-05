@@ -37,7 +37,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = " * ", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! the client locale is " + locale.toString());
 
@@ -47,10 +47,16 @@ public class HomeController {
 
 		String formattedDate = dateFormat.format(date);
 
-		model.addAttribute("serverTime", formattedDate);
-
+		String prihlaseny = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		
+		model.addAttribute("formattedDate", formattedDate);
+		model.addAttribute("prihlaseny", prihlaseny);
+		
 		return "home";
 	}
+	
+	
 
 	@RequestMapping("/uzivatele")
 	public ModelAndView uzivateleHandler() {
@@ -99,7 +105,7 @@ public class HomeController {
 		ArrayList<Udalost> udalosti = new ArrayList<Udalost>(
 				manazerUdalosti.seradUdalosti(uzivatel.getSeznamUdalosti()));
 		mav.addObject("seznamUdalosti", udalosti);
-		mav.addObject("nadpis", "Všechny vaše události");
+		mav.addObject("nadpis", "Vï¿½echny vaï¿½e udï¿½losti");
 		mav.addObject("verejne", false);
 		return mav;
 	}
@@ -111,7 +117,7 @@ public class HomeController {
 				manazerUdalosti.seradUdalosti(planovac.vemVerejneUdalosti()));
 		mav.addObject("seznamUdalosti",
 				manazerUdalosti.getNAktualnichUdalosti(udalosti, 100));
-		mav.addObject("nadpis", "Nejbližší veøejné události");
+		mav.addObject("nadpis", "Nejbliï¿½ï¿½ï¿½ veï¿½ejnï¿½ udï¿½losti");
 		mav.addObject("verejne", true);
 		return mav;
 	}

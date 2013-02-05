@@ -70,7 +70,7 @@
 		
 		<sec:authorize access="hasRole('ROLE_USER')">
 <div id="user_login">
-			<a href="<spring:url value="/logout" htmlEscape="true" />">Logout</a>
+			<a href="<spring:url value="/logout" htmlEscape="true" />">Odhlásit</a> │ <c:out value="${prihlaseny}" />
 			</div>
 		</sec:authorize>
 

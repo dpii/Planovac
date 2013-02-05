@@ -17,7 +17,7 @@
       <td>
           <spring:url value="/udalost/${udalost.idUdalosti}" context="planovac" var="udalostUrl" htmlEscape="true">
 			</spring:url>
-          <a href="${fn:escapeXml(udalostUrl)}">${udalost.nazev}</a>
+          <a href="${udalostUrl}">${udalost.nazev}</a>
       </td>
       <td>${udalost.popis}</td>
       <td>${udalost.zacatek}</td>
@@ -26,7 +26,7 @@
       	<td>	
       		<spring:url value="/skupiny/${udalost.vlastnikSk.idSkupiny}" context="planovac" var="skupinaUrl" htmlEscape="true">
 			</spring:url>
-			<a href="${fn:escapeXml(skupinaUrl)}">${udalost.vlastnikSk.nazev}</a>
+			<a href="${skupinaUrl}">${udalost.vlastnikSk.nazev}</a>
 		  </td>
 		</c:if>
     </tr>
