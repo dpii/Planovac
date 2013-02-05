@@ -59,6 +59,7 @@
 		<a href="<spring:url value="/udalost/${udalost.idUdalosti}/odebratSe" htmlEscape="true" />">Odebrat se od události</a>
 		<br/>
 	</c:if>
-	<a href="JavaScript:history.back()">Zpět</a>
+	<br/>
+<a href="<spring:url value="/uzivatel" htmlEscape="true" />">Zpět</a>
 
 <%@ include file="/WEB-INF/views/footer.jsp"%>

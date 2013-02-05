@@ -60,6 +60,10 @@ public class UzivatelForm {
 			uzivatel.setSeznamUdalosti(seznam1);
 			Collection<Skupina> seznam2 = new ArrayList<Skupina>();
 			uzivatel.setSeznamSkupin(seznam2);
+			Collection<Udalost> seznam3 = new ArrayList<Udalost>();
+			uzivatel.setVedeneUdalosti(seznam3);
+			Collection<Skupina> seznam4 = new ArrayList<Skupina>();
+			uzivatel.setVedeneSkupiny(seznam4);
 			this.planovac.ulozUzivatele(uzivatel);
 			status.setComplete();
 			return "redirect:/uzivatele/" + uzivatel.getIdUzivatele();

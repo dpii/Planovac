@@ -67,7 +67,8 @@
 			se od skupiny</a>
 		<br />
 	</c:if>
-	<a href="JavaScript:history.back()">Zpět</a>
+		<br/>
+<a href="<spring:url value="/uzivatel" htmlEscape="true" />">Zpět</a>
 </div>
 
 <%@ include file="/WEB-INF/views/footer.jsp"%>

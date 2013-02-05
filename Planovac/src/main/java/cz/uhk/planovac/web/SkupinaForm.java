@@ -62,7 +62,7 @@ public class SkupinaForm {
 				Collection<Uzivatel> seznamClenu = new ArrayList<Uzivatel>();
 				seznamClenu.add(uzivatel);
 				skupina.setSeznamClenu(seznamClenu);
-			
+			uzivatel.getVedeneSkupiny().add(skupina);
 			uzivatel.getSeznamSkupin().add(skupina);
 			this.planovac.ulozUzivatele(uzivatel);
 			status.setComplete();

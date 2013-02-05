@@ -61,7 +61,6 @@
 	PPRO 2013
 </h1>
 
-<P>  ${serverTime}. Na projektu stále pracujeme.</P>
 
 <ul>
   
