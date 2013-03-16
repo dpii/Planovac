@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<link rel="stylesheet" type="text/css" href="default.css">
+<title>DODRB 2013 - Planovac - Nachazel, Dupal</title>
+</head>
+<body>
+<h3>DORDB 2013 - Nachazel, Dupal - Planovac</h3>
+<div id="main">
+
+
+<h1>1. Obrázek s modelem (E-R diagram)</h1>
+<p>
+ musí obsahovat minimálně 4 entity, lze použít model z vlastních předchozích 
+semestrálních prací apod. Doporučena jsou originální zadání (nikoliv různé knihovny, 
+databáze CD/DVD, autobazary, apod.)
+
+
+
+</p>
+<img src="images/er.jpg" alt="ER Diagram">
+
+<h1>2. Slovní popis dodatečných integritních omezení</h1>
+<ul>
+<li> trivialni omezeni: tabulka Udalost - konec události musí být větší než zacatek</li>
+<li> natriviální omezení: tabulky Pripominka/Udalost - cas_pred_udalosti nemůže být větší než je začátek události</li>
+</ul>
+<p></p>
+
+<h1>3. Návrh API rozhraní „business logiky“ pro dva procesy</h1>
+<p>
+
+
+
+</p>
+
+<h1>4. Návrh pěti slovně formulovaných dotazů nad schématem</h1>
+<p>
+
+
+
+</p>
+
+<h1>5. Skript, který vytvoří databázové schéma odpovídající E-R diagramu</h1>
+<textarea cols="100" rows="20">
+CREATE DATABASE IF NOT EXISTS planovac;
+USE planovac;
+
+CREATE TABLE IF NOT EXISTS UZIVATELE (
+  idUzivatele INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  login VARCHAR(30) NOT NULL,
+  jmeno VARCHAR(30),
+  prijmeni VARCHAR(30),
+  email VARCHAR(30) NOT NULL,
+  heslo_hash VARCHAR(30) NOT NULL,
+  povolen tinyint(1) NOT NULL,
+  role VARCHAR(45) NOT NULL,
+  datumZalozeni DATE,
+  datumPosledniPrihlaseni DATE,
+  adresa VARCHAR(30),
+  mesto VARCHAR(30),
+  telefon VARCHAR(20),
+  INDEX(prijmeni)
+) engine=InnoDB;
+
+
+
+CREATE TABLE IF NOT EXISTS SKUPINY (
+  idSkupiny INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nazev VARCHAR(30),
+  idVedouciho INT(4) UNSIGNED NOT NULL,
+  popis VARCHAR(255),
+  verejna BOOLEAN,
+  INDEX(nazev),
+  FOREIGN KEY (idVedouciho) REFERENCES UZIVATELE(idUzivatele)
+) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS UDALOSTI (
+  idUdalosti INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nazev VARCHAR(30),
+  verejna BOOLEAN,
+  idVlastnikaSk INT(4) UNSIGNED,
+  idVlastnikaUz INT(4) UNSIGNED,
+  obrazek VARCHAR(30),
+  zacatek DATETIME,
+  konec DATETIME,
+  popis VARCHAR(255),
+  INDEX(nazev),
+  FOREIGN KEY (idVlastnikaSk) REFERENCES SKUPINY(idSkupiny),
+  FOREIGN KEY (idVlastnikaUz) REFERENCES UZIVATELE(idUzivatele)
+) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS SKUPINY_UZIVATELU (
+  idSkupiny INT(4) UNSIGNED NOT NULL,
+  idUzivatele INT(4) UNSIGNED NOT NULL,
+  FOREIGN KEY (idSkupiny) REFERENCES SKUPINY(idSkupiny),
+  FOREIGN KEY (idUzivatele) REFERENCES UZIVATELE(idUzivatele),
+  UNIQUE (idSkupiny,idUzivatele)
+) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS UDALOSTI_UZIVATELU (
+  idUdalosti INT(4) UNSIGNED NOT NULL,
+  idUzivatele INT(4) UNSIGNED NOT NULL,
+  FOREIGN KEY (idUdalosti) REFERENCES UDALOSTI(idUdalosti),
+  FOREIGN KEY (idUzivatele) REFERENCES UZIVATELE(idUzivatele),
+  UNIQUE (idUdalosti,idUzivatele)
+) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS PRIPOMINKY (
+  idPripominky INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  idUdalosti INT(4) UNSIGNED NOT NULL,
+  idUzivatele INT(4) UNSIGNED NOT NULL,
+  typ_pripominky INT(4) UNSIGNED,
+  cas_pred_udalosti DATETIME,
+  opakovani_po_intervalu INT(4) UNSIGNED,
+  aktivni BOOLEAN,
+  FOREIGN KEY (idUdalosti) REFERENCES UDALOSTI(idUdalosti),
+  FOREIGN KEY (idUzivatele) REFERENCES UZIVATELE(idUzivatele),
+  UNIQUE (idPripominky)
+) engine=InnoDB;
+
+
+</textarea>
+
+
+<h1>6. Skript, který vytvoří v databázovém schématu dodatečná integritní omezení</h1>
+<p>
+
+
+
+</p>
+
+<h1>7. Skript, který naplní tabulky testovacími daty</h1>
+<p>
+
+
+
+</p>
+
+<h1>8. Skript (včetně výstupu spool), který provede postupně všechny navržené dotazy (viz výše)</h1>
+<p>
+
+
+
+</p>
+
+<h1>9. Skript, který se pokusí porušit postupně všechna dodatečná integritní omezení + výstup spool 
+z provádění tohoto skriptu (budou vidět chyby při porušení I.O.)</h1>
+<p>
+
+
+
+</p>
+
+
+<h1>10. Skript pro vytvoření balíku (package) a procedur „business logiky“ (viz výše)</h1>
+<p>
+
+
+
+</p>
+
+<h1>11. Testovací skript (včetně výstupu spool obdrženého po spuštění) pro obě procedury, včetně 
+souvisejících dotazů, které ověří, že každá procedura provedla to co měla</h1>
+<p>
+
+
+
+</p>
+
+
+<h1>12. Skript, který doplní do zvolené tabulky schématu sloupec, který bude obsahovat odvozené 
+hodnoty (průměrný plat zaměstnance v rámci oddělní apod.) – tyto hodnoty budou 
+automaticky aktualizovány pomocí triggerů</h1>
+<p>
+
+
+
+</p>
+
+<h1>13. Skript, který vytvoří úložiště ještě jednou v „objektové“ podobě</h1>
+<p>
+
+
+
+</p>
+
+<h1>14. Skript, který provede navržených pět dotazů znovu, tentokrát nad objektovými tabulkami</h1>
+<p>
+
+
+
+</p>
+
+<h1>15. Navrhněte slovně fakta a dimenze pro datový sklad vycházející z vaší databáze. P</h1>
+<p>
+
+
+
+</p>
+
+
+
+
+
+</div>
+
+<a href="http://www.youtube.com/watch?v=oHg5SJYRHA0" target="_blank">UHK FIM letní semestr 2013</a>
+</body>
+</html>

@@ -60,3 +60,18 @@ CREATE TABLE IF NOT EXISTS UDALOSTI_UZIVATELU (
   FOREIGN KEY (idUzivatele) REFERENCES UZIVATELE(idUzivatele),
   UNIQUE (idUdalosti,idUzivatele)
 ) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS PRIPOMINKY (
+  idPripominky INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  idUdalosti INT(4) UNSIGNED NOT NULL,
+  idUzivatele INT(4) UNSIGNED NOT NULL,
+  typ_pripominky INT(4) UNSIGNED,
+  cas_pred_udalosti DATETIME,
+  opakovani_po_intervalu INT(4) UNSIGNED,
+  aktivni BOOLEAN,
+  FOREIGN KEY (idUdalosti) REFERENCES UDALOSTI(idUdalosti),
+  FOREIGN KEY (idUzivatele) REFERENCES UZIVATELE(idUzivatele),
+  UNIQUE (idPripominky)
+) engine=InnoDB;
+
+

@@ -8,6 +8,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cz">
 
 
+
+
 <head>
 <script type="text/javascript"
 	src="<spring:url value="/resources/scripts/jquery-1.4.1.min.js" htmlEscape="true" />"></script>
