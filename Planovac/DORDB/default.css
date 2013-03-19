@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+
+#main {
+	padding: 20px;
+	margin-left: 5%;
+	text-align: left;
+	
+	border-style: dashed;
+	border-width: 1px;
+
+
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<link rel="stylesheet" type="text/css" href="default.css">
+<title>DODRB 2013 - Planovac - Nachazel, Dupal</title>
+</head>
+<body>
+<h3>DORDB 2013 - Nachazel, Dupal - Planovac</h3>
+<div id="main">
+
+
+<h1>1. Obrázek s modelem (E-R diagram)</h1>
+<p>
+ musí obsahovat minimálně 4 entity, lze použít model z vlastních předchozích 
+semestrálních prací apod. Doporučena jsou originální zadání (nikoliv různé knihovny, 
+databáze CD/DVD, autobazary, apod.)
+
+
+
+</p>
+<img src="images/er.jpg" alt="ER Diagram">
+
+<h1>2. Slovní popis dodatečných integritních omezení</h1>
+<h2>2.1 Triviální omezení</h2>
+<ul>
+<li> Konec události musí být později než její začátek</li>
+<li> Skupina musí mít ID vedoucího</li>
+<li> Skupinové heslo musí mít alespoň 5 znaků</li>
+<li> Uživatelské heslo musí mít alespoň 5 znaků </li>
+</ul>
+
+<h2>2.2 Netriviální omezení</h2>
+<ul>
+<li> Pripominka/Udalost - cas_pred_udalosti nemůže být později než je začátek události</li>
+<li> Skupina nebude mít více jak 150 členů </li>
+</ul>
+
+<p></p>
+
+<h1>3. Návrh API rozhraní „business logiky“ pro dva procesy</h1>
+<p>
+<b>Procedura:</b> nastavUpozorneniUdalostiProSkupinu <br />
+<b>Parametry:</b> idUdalosti, cas_pred_udalosti, opakovani_po_intervalu <br />
+<b>Popis:</b> Kdyz napr. vedouci skupiny vytvori udalost pro vsechny cleny skupiny, tato procedura nastavi i pripominku na tuto udalost. Vytvori ji kazdemu uzivateli v pozadovanem predstihu a prip. opakovani, kazdy uzivatel si ji pak dale muze zmenit. <br />
+
+<br />
+
+<b>Procedura:</b> najdiUdalost <br />
+<b>Parametry:</b> zacatek, konec <br />
+<b>Popis:</b> Vyhleda udalosti, které se nacházejí v požadovaném intervalu. Např. vedoucí skupiny hledá vhodný termin. <br />
+</p>
+
+<h1>4. Návrh pěti slovně formulovaných dotazů nad schématem</h1>
+<p>
+<ol>
+<li>Určí počet uživatelů, kteří mají v daný čas již vytvořenou událost v rámci skupiny</li>
+<li>Vypočte průměrný počet přípomínek uživatelů.</li>
+<li>Určí počet připomínek na danou událost</li>
+<li>Zjistí počet vedoucích skupin</li>
+<li>Vyhledá nejvyýše čtyři posledni události pro každého uživatele.</li>
+
+</ol>
+
+
+
+</p>
+
+<h1>5. Skript, který vytvoří databázové schéma odpovídající E-R diagramu</h1>
+<a href="sql/5_schema.sql">5_schema.sql</a>
+
+<h1>6. Skript, který vytvoří v databázovém schématu dodatečná integritní omezení</h1>
+<a href="sql/6_constraints.sql">6_constraints.sql</a>
+<p>
+
+
+
+</p>
+
+<h1>7. Skript, který naplní tabulky testovacími daty</h1>
+<p>
+
+
+
+</p>
+
+<h1>8. Skript (včetně výstupu spool), který provede postupně všechny navržené dotazy (viz výše)</h1>
+<p>
+
+
+
+</p>
+
+<h1>9. Skript, který se pokusí porušit postupně všechna dodatečná integritní omezení + výstup spool 
+z provádění tohoto skriptu (budou vidět chyby při porušení I.O.)</h1>
+<p>
+
+
+
+</p>
+
+
+<h1>10. Skript pro vytvoření balíku (package) a procedur „business logiky“ (viz výše)</h1>
+<p>
+
+
+
+</p>
+
+<h1>11. Testovací skript (včetně výstupu spool obdrženého po spuštění) pro obě procedury, včetně 
+souvisejících dotazů, které ověří, že každá procedura provedla to co měla</h1>
+<p>
+
+
+
+</p>
+
+
+<h1>12. Skript, který doplní do zvolené tabulky schématu sloupec, který bude obsahovat odvozené 
+hodnoty (průměrný plat zaměstnance v rámci oddělní apod.) – tyto hodnoty budou 
+automaticky aktualizovány pomocí triggerů</h1>
+<p>
+
+
+
+</p>
+
+<h1>13. Skript, který vytvoří úložiště ještě jednou v „objektové“ podobě</h1>
+<p>
+
+
+
+</p>
+
+<h1>14. Skript, který provede navržených pět dotazů znovu, tentokrát nad objektovými tabulkami</h1>
+<p>
+
+
+
+</p>
+
+<h1>15. Navrhněte slovně fakta a dimenze pro datový sklad vycházející z vaší databáze. </h1>
+<p>
+
+
+
+</p>
+
+
+
+
+
+</div>
+
+<br />
+<a href="http://www.youtube.com/watch?v=oHg5SJYRHA0" target="_blank">UHK FIM letní semestr 2013</a>
+</body>
+</html>

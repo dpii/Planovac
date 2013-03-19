@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:beans="http://www.springframework.org/schema/beans"
@@ -74,4 +75,79 @@
 		</authentication-manager>
 	
 	
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security-3.0.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+ 
+	
+	<http auto-config="true"  use-expressions="true">
+		<intercept-url pattern="/login" access="permitAll"/>
+		<intercept-url pattern="/logout" access="permitAll"/>
+		<intercept-url pattern="/denied" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/" access="permitAll"/>
+		<intercept-url pattern="/uzivatel" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/vyhledatTermin" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/udalost/{idUdalosti}/upravit" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/uzivatel/upravit" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/uzivatel/udalosti" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/skupina/{idSkupiny}/upravit" access="hasRole('ROLE_USER')"/>
+		
+		<form-login login-page="/login" 
+			authentication-failure-url="/loginfailed" 
+			default-target-url="/uzivatel"/>
+		
+		<access-denied-handler error-page="/denied"/>
+		
+		<logout invalidate-session="true" 
+			logout-success-url="/" 
+			logout-url="/logout"/>
+	</http>
+	
+<!-- 	JPA + SPRING-SECURITY! -->
+<!-- 	<beans:bean id="customUserDetailsService" class="cz.uhk.planovac.security.CustomUserDetailsService"/> -->
+<!-- 	<authentication-manager>
+	        <authentication-provider user-service-ref="customUserDetailsService">
+	        		<password-encoder hash="md5"/>
+	        </authentication-provider>
+	</authentication-manager> -->
+	
+<!-- 	Jednoduchá security s uživateli tady v xml -->
+<!-- 	<authentication-manager>
+	        <authentication-provider>
+	        		<user-service>
+	        			<user name="nick" password="1234" authorities="ROLE_USER"/>
+	        		</user-service>
+	        </authentication-provider>
+	</authentication-manager> -->
+	
+<!-- 	Pokud o načítání z db bez JPA -->
+	<authentication-manager>
+	   	<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+ 
+		   users-by-username-query="
+		      select login,heslo_hash, povolen 
+		      from UZIVATELE where login=?" 
+ 
+		   authorities-by-username-query="
+		      select login, role from uzivatele 
+		      where login =?  " 
+ 
+			/>
+	   		</authentication-provider>
+		</authentication-manager>
+	
+	
+>>>>>>> refs/remotes/origin/master
 </beans:beans>
