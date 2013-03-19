@@ -1,7 +1,30 @@
-insert into UZIVATELE (adresa, datumPosledniPrihlaseni, datumZalozeni, email, heslo_hash, jmeno, login, mesto, povolen, prijmeni, role, telefon) values ("", "", "", "mail@.domena.cz", "1234", "", "nick", "", 1, "", "ROLE_USER", "")
+insert into UZIVATELE (`adresa`, `datumPosledniPrihlaseni`, `datumZalozeni`, `email`, `heslo_hash`, `jmeno`, `login`, `mesto`, `povolen`, `prijmeni`, `role`, `telefon`) values ('', NULL, NULL, 'mail@.domena.cz', '1234', 'Nick', 'nick', '', 1, '', 'ROLE_USER', '');
+insert into UZIVATELE (`adresa`, `datumPosledniPrihlaseni`, `datumZalozeni`, `email`, `heslo_hash`, `jmeno`, `login`, `mesto`, `povolen`, `prijmeni`, `role`, `telefon`) values ('', NULL, NULL, 'pepa@.seznam.cz', '1234', 'Pepa', 'pepa', '', '1', 'Novák', 'ROLE_USER', '');
+insert into UZIVATELE (`adresa`, `datumPosledniPrihlaseni`, `datumZalozeni`, `email`, `heslo_hash`, `jmeno`, `login`, `mesto`, `povolen`, `prijmeni`, `role`, `telefon`) values ('', NULL, NULL, 'mail@.domena.cz', '1234', '', 'Nìkdo', '', '1', '', 'ROLE_USER', '');
+insert into UZIVATELE (`adresa`, `datumPosledniPrihlaseni`, `datumZalozeni`, `email`, `heslo_hash`, `jmeno`, `login`, `mesto`, `povolen`, `prijmeni`, `role`, `telefon`) values ('', NULL, NULL, 'mejl@.centrum.cz', '1234', 'Karel', 'Kája', '', '1', 'B.', 'ROLE_USER', '');
+insert into UZIVATELE (`adresa`, `datumPosledniPrihlaseni`, `datumZalozeni`, `email`, `heslo_hash`, `jmeno`, `login`, `mesto`, `povolen`, `prijmeni`, `role`, `telefon`) values ('', NULL, NULL, 'rose@.gmail.com', '1234', 'Lucka', 'Rose', '', '1', 'H.', 'ROLE_USER', '');
 
+INSERT INTO `planovac`.`skupiny` (`nazev`, `idVedouciho`, `popis`, `verejna`) VALUES ('Skupina Nicka', '1', 'skupina vedená Nickem, každý se mùže pøidat!', '1');
+INSERT INTO `planovac`.`skupiny` (`nazev`, `idVedouciho`, `popis`, `verejna`) VALUES ('Group s.r.o.', '4', 'Pracovní skupina', '0');
+INSERT INTO `planovac`.`skupiny` (`nazev`, `idVedouciho`, `popis`, `verejna`) VALUES ('Skupinka', '5', 'Moje skupina', '0');
 
-insert into UDALOSTI (konec, nazev, obrazek, verejna, idVlastnikaSk, idVlastnikaUz, zacatek) values ('2013-02-01', 'Událost', '', 0, null, '1', '2013-01-01')
+INSERT INTO `planovac`.`skupiny_uzivatelu` (`idSkupiny`, `idUzivatele`) VALUES ('1', '1');
+INSERT INTO `planovac`.`skupiny_uzivatelu` (`idSkupiny`, `idUzivatele`) VALUES ('1', '2');
+INSERT INTO `planovac`.`skupiny_uzivatelu` (`idSkupiny`, `idUzivatele`) VALUES ('1', '3');
+INSERT INTO `planovac`.`skupiny_uzivatelu` (`idSkupiny`, `idUzivatele`) VALUES ('2', '4');
+INSERT INTO `planovac`.`skupiny_uzivatelu` (`idSkupiny`, `idUzivatele`) VALUES ('2', '1');
+INSERT INTO `planovac`.`skupiny_uzivatelu` (`idSkupiny`, `idUzivatele`) VALUES ('3', '5');
+INSERT INTO `planovac`.`skupiny_uzivatelu` (`idSkupiny`, `idUzivatele`) VALUES ('3', '2');
 
+INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Akce', '1', '2', '5', NULL, '2013-02-06 18:00:00', '2013-02-06 22:00:00', 'Každý je zván!');
+INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Porada', '0', '1', '1', NULL, '2013-02-06 14:00:00', '2013-02-06 15:30:00', '');
+INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Osobní záležitisti', '0', NULL, '5', NULL, '2013-02-06 10:00:00', '2013-02-06 15:00:00', '');
+INSERT INTO `planovac`.`udalosti` (`nazev`, `verejna`, `idVlastnikaSk`, `idVlastnikaUz`, `obrazek`, `zacatek`, `konec`, `popis`) VALUES ('Nemám èas!', '0', NULL, '3', NULL, '2013-02-06 01:00:00', '2013-02-07 10:00:00', 'Nerušit!');
 
-insert into UDALOSTI_UZIVATELU (idUzivatele,idUdalosti) values (1, 1)
+insert into UDALOSTI_UZIVATELU (idUzivatele,idUdalosti) values (1, 2);
+insert into UDALOSTI_UZIVATELU (idUzivatele,idUdalosti) values (4, 2);
+insert into UDALOSTI_UZIVATELU (idUzivatele,idUdalosti) values (1, 1);
+insert into UDALOSTI_UZIVATELU (idUzivatele,idUdalosti) values (5, 1);
+insert into UDALOSTI_UZIVATELU (idUzivatele,idUdalosti) values (4, 1);
+insert into UDALOSTI_UZIVATELU (idUzivatele,idUdalosti) values (3, 4);
+insert into UDALOSTI_UZIVATELU (idUzivatele,idUdalosti) values (5, 3);
